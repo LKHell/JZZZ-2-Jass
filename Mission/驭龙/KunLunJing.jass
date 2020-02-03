@@ -1,0 +1,30 @@
+function Trig_klConditions takes nothing returns boolean
+    //判断单位附加值 == 44 
+    return ((GetUnitPointValue(GetTriggerUnit()) == 44))
+endfunction
+
+function Trig_klActions takes nothing returns nothing
+    
+    // 33 随机 大于 > 106
+    if ((GetRandomInt(33, 108) >= 106)) then
+ 
+        call CreateItem ('I00S', GetWidgetX(GetTriggerUnit()), GetWidgetY(GetTriggerUnit()))
+
+        
+        call DestroyTrigger(GetTriggeringTrigger())
+  
+    endif
+  
+endfunction
+
+//===========================================================================
+function InitTrig_KunLunJing takes nothing returns nothing
+    set gg_trg_KunLunJing = CreateTrigger()
+
+    call TriggerRegisterPlayerUnitEventSimple( gg_trg_KunLunJing, Player(PLAYER_NEUTRAL_AGGRESSIVE), EVENT_PLAYER_UNIT_DEATH )
+    
+   
+    call TriggerAddCondition(gg_trg_KunLunJing, Condition(function Trig_klConditions))
+    call TriggerAddAction(gg_trg_KunLunJing, function Trig_klActions)
+endfunction
+

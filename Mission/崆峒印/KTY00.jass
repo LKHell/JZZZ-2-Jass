@@ -34,11 +34,11 @@ function Trig_KTY00Actions takes nothing returns nothing
         // 方天
         call UnitAddItemByIdSwapped('I01Y', udg_NpcLvBu)
 
-
+        
         // 吸血
         call UnitAddAbility(udg_NpcLvBu, 'AUav')
         call SetUnitAbilityLevel(udg_NpcLvBu, 'AUav', 9)
-
+        call UnitAddItemByIdSwapped('I02E', GetTriggerUnit())
         call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcLvBu, "??", null, "哈哈哈，是时候该休息一下了", bj_TIMETYPE_ADD, 0, true)
         call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcDiaoChan, "貂蝉", null, "奉先大人！你在哪里？", bj_TIMETYPE_ADD, 0, true)
         call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcDiaoChan, "貂蝉", null, "将军此乃崆峒印的赝品，随不能与奉先大人的真印相比，但若将军帮我找到奉先大人，我必将真印给予将军！", bj_TIMETYPE_ADD, 0, true) 

@@ -1,14 +1,15 @@
 function Trig_LB_KillConditions takes nothing returns boolean
-    return ((GetKillingUnitBJ() == gg_unit_Eevi_0046) and (IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true))
+    return ((GetKillingUnitBJ() == udg_NpcLvBu) and (IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true))
 endfunction
 
 function Trig_LB_KillActions takes nothing returns nothing
-    if ((GetRandomInt(1, 20) <= GetUnitAbilityLevel(gg_unit_edry_0214, 'A08K'))) then
+    // 貂蝉火之缚等级 / 20 触发吕布死亡
+    if ((GetRandomInt(1, 20) <= GetUnitAbilityLevel(udg_NpcDiaoChan, 'A08K'))) then
         call DisableTrigger(GetTriggeringTrigger())
-        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Eevi_0046, "TRIGSTR_6801", null, "TRIGSTR_6802", bj_TIMETYPE_ADD, 0, true)
-        call KillUnit(gg_unit_Eevi_0046)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcLvBu, "吕布", null, "菜", bj_TIMETYPE_ADD, 0, true)
+        call KillUnit(udg_NpcLvBu)
     else
-        call IncUnitAbilityLevel(gg_unit_edry_0214, 'A08K')
+        call IncUnitAbilityLevel(udg_NpcDiaoChan, 'A08K')
     endif
 endfunction
 

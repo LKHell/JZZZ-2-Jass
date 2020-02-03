@@ -1,0 +1,38 @@
+function Trig_LB_FinishedConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_LB_FinishedActions takes nothing returns nothing
+    local real x  
+    local real y  
+     
+    call DestroyTrigger(GetTriggeringTrigger())
+    
+    
+    call UnitRemoveAbility(udg_NpcDiaoChan, 'Aneu')
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcDiaoChan, "貂蝉", null, "谢谢你帮我找到奉先,这些东西请你收下吧!", bj_TIMETYPE_ADD, 0, true)
+    
+    set x = GetWidgetX(GetTriggerUnit()) 
+    set y = GetWidgetY(GetTriggerUnit()) 
+     
+    
+    call CreateItem(udg_wplx[GetRandomInt(28, 88)], x,y)
+    call CreateItem(udg_wplx[GetRandomInt(28, 48)], x,y)
+    call CreateItem(udg_wplx[GetRandomInt(47, 88)], x,y)
+
+    call RemoveItem(GetItemOfTypeFromUnitBJ(udg_NpcLvBu, 'ktrm'))
+    call CreateItem('ktrm', x,y)
+   
+  
+endfunction
+
+//===========================================================================
+function InitTrig_LB_Finished takes nothing returns nothing
+    set gg_trg_LB_Finished = CreateTrigger()
+    call DisableTrigger(gg_trg_LB_Finished)
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_LB_Finished, gg_rct_______11)
+    call TriggerAddCondition(gg_trg_LB_Finished, Condition(function Trig_LB_FinishedConditions))
+    call TriggerAddAction(gg_trg_LB_Finished, function Trig_LB_FinishedActions)
+endfunction
+

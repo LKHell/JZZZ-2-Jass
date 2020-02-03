@@ -2,8 +2,8 @@ function Trig_LB_DeadActions takes nothing returns nothing
     local integer i = 1
     call DestroyTrigger(GetTriggeringTrigger())
     call DestroyTrigger(gg_trg_LB_Kill)
-    
-   
+    call EnableTrigger(gg_trg_LB_Finished)
+    call DestroyTrigger(gg_trg_KTY00)
     
 
    
