@@ -1,0 +1,70 @@
+function Trig_InitTips_Actions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    call EnableTrigger(gg_trg_TipsTimer )
+    set udg_tsxuhun[0] = "本图由逆魂团队成员LK-Hao制作"
+    set udg_tsxuhun[1] = "提示：输入-+可以重置镜头高度"
+    set udg_tsxuhun[2] = "提示：玩家一或玩家二输入-q可以删除地面部分物品"
+    set udg_tsxuhun[3] = "提示：低难度输入hg可以快速回城"
+    set udg_tsxuhun[4] = "听闻：刑天魔神所在的常羊山经常会有陨石袭击，造成的伤害似乎魔免也无法抵挡，但是有魔法抗性的物品却可以减少所受到的伤害"
+    set udg_tsxuhun[5] = "听闻：黑水玄蛇虽然凶猛异常，却也极为惧怕魔法，除非面对无名小卒与初出茅庐之人。"
+    set udg_tsxuhun[6] = "欺骗者，魑魅，魍魉，怎么最近总有一些妖怪来骚扰？"
+    set udg_tsxuhun[7] = "听闻：黑龙之玉并不只有一块"
+    set udg_tsxuhun[8] = "听闻：水镜先生可以提取一些物品"
+    set udg_tsxuhun[9] = "提示:玩家1输入-N可以显示紫色装备修炼情况（多人可能引起掉线），-Q可以清除地上的部分物品。"
+    set udg_tsxuhun[10] = "提示:输入-I可以关闭/开启武将信息提示功能。"
+    set udg_tsxuhun[11] = "听闻：城外有个山洞但是不知通向何处，真是奇怪"
+    set udg_tsxuhun[12] = "听闻：水镜先生在城外，而且有个神秘老人在他附近收集圣兽的灵气。而且据说他有个叫燕儿的女儿"
+    set udg_tsxuhun[13] = "听闻：鸳鸯岛的仙侣可以将武勋转化成属性。训练场长官貌似也可以"
+    set udg_tsxuhun[14] = "杂谈：你信春哥吗？你真的信春哥吗？那就买还魂丹吧，人称春哥宝丹！"
+    set udg_tsxuhun[15] = "智力系武器的五行伤害对技能也有效果"
+    set udg_tsxuhun[16] = "据说任大头会驯化野兽，而且好像还能让野兽带装备"
+    set udg_tsxuhun[19] = "泊柛：|c00FF0000感谢：sirius0168，小克天下，荆州之战一的作者，有了你们才有荆州贰！"
+    set udg_tsxuhun[20] = "泊柛：|c00FF0000感谢：地狱之火，sinkblack，杀道惊云，long，长疯大侠，kkkoflogo（轩），a819619（峰子），jtr11235，卧槽马，荆州的骨灰级玩家感谢你们"
+    set udg_tsxuhun[21] = "泊柛：|c00FF0000感谢：海公公，相随，leif荆州的骨灰级玩家感谢你们"
+    set udg_tsxuhun[22] = "泊柛：|c00FF0000感谢：君已陌路，人面桃花，饕餮游神"
+    set udg_tsxuhun[23] = "|c00FF0000感谢：sje1996811，iuxk_xxx，szxdeng，噬天烈魂，沫，lukaiqiang，"
+    set udg_tsxuhun[24] = "|c00FF0000感谢：jzymzhida、丶蒹葭，天聚成（ltc52000），王者无敌，wakinfan（wk）"
+    set udg_tsxuhun[25] = "|c00FF0000感谢：锅只是路过，一方豆腐，二方豆腐，夜雨丿潇湘丶，再次灬无奈（Belief丶筱诺），YD_de_JB"
+    // ---
+    set udg_tsxuhun[26] = "回生术"
+    set udg_tsxuhun[27] = "|c0000FF00隐身之法术|r"
+    set udg_tsxuhun[28] = "|c0000FF00减速以及范围禁魔|r|c00FF0000破甲|r"
+    set udg_tsxuhun[29] = "|c0000FF00分裂攻击|r|c00FF0000重击|r"
+    set udg_tsxuhun[30] = "|c0000FF00多重攻击，召唤术，|r|c00FF0000反伤|r"
+    set udg_tsxuhun[31] = "|c0000FF00范围杀伤技能，|r|c00FF0000五行罩|r"
+    set udg_tsxuhun[32] = "|c0000FF00分裂攻击，|r|c00FF0000魔法免疫|r"
+    set udg_tsxuhun[33] = "|c0000FF00范围伤害技能，|r|c00FF0000超大范围分裂，力拔山兮气盖世|r"
+    set udg_tsxuhun[34] = "|c00FF0000隐身能力，甄姬拥有多重分身|r"
+    set udg_tsxuhun[35] = "|c0000FF00震天弓|r|c00FF0000天下无敌|r"
+    set udg_tsxuhun[36] = "|c0000FF00幻影斩|r|c00FF0000天下无敌，变身|r"
+    set udg_tsxuhun[38] = "|c00FF0000超强扣甲能力|r"
+    set udg_tsxuhun[39] = "|c00FF0000力拔山兮气盖世能力|r"
+    set udg_tsxuhun[40] = "|c00FF0000超强镜像能力|r"
+    set udg_tsxuhun[41] = "|c00FF0000超强范围伤害能力|r"
+    set udg_tsxuhun[42] = "|c00FF0000超强范围攻击能力|r"
+    set udg_tsxuhun[43] = "|c0000FF00高闪避，高倍击|r|c00FF0000超强反伤|r,30%分裂攻击，"
+    set udg_tsxuhun[44] = "|c00FF0000超强范围秒杀能力|r"
+    // 终结技提示文字
+    set udg_tsxuhun[100] = "|Cff00ff00领悟了终级技能"
+    set udg_tsxuhun[101] = "|Cff00ff00终级技能获得提升"
+
+    set udg_tsxuhun[200] = "|Cff00ff00失败|r"
+    //猎人
+    set udg_tsxuhun[300] =  "猎人"
+    set udg_tsxuhun[301] =  "这些兽皮还不错！"
+    set udg_tsxuhun[302] =  "你带回来的兽皮太棒了！这个东西给你！"
+    set udg_tsxuhun[303] =  "你可以帮我找些兽皮回来吗？我愿意高价收购！"
+    set udg_tsxuhun[304] =  "啊！此乃鹏鸟之羽，可用此物，编织翅膀！"
+    set udg_tsxuhun[305] =  "你带来的羽毛有瑕疵......"
+    set udg_tsxuhun[306] =  "你的宝宝长大了，我把它训练成了战骑。"
+    set udg_tsxuhun[307] =  "你的宝宝长大了，我把它训练成了战宠。"
+
+
+endfunction
+
+//===========================================================================
+function InitTrig_InitTips takes nothing returns nothing
+    set gg_trg_InitTips = CreateTrigger(  )
+    call TriggerAddAction( gg_trg_InitTips, function Trig_InitTips_Actions )
+endfunction
+

@@ -1,0 +1,76 @@
+function Trig_XunHua00Conditions takes nothing returns boolean
+    return ((GetItemTypeId(GetManipulatedItem()) == 'skrt'))
+endfunction
+
+function Trig_XunHua00Func002A takes nothing returns nothing
+ 
+local integer i
+local integer o =0
+// 用二维数组会更好
+if ((GetItemType(GetEnumItem()) == ITEM_TYPE_CHARGED)) then
+    if ((GetItemTypeId(GetEnumItem()) == 'I00Z')) then         
+        // 鹏鸟之翼   
+        set i = 'tbar'
+        set o = 0
+            
+    elseif ((GetItemTypeId(GetEnumItem()) == 'I015')) then
+        //仙虎
+        set i = 'I016'
+        set o =  'nwld'
+
+    elseif ((GetItemTypeId(GetEnumItem()) == 'I00Q')) then
+        //玄龟
+        set i = 'I00R'
+        set o ='ncen'
+       
+    elseif ((GetItemTypeId(GetEnumItem()) == 'I012')) then
+        //赤彘
+        set i = 'I018'
+        set o ='nqb4'
+        
+    elseif ((GetItemTypeId(GetEnumItem()) == 'I010')) then
+        //战熊
+        set i ='I017'
+        set o ='ngz4'
+        
+    elseif ((GetItemTypeId(GetEnumItem()) == 'I011')) then
+        //战狼
+        set i ='I013'
+        set o ='nwlg'
+        
+    elseif ((GetItemTypeId(GetEnumItem()) == 'I02I')) then
+        //巨象
+        set i = 'I007'
+        set o ='nmdr'
+         
+    endif
+    // 删除物品
+    call RemoveItem(GetEnumItem())
+
+    if ((GetRandomInt(1, 3) != 2)) then
+    // 创建坐骑
+        call CreateItem(i,  3389,-2378)
+    elseif(o != 0) then
+    // 为最后创建的宠物 添加物品栏
+         call UnitAddAbility(CreateUnit(GetOwningPlayer(GetTriggerUnit()),o, 3389,-2378 ,0), 'A0AE')
+    endif
+endif
+     
+endfunction
+
+function Trig_XunHua00Actions takes nothing returns nothing
+    
+    call EnumItemsInRectBJ(gg_rct________017, function Trig_XunHua00Func002A)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcRenDaTou, udg_tsxuhun[300] , null, udg_tsxuhun[306] , bj_TIMETYPE_ADD, 0, true)
+   
+endfunction
+
+//===========================================================================
+function InitTrig_XunHua00 takes nothing returns nothing
+    set gg_trg_XunHua00 = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_XunHua00, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_XunHua00, Condition(function Trig_XunHua00Conditions))
+    call TriggerAddAction(gg_trg_XunHua00, function Trig_XunHua00Actions)
+endfunction
+

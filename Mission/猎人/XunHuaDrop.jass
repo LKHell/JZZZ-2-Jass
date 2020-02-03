@@ -1,0 +1,71 @@
+function Trig_XunHuaDropConditions takes nothing returns boolean
+    return ((GetUnitPointValue(GetTriggerUnit()) == 10))
+endfunction
+
+function Trig_XunHuaDropActions takes nothing returns nothing
+    local real x  = GetWidgetX(GetTriggerUnit())
+    local real y  = GetWidgetY(GetTriggerUnit())
+    local integer itemInt =0
+    local integer randomInt = GetRandomInt(1,10)
+    
+   //龟
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'ncen')) then
+        if (randomInt == 9) then
+           set itemInt ='I00Q'
+         
+        endif
+    //象
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'nmdr')) then
+        if (randomInt == 9) then
+           set itemInt ='I02I'
+            
+        endif
+    //狼
+    elseif (((GetUnitTypeId(GetTriggerUnit()) == 'nwlt') or (GetUnitTypeId(GetTriggerUnit()) == 'nwlg'))) then
+        if (randomInt == 6) then
+           set itemInt ='I011'
+            
+        endif
+    //熊
+    elseif (((GetUnitTypeId(GetTriggerUnit()) == 'ngza') or (GetUnitTypeId(GetTriggerUnit()) == 'ngz4'))) then
+        if ((randomInt == 6) or (randomInt == 2)) then
+           set itemInt ='I010'
+            
+        endif
+        //虎
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'nwld')) then
+        if ((randomInt == 6) or (randomInt == 2)) then
+           set itemInt ='I015'
+            
+        endif
+        //猪
+    elseif (((GetUnitTypeId(GetTriggerUnit()) == 'nqb2') or (GetUnitTypeId(GetTriggerUnit()) == 'nqb3') or (GetUnitTypeId(GetTriggerUnit()) == 'nqb4'))) then
+        if (randomInt == 5) then
+           set itemInt ='I012'
+            
+        endif
+        //大鹏
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'n002')) then
+        if (randomInt < 3) then
+           set itemInt ='I00Z'
+            
+        endif
+ 
+    endif
+
+    if (itemInt != 0) then
+             
+            call CreateItem(itemInt,x,y)
+    endif
+     
+endfunction
+
+//===========================================================================
+function InitTrig_XunHuaDrop takes nothing returns nothing
+    set gg_trg_XunHuaDrop = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_XunHuaDrop, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_XunHuaDrop, Condition(function Trig_XunHuaDropConditions))
+    call TriggerAddAction(gg_trg_XunHuaDrop, function Trig_XunHuaDropActions)
+endfunction
+

@@ -1,0 +1,60 @@
+function Trig_ShouPiConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_ShouPiActions takes nothing returns nothing
+//你可以帮我找些兽皮回来吗？我愿意高价收购！
+local integer i = 303
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'pomn') == true)) then
+    // 普通兽皮
+        call AdjustPlayerStateBJ((GetItemCharges(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'pomn')) * 3000), GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'pomn'))
+        // 这些兽皮还不错！
+        set i = 301
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'srrc') == true)) then
+
+    // Then - 动作
+    // 设置 i = (((触发单位) 所持有的 优质的兽皮) 的使用次数)
+    // 玩家 - 增加 ((i) x 6500) ((触发单位) 的所有者) 的 现有黄金
+    // 物品 - 删除 ((触发单位) 所持有的 优质的兽皮)
+    // If - Then - Else
+    //     If - 条件
+    //         ((触发单位) 拥有 心灵药剂) 等于 TRUE
+    //     Then - 动作
+    //         物品 - 设置 ((触发单位) 所持有的 心灵药剂) 的使用次数为 ((((触发单位) 所持有的 心灵药剂) 的使用次数) + (i))
+    //     Else - 动作
+    //         英雄 - 创建 心灵药剂 给 (触发单位)
+    //         物品 - 设置 ((触发单位) 所持有的 心灵药剂) 的使用次数为 (i)
+    
+   
+
+        set i= GetItemCharges(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'srrc'))
+        
+        call AdjustPlayerStateBJ((i * 6500), GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'srrc'))
+
+
+        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I02K') == true)) then
+            call SetItemCharges(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I02K'), (GetItemCharges(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I02K')) + i))
+        else
+
+            call UnitAddItemByIdSwapped('I02K', GetTriggerUnit())
+            call SetItemCharges(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I02K'), i)
+        endif
+
+        //你带回来的兽皮太棒了！这个东西给你！
+        set i= 302
+    endif
+
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcRenDaTou, "猎人", null, udg_tsxuhun[i], bj_TIMETYPE_ADD, 0, true)
+endfunction
+
+//===========================================================================
+function InitTrig_ShouPi takes nothing returns nothing
+    set gg_trg_ShouPi = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_ShouPi, gg_rct________017)
+    call TriggerAddCondition(gg_trg_ShouPi, Condition(function Trig_ShouPiConditions))
+    call TriggerAddAction(gg_trg_ShouPi, function Trig_ShouPiActions)
+endfunction
+
