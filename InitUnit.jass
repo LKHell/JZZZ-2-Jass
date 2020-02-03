@@ -1,0 +1,58 @@
+
+
+
+
+function Trig_InitUnit_Actions takes nothing returns nothing
+    local unit u 
+    call DisableTrigger( GetTriggeringTrigger() )
+    //奸商 老家
+	call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'sT01', 107, -1658, 130.00)
+    //奸商 渔村下方
+	call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'sT01', 5685, -2537, 300.00)
+    //奸商 上庸
+	call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'sT01', -8926, 12688, 333.00)
+    //奸商 复活区域
+	call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'sT01', -9363, -11814, 270.00)
+
+    // 杂货铺 ST02  老家
+    call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'sT02', -262, -1871, 125.00)
+    // 杂货铺 ST02  上庸
+    call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'sT02', -8705, 12838, 300.00)
+
+    // 装备店 老家
+    call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'sT03', -1770, -1770, 50.00)
+    // 铁匠 老家
+    call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'sT04', -1560, -1925, 70.00)
+     // 游走商人 老家
+    call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'sT05', -2150, 1000, 300.00)
+
+     // 炼化师 
+    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'sT06', 3100, 4480, 180.00)
+
+    // author
+    call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'emtg', 2949, -1174, 60.00)
+
+
+    
+    ///箭塔 西门
+    call  CreateUnit(Player(8), 'hgtw', -2630, -705, 180.00)
+    // 东门
+    call  CreateUnit(Player(8), 'hgtw', 2000, -300, 180.00)
+    // 野外左侧
+    call  CreateUnit(Player(8), 'hgtw', -2300, 4900, 180.00)
+    //野外右侧
+    call  CreateUnit(Player(8), 'hgtw', -250, 5675, 180.00)
+    // 南门
+    call  CreateUnit(Player(8), 'hgtw', -464, -2775, 180.00)
+   
+   
+    set u = null
+endfunction
+
+//===========================================================================
+function InitTrig_InitUnit takes nothing returns nothing
+    set gg_trg_InitUnit = CreateTrigger(  )
+    call DisableTrigger( gg_trg_InitUnit )
+    call TriggerAddAction( gg_trg_InitUnit, function Trig_InitUnit_Actions )
+endfunction
+

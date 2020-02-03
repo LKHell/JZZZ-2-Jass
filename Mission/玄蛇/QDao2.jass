@@ -1,0 +1,52 @@
+function Trig_QDao2Conditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'kymn') == true) and (IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_QDao2Actions takes nothing returns nothing
+    local integer i = 0
+    local real x 
+    local real y 
+
+    call DestroyTrigger(GetTriggeringTrigger())
+    // 移除首级
+    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'kymn'))
+    
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcCunZhang, "村长", null, "你真的杀死了那头蛇？！真是个了不起的人。这是我给你的报酬，请收下吧！哦，这个是在河边发现的，看起来挺值钱的。", bj_TIMETYPE_ADD, 0, true)
+
+    call QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_COMPLETED, "为民除害（完成）")
+    //奖励装备
+    call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(1, 87)], GetTriggerUnit())
+    // 和氏璧
+    call UnitAddItemByIdSwapped('sor5', GetTriggerUnit())
+    
+    call DisplayTextToForce(GetPlayersAll(), "你得到了5000经验值，以及一件装备；村民们都回来了...")
+    call AddHeroXPSwapped(5000, GetTriggerUnit(), true)
+    
+    
+    //创建商店
+    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE),'nmrc',1000,14000,270)
+    //创建装备店
+    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE),'hgra',596,13216,270)
+     
+     
+     
+    loop
+        exitwhen i > 15
+        set udg_pointTemp = GetRandomLocInRect(gg_rct_______u)
+        set x = GetRandomInt(-672,1312)
+        set y = GetRandomInt(12246,13504)
+        call CreateUnit(Player(8),udg_unitNormal[GetRandomInt(1, 3)],x,y,GetRandomInt(1,35)*10)
+         set i = i + 1
+    endloop
+endfunction
+
+//===========================================================================
+function InitTrig_QDao2 takes nothing returns nothing
+    set gg_trg_QDao2 = CreateTrigger()
+    call DisableTrigger(gg_trg_QDao2)
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_QDao2, gg_rct_______u)
+    call TriggerAddCondition(gg_trg_QDao2, Condition(function Trig_QDao2Conditions))
+    call TriggerAddAction(gg_trg_QDao2, function Trig_QDao2Actions)
+endfunction
+

@@ -1,0 +1,98 @@
+function Trig_FC1Actions takes nothing returns nothing
+local unit u
+local real x
+local real y 
+local integer i
+// 拥有钥匙
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'mort') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetEnteringUnit(), 'mort'))
+        call DestroyTrigger(GetTriggeringTrigger())
+        //武勋 + 25
+        set udg_SHUXING[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] = (udg_SHUXING[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] + 25)
+        call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 4, (GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1), I2S(udg_SHUXING[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "获得25点武勋奖励！|Cff00ff00冥界大门被开启，火云邪神降临"))
+        
+        
+        set i = 0
+        loop
+            exitwhen i > 10
+            // 创建陨石马甲
+            set x = GetRandomInt(-896,224)
+            set y = GetRandomInt(15712,16640)
+
+             
+            call UnitApplyTimedLifeBJ(2.00, 'BHwe', CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'hgyr',x,y  , 0))
+         
+           
+            set i = i + 1
+        endloop
+        
+        set u = CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE),'Nmag',x,y,0)
+        // 注册邪神死亡事件到 指定触发
+        call TriggerRegisterUnitEvent(gg_trg_FCDead, u, EVENT_UNIT_DEATH)
+        call ShowUnit(u,false)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), u, "邪神", null, "啊哈哈，愚昧的人啊，你们打开了大门就只有死！", bj_TIMETYPE_ADD, 0, true)
+        
+        
+
+        // 火焰赦令
+        call UnitAddItemByIdSwapped('I01Z', u)
+        /// 东皇钟
+        call UnitAddItemByIdSwapped('dthb', u)
+        
+        call SetHeroLevel(u,99,false)
+        // 炎魔
+        call SetUnitAbilityLevel(u, 'ANlm', 3)
+        //斧头
+        call SetUnitAbilityLevel(u, 'ANca', 9)
+        
+        //暴击 40% 2 
+        call UnitAddAbility(u, 'A024')
+        // 白虎威风
+        call UnitAddAbility(u, 'A04L')
+        // 混元一气Z
+        call UnitAddAbility(u, 'AIba')
+        // 破甲
+        call UnitAddAbility(u, 'A03O')
+        call SetUnitAbilityLevel(u, 'A03O', 9)
+        // 八门金锁
+        call UnitAddAbility(u, 'A03Y')
+        call SetUnitAbilityLevel(u, 'A03Y', 9)
+        //吸血
+        call UnitAddAbility(u, 'SCva')
+
+    
+        // if ((IsUnitAliveBJ(udg_NpcYangJia) == true)) then
+        //  //杨嘉 改变所属
+        // call SetUnitOwner(udg_NpcYangJia, Player(8), true)
+        // else
+        //  //杨嘉 改变所属
+        // call SetUnitOwner(udg_NpcYangJia, Player(PLAYER_NEUTRAL_AGGRESSIVE), true)
+        // endif
+        //杨嘉 改变所属
+        call SetUnitOwner(udg_NpcYangJia, Player(8), true)
+        call ShowUnit(u,true)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcYangJia, "杨嘉", null, "杨一刀参战", bj_TIMETYPE_ADD, 0, false)
+        
+        call EnableTrigger(gg_trg_FCJW)
+        call EnableTrigger(gg_trg_FCDead)
+        if ((GetUnitTypeId(GetTriggerUnit()) == 'Hkal')) then
+            call SetUnitAbilityLevel(u, 'A03O', 1)
+            call TransmissionFromUnitWithNameBJ(GetPlayersAll(), GetTriggerUnit(), "姜维", null, "吾乃姜维，邪神受死！", bj_TIMETYPE_ADD, 0, true)
+        
+        endif
+    else
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcYangJia, "杨嘉", null, "这里邪气太浓", bj_TIMETYPE_ADD, 0, true)
+    endif
+    set u = null
+endfunction
+
+//===========================================================================
+function InitTrig_FC1 takes nothing returns nothing
+    set gg_trg_FC1 = CreateTrigger()
+    call DisableTrigger(gg_trg_FC1)
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_FC1, gg_rct______________038)
+    call TriggerAddAction(gg_trg_FC1, function Trig_FC1Actions)
+endfunction
+

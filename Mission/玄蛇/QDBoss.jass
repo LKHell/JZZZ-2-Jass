@@ -1,0 +1,12 @@
+function Trig_QDBoss_Actions takes nothing returns nothing
+    call DestroyTrigger(gg_trg_QDBoss)
+    call CreateItem('kymn',GetWidgetX(GetTriggerUnit()),GetWidgetY(GetTriggerUnit()))
+endfunction
+
+//===========================================================================
+function InitTrig_QDBoss takes nothing returns nothing
+    set gg_trg_QDBoss = CreateTrigger(  )
+    call DisableTrigger(gg_trg_QDBoss)
+    call TriggerAddAction( gg_trg_QDBoss, function Trig_QDBoss_Actions )
+endfunction
+

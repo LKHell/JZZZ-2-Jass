@@ -1,0 +1,28 @@
+function Trig_huatuo2Conditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ckng') == true))
+endfunction
+
+function Trig_huatuo2Actions takes nothing returns nothing
+    call DisableTrigger(GetTriggeringTrigger())
+    call RemoveItem(GetItemOfTypeFromUnitBJ(GetEnteringUnit(), 'ckng'))
+    set udg_SHUXING[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] = (udg_SHUXING[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] + 45)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 4, (GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit())) + 1), I2S(udg_SHUXING[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]))
+    call TransmissionFromUnitTypeWithNameBJ(GetPlayersAll(), Player(8), 'Hant', "关羽", udg_GuanYuLocation, null, "多谢将军的药！", bj_TIMETYPE_ADD, 2.00, true)
+    
+    
+    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE),'nmrd',686,-1285,143) 
+    
+    call DisplayTimedTextToForce(GetPlayersAll(), 5.00, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "获得45点武勋奖励！|Cff00ff00同时诸葛亮派来了新的军需官！"))
+    call QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_COMPLETED, "关羽的伤（完成）")
+    call DestroyTrigger(GetTriggeringTrigger())
+endfunction
+
+//===========================================================================
+function InitTrig_huatuo2 takes nothing returns nothing
+    set gg_trg_huatuo2 = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_huatuo2, gg_rct_startArea)
+    call TriggerAddCondition(gg_trg_huatuo2, Condition(function Trig_huatuo2Conditions))
+    call TriggerAddAction(gg_trg_huatuo2, function Trig_huatuo2Actions)
+endfunction
+

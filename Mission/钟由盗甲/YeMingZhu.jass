@@ -1,0 +1,65 @@
+function Trig_zongsyouConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_zongsyouFunc002Func014A takes nothing returns nothing
+// 开启共享权限
+    call SetPlayerAlliance(Player(8), GetEnumPlayer(), ALLIANCE_SHARED_CONTROL, true)
+endfunction
+
+function Trig_zongsyouActions takes nothing returns nothing
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ches') == true)) then
+        call DisableTrigger(GetTriggeringTrigger())
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetEnteringUnit(), 'ches'))
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcZhongShi, "钟诗", null, "就是这个了！好东西，我收下了！", bj_TIMETYPE_ADD, 15.00, true)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcZhongYou, "钟由", null, "看这个时辰，我们安插的奸细也应该动手了", bj_TIMETYPE_ADD, 15.00, true)
+        call QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_WARNING, "关羽装备悉数被盗！关羽宝刀不知所踪！我方某武将属性减少20！")
+
+        call RemoveItem(UnitItemInSlotBJ(gg_unit_Hant_0005, 1))
+        call RemoveItem(UnitItemInSlotBJ(gg_unit_Hant_0005, 2))
+        call RemoveItem(UnitItemInSlotBJ(gg_unit_Hant_0005, 3))
+        call RemoveItem(UnitItemInSlotBJ(gg_unit_Hant_0005, 4))
+        call RemoveItem(UnitItemInSlotBJ(gg_unit_Hant_0005, 5))
+        call RemoveItem(UnitItemInSlotBJ(gg_unit_Hant_0005, 6))
+
+
+       
+        call ForForce(GetPlayersAllies(Player(8)), function Trig_zongsyouFunc002Func014A)
+
+        // 全属性-20
+        call ModifyHeroStat(bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_SUB, 20)
+        call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_SUB, 20)
+        call ModifyHeroStat(bj_HEROSTAT_INT, GetTriggerUnit(), bj_MODIFYMETHOD_SUB, 20)
+
+        // call PingMinimapLocForForceEx(GetPlayersAll(), udg_GuanYuLocation, 15.00, bj_MINIMAPPINGSTYLE_FLASHY, 0.00, 100, 0.00)
+        // x , y , duration , red ,green ,blue , is flashy
+        call PingMinimapEx(-731,-511,15,0, 255, 0, true)
+        
+        // 土行
+        call ShowUnitShow(gg_unit_nhdc_0266)
+
+        //创建刺客
+        // 左上
+        call  CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'nrvi', -1173, -206, 313.00)
+        // 下
+        call  CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'nrvi', -736, -888, 81.00)  
+        // 右
+        call  CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'nrvi', -200, -464, 200.00)
+
+
+        // call DestroyTrigger(GetTriggeringTrigger())
+    else
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcZhongYou, "钟由", null, "我们想找夜明珠，不然我们晚上数钱的时候不方便。", bj_TIMETYPE_ADD, 10.00, true)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcZhongShi, "钟诗", null, "只要你能找得到，我帮你骗掉关羽身上的装备！", bj_TIMETYPE_ADD, 15.00, true)
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_YeMingZhu takes nothing returns nothing
+    set gg_trg_YeMingZhu = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_YeMingZhu, gg_rct_daojia)
+    call TriggerAddCondition(gg_trg_YeMingZhu, Condition(function Trig_zongsyouConditions))
+    call TriggerAddAction(gg_trg_YeMingZhu, function Trig_zongsyouActions)
+endfunction
+

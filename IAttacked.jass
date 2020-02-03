@@ -1,0 +1,89 @@
+function Trig_ItemBeAttackedConditions takes nothing returns boolean
+// 攻击者与触发单位敌对
+    return ((IsPlayerEnemy(GetOwningPlayer(attacker), GetOwningPlayer(triggerUnit)) == true))
+endfunction
+
+function Trig_ItemBeAttackedActions takes nothing returns nothing
+    local unit triggerUnit = GetTriggerUnit()
+    local unit attacker = GetAttacker()
+    local unit dummyUnit
+    local real x
+    local real y 
+    // 玄铁套，攻击 减护甲 1/10 升级
+    if ((GetRandomInt(1, 10) == 6) and (GetUnitAbilityLevelSwapped('A03H', triggerUnit ) == 1)) then
+        call IncUnitAbilityLevel(triggerUnit, 'A03H')     
+    else
+        // 拥有玄铁套
+        if ((IsPlayerAlly(GetOwningPlayer(triggerUnit), Player(8)) == false) and (UnitHasItemOfTypeBJ(attacker, 'I00D') == true) and (UnitHasItemOfTypeBJ(attacker, 'I00E') == true) and (GetUnitAbilityLevelSwapped('A03H', triggerUnit) < 1)) then
+            // 添加1级减甲
+            call UnitAddAbilityBJ('A03H', triggerUnit)
+
+        endif
+    endif
+    
+    //刑天斧头 被攻击  20% 发动 ,单位不能拥有咆哮
+    if ((UnitHasItemOfTypeBJ(triggerUnit, 'gsou') == true) and (UnitHasBuffBJ(triggerUnit, 'Broa') == false)) then  
+        if ((GetRandomInt(1, 5) == 5)) then
+            set x  = GetWidgetX(triggerUnit)
+            set y = GetWidgetY(triggerUnit)
+            set dummyUnit = CreateUnit(GetOwningPlayer(triggerUnit),'hwt3',x,y,0 )
+            call IssueImmediateOrder(dummyUnit, "roar")
+        endif
+    endif
+
+    //方天画戟 被攻击 反击 5% 
+    if ((UnitHasItemOfTypeBJ(triggerUnit, 'mnsf') == true)) then
+        if ((GetRandomInt(1, 20) == 6)) then
+            set udg_pointTemp = GetUnitLoc(triggerUnit)
+
+            set x  = GetWidgetX(triggerUnit)
+            set y = GetWidgetY(triggerUnit)
+            set dummyUnit = CreateUnit(GetOwningPlayer(triggerUnit),'h00H',x,y,0 )
+            call IssueTargetOrder(dummyUnit, "forkedlightning", attacker)
+        endif
+    endif
+
+    // 荆棘阵 被攻击 反击 2倍智力伤害 物理
+    if ((GetUnitAbilityLevel(triggerUnit, 'AEah') > 0) and (IsUnitType(triggerUnit, UNIT_TYPE_HERO) == true)) then
+        // 火系 物理
+        call UnitDamageTarget(triggerUnit, attacker, (GetHeroInt(triggerUnit, true) * 2) , true, true, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\NightElf\\ThornsAura\\ThornsAuraDamage.mdl", attacker, "overhead"))
+    endif
+
+    // 血魔盾 被攻击 反伤   智力+敏捷 物理
+    if ((IsUnitType(triggerUnit, UNIT_TYPE_HERO) == true) and (UnitHasBuffBJ(triggerUnit, 'BNms') == true)) then
+        call UnitDamageTarget(triggerUnit, attacker,  (GetHeroInt(triggerUnit, true) + GetHeroAgi(triggerUnit, true) ) , true, true, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)  
+    endif
+    
+    //承影剑 攻击 扣篮
+    if ((UnitHasItemOfTypeBJ(attacker, 'ofro') == true)) then
+         
+        
+        set x  = GetWidgetX(triggerUnit)
+        set y = GetWidgetY(triggerUnit)
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Feedback\\ArcaneTowerAttack.mdl", x, y))
+        
+        if ((IsUnitIllusionBJ(attacker) == true)) then
+            call SetUnitManaBJ(triggerUnit, (GetUnitState(triggerUnit, UNIT_STATE_MANA) - 45.00))
+        else
+            call SetUnitManaBJ(triggerUnit, (GetUnitState(triggerUnit, UNIT_STATE_MANA) - 100.00))
+        endif
+       
+    endif
+
+    // 局部变量置空
+    set triggerUnit = null
+    set attacker = null  
+    set dummyUnit=null 
+     
+endfunction
+
+//===========================================================================
+function InitTrig_ItemBeAttacked takes nothing returns nothing
+    set gg_trg_ItemBeAttacked = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ItemBeAttacked, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerAddCondition(gg_trg_ItemBeAttacked, Condition(function Trig_ItemBeAttackedConditions))
+    call TriggerAddAction(gg_trg_ItemBeAttacked, function Trig_ItemBeAttackedActions)
+endfunction
+

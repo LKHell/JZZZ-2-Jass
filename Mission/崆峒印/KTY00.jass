@@ -1,0 +1,56 @@
+function Trig_KTY00Conditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_KTY00Actions takes nothing returns nothing
+    if ((udg_lb == 10)) then
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcDiaoChan, "貂蝉", null, "我刚刚好像听到了奉先的声音......", bj_TIMETYPE_ADD, 0, true)
+    elseif ((udg_lb < 5)) then
+        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'envl') == true)) then
+            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'envl'))
+            set udg_lb = (udg_lb + 1)
+            // 全属性+5
+            call ModifyHeroStat(bj_HEROSTAT_INT, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 5)
+            call ModifyHeroStat(bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 5)
+            call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 5)
+
+            call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcDiaoChan, "貂蝉", null, "谢谢了！不过貌似还需要一些。", bj_TIMETYPE_ADD, 0, true)                         
+        endif
+    else
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'envl'))
+        set udg_lb = 10
+       
+        call EnableTrigger(gg_trg_LB_Dead)
+        call EnableTrigger(gg_trg_LB_Kill)
+        // 创建吕布
+        set udg_NpcLvBu = CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE),'Eevi',6560,-6163,0)
+        // 注册邪神死亡事件到 指定触发
+        call TriggerRegisterUnitEvent(gg_trg_LB_Dead, udg_NpcLvBu, EVENT_UNIT_DEATH)
+
+        //设置等级
+        call SetHeroLevel(udg_NpcLvBu,99,false)
+        // 添加崆峒
+        call UnitAddItemByIdSwapped('ktrm', udg_NpcLvBu)
+        // 方天
+        call UnitAddItemByIdSwapped('I01Y', udg_NpcLvBu)
+
+
+        // 吸血
+        call UnitAddAbility(udg_NpcLvBu, 'AUav')
+        call SetUnitAbilityLevel(udg_NpcLvBu, 'AUav', 9)
+
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcLvBu, "??", null, "哈哈哈，是时候该休息一下了", bj_TIMETYPE_ADD, 0, true)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcDiaoChan, "貂蝉", null, "奉先大人！你在哪里？", bj_TIMETYPE_ADD, 0, true)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcDiaoChan, "貂蝉", null, "将军此乃崆峒印的赝品，随不能与奉先大人的真印相比，但若将军帮我找到奉先大人，我必将真印给予将军！", bj_TIMETYPE_ADD, 0, true) 
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_KTY00 takes nothing returns nothing
+    set gg_trg_KTY00 = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_KTY00, gg_rct_______11)
+    call TriggerAddCondition(gg_trg_KTY00, Condition(function Trig_KTY00Conditions))
+    call TriggerAddAction(gg_trg_KTY00, function Trig_KTY00Actions)
+endfunction
+

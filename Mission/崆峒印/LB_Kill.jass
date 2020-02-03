@@ -1,0 +1,24 @@
+function Trig_LB_KillConditions takes nothing returns boolean
+    return ((GetKillingUnitBJ() == gg_unit_Eevi_0046) and (IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_LB_KillActions takes nothing returns nothing
+    if ((GetRandomInt(1, 20) <= GetUnitAbilityLevel(gg_unit_edry_0214, 'A08K'))) then
+        call DisableTrigger(GetTriggeringTrigger())
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Eevi_0046, "TRIGSTR_6801", null, "TRIGSTR_6802", bj_TIMETYPE_ADD, 0, true)
+        call KillUnit(gg_unit_Eevi_0046)
+    else
+        call IncUnitAbilityLevel(gg_unit_edry_0214, 'A08K')
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_LB_Kill takes nothing returns nothing
+    set gg_trg_LB_Kill = CreateTrigger()
+    call DisableTrigger(gg_trg_LB_Kill)
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_LB_Kill, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_LB_Kill, Condition(function Trig_LB_KillConditions))
+    call TriggerAddAction(gg_trg_LB_Kill, function Trig_LB_KillActions)
+endfunction
+

@@ -1,0 +1,83 @@
+function Trig_InitUnitNpc_Actions takes nothing returns nothing
+    local unit u 
+    local integer i = GetRandomInt(0,3)
+    call DisableTrigger( GetTriggeringTrigger() )
+    
+
+     
+    // 白虎
+    set u =  CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'nwwd', -8456, 515, 342.00)
+    if(i==0) then
+        call TriggerRegisterUnitEvent( gg_trg_huatuo ,  u , EVENT_UNIT_DEATH )
+    endif
+    // 青龙 删除装载
+    set u =  CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'ngrd', 7358, 4400, 225.00)
+    call UnitRemoveAbilityBJ( 'Aloa', u )
+    call UnitRemoveAbilityBJ( 'Adro', u )
+    if(i==1) then
+        call TriggerRegisterUnitEvent( gg_trg_huatuo ,  u , EVENT_UNIT_DEATH )
+    endif
+
+    // 玄武
+    set u =  CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'ntrd', 4600, 15000, 250.00)
+    if(i==2) then
+        call TriggerRegisterUnitEvent( gg_trg_huatuo ,  u , EVENT_UNIT_DEATH )
+    endif
+    // 朱雀
+    set u =  CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'hphx', 2900, -5630, 72.00)
+    if(i==3) then
+        call TriggerRegisterUnitEvent( gg_trg_huatuo ,  u , EVENT_UNIT_DEATH )
+    endif
+
+    // 任务 npc
+     // 驭龙
+    set udg_NpcYuLong =   CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'o003', 6696, -637, 270.00)
+    //庞统
+    call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'n00T', -4100, -1720, 25.00)
+
+    //冥界守卫 正北方 
+    call TriggerRegisterUnitEvent(gg_trg_FC0, CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'unp2', -314, 16385, 270.00), EVENT_UNIT_DEATH)
+
+    // 杨嘉
+    set udg_NpcYangJia =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'Hpb1', -8550, 12410, 6.00)
+
+    //=============================================================== 
+    // 种诗
+    set udg_NpcZhongShi =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'nshe', 1444, 12935, 172)
+    // 钟由
+    set udg_NpcZhongYou =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'ndog', 1497, 12773, 221)
+    //=============================================================== 
+     // 许混
+    set udg_NpcXuHun =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'oosc', 1497, 12773, 221)
+
+
+    // 许混泉水
+    set udg_NpcQuan =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'ndfl',8342, 3045,270)
+    //=============================================================== 
+    //大圣之怒	
+    // 阿瑶
+    set udg_NpcAYao =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'Ewar',5023, 5723,223)
+	// 坎魔
+    call TriggerRegisterUnitEvent( gg_trg_AYLuoShenDrop , CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'nsel', -9300, -2300, 180), EVENT_UNIT_DEATH )
+    
+    call CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'nsel', -9300, -2000, 180)
+    //===============================================================
+
+    // 玄蛇-村长
+    set udg_NpcCunZhang = CreateUnit (Player(PLAYER_NEUTRAL_PASSIVE),'nmed',-488 ,13276 ,321)
+    
+    // 崆峒印-貂蝉
+    set udg_NpcDiaoChan = CreateUnit (Player(PLAYER_NEUTRAL_PASSIVE),'edry',6395 ,-732 ,300)
+ 
+    set u = null
+    call DestroyTrigger(GetTriggeringTrigger())
+endfunction
+
+//===========================================================================
+function InitTrig_InitUnitNpc takes nothing returns nothing
+    set gg_trg_InitUnitNpc = CreateTrigger()
+    
+    call TriggerAddAction( gg_trg_InitUnitNpc, function Trig_InitUnitNpc_Actions )
+    call TriggerRegisterTimerEventSingle(gg_trg_InitUnitNpc, 8.00)
+endfunction
+

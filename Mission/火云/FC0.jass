@@ -1,0 +1,20 @@
+function Trig_FC0Actions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    call EnableTrigger(gg_trg_FC1)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), GetTriggerUnit(), "???", null, "好心人，救救我，我被封印在这，需要钥匙才能打开大门", bj_TIMETYPE_ADD, 0, true)
+    
+    // 杨嘉移动
+   // call IssuePointOrder(udg_NpcYangJia,"move",-1000,16000)
+    call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl",-1000,16000))
+    call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl",-8550, 12410))
+ 	
+    call SetUnitPosition(udg_NpcYangJia,-1000,16000)
+endfunction
+
+//===========================================================================
+function InitTrig_FC0 takes nothing returns nothing
+    set gg_trg_FC0 = CreateTrigger()
+ 
+    
+    call TriggerAddAction(gg_trg_FC0, function Trig_FC0Actions)
+endfunction

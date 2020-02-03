@@ -1,0 +1,18 @@
+function Trig_TuxingQLD_Actions takes nothing returns nothing
+    call DestroyTrigger(gg_trg_TuxingQLD)
+    call CreateItem('I00V',GetWidgetX(GetTriggerUnit()),GetWidgetY(GetTriggerUnit()))
+    // 创建幽魂
+    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'ushd', -9200, 13710, 90)
+    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'ushd', -9500, 14810, 0)
+    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'ushd', -8200, 14710, 270)
+    call CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'ushd', -9200, 15000, 233)
+
+endfunction
+
+//===========================================================================
+function InitTrig_TuxingQLD takes nothing returns nothing
+    set gg_trg_TuxingQLD = CreateTrigger(  )
+    call DisableTrigger(gg_trg_TuxingQLD)
+    call TriggerAddAction( gg_trg_TuxingQLD, function Trig_TuxingQLD_Actions )
+endfunction
+

@@ -1,0 +1,313 @@
+function Trig_TZConditions takes nothing returns boolean
+ 
+    // ((触发单位) 是 英雄) 等于 TRUE
+    // ((被操作物品) 的分类) 不等于 能量提升
+    // ((触发单位) 的类型) 不等于 物品栏
+
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true) and (GetItemType(GetManipulatedItem()) != ITEM_TYPE_POWERUP) and (GetUnitTypeId(GetTriggerUnit()) != 'Ntin'))
+endfunction
+
+function Trig_TZActions takes nothing returns nothing
+    local integer itemTypeCount =0
+    local integer i 
+    local itemtype itemT = GetItemType(GetManipulatedItem())
+    
+    // If - 条件
+    // ((触发单位) 是 玩家9(灰色) 的同盟单位) 等于 TRUE
+    // ((被操作物品) 的分类) 不等于 可充 能量提升
+    if ( (itemT  != ITEM_TYPE_CHARGED) and (itemT  != ITEM_TYPE_POWERUP)) then
+        set i = 1
+        loop
+            exitwhen i > 6
+            if ( (IsUnitAlly(GetTriggerUnit(), Player(8)) == true) and  (UnitItemInSlotBJ(GetTriggerUnit(), i) != null)  and (GetItemType(UnitItemInSlotBJ(GetTriggerUnit(), i)) == itemT )) then
+                 set itemTypeCount = itemTypeCount + 1
+            else
+            endif
+            set i = i + 1
+        endloop
+    else
+    endif
+    set itemT = null
+    
+    if ( itemTypeCount  > 1)  then
+        call UnitRemoveItemSwapped(GetManipulatedItem(), GetTriggerUnit())
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, ("|cffffcc00" + GetHeroProperName(GetTriggerUnit())) + "|r|cff0080FF每个英雄只能装备“武器，铠甲，头盔，座骑,宝物”各一件。|r")
+        return
+    endif
+    
+    
+    // 玩家9 禁止获取复活类物品
+    // Then - 动作
+    // 英雄 - 丢弃 ((触发单位) 所持有的 还魂丹) ,从 (触发单位) 身上
+    // 英雄 - 丢弃 ((触发单位) 所持有的 |cffffdead女娲石) ,从 (触发单位) 身上
+    // 英雄 - 丢弃 ((触发单位) 所持有的 |cffffdead昊天塔) ,从 (触发单位) 身上
+    // 英雄 - 丢弃 ((触发单位) 所持有的 |Cff00ff00魔龙之心) ,从 (触发单位) 身上
+    if ((GetOwningPlayer(GetTriggerUnit()) == Player(8))) then
+        call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ankh'), GetTriggerUnit())
+        call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'thdm'), GetTriggerUnit())
+        call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'k3m1'), GetTriggerUnit())
+        call UnitRemoveItemSwapped(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'pgin'), GetTriggerUnit())
+    else
+    endif
+
+
+    // 专属类型限制 ，删除
+    // if (IsUnitAlly(GetTriggerUnit(), Player(8)) == true) then 
+    //     if ( (GetUnitPointValue(GetTriggerUnit()) != 1) and (GetUnitPointValue(GetTriggerUnit()) != 5)  and (GetItemLevel(GetManipulatedItem()) == 5)) then
+    //         call UnitRemoveItemSwapped(GetManipulatedItem(), GetTriggerUnit())
+    //         // 智力 等级5
+    //         return
+    //     else
+    //     endif
+    //     if ( (GetItemLevel(GetManipulatedItem()) == 6) and (GetUnitPointValue(GetTriggerUnit()) != 3) and ((GetUnitPointValue(GetTriggerUnit()) != 1) or (GetUnitTypeId(GetTriggerUnit()) == 'N00N'))) then
+    //         call UnitRemoveItemSwapped(GetManipulatedItem(), GetTriggerUnit())
+    //         // 弓箭 等级6
+    //         return
+    //     else
+    //     endif
+    //     if ( (GetItemLevel(GetManipulatedItem()) == 4) and (GetUnitPointValue(GetTriggerUnit()) != 4) and (GetUnitTypeId(GetTriggerUnit()) != 'O005') and (GetUnitTypeId(GetTriggerUnit()) != 'Hant') and (GetUnitTypeId(GetTriggerUnit()) != 'N00N')) then
+    //         call UnitRemoveItemSwapped(GetManipulatedItem(), GetTriggerUnit())
+    //         // 斧头 等级4
+    //         return
+    //     else
+    //     endif
+    //     if ( (GetItemLevel(GetManipulatedItem()) == 3) and (GetUnitPointValue(GetTriggerUnit()) != 1) and (GetUnitPointValue(GetTriggerUnit()) != 2) and (GetUnitPointValue(GetTriggerUnit()) != 4)) then
+    //         call UnitRemoveItemSwapped(GetManipulatedItem(), GetTriggerUnit())
+    //         // 近战 等级3
+    //         return
+    //     else
+    //     endif
+    // endif 
+
+    // 雌雄剑
+    if ((GetItemTypeId(GetManipulatedItem()) == 'lnrn') and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'lnrn') == true)) then
+        call SetPlayerHandicapXPBJ(GetOwningPlayer(GetTriggerUnit()), (1.50 * GetPlayerHandicapXPBJ(GetOwningPlayer(GetTriggerUnit()))))
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "你的经验获取率提升50%")
+    
+    endif
+    // 梨花
+    if (((GetUnitTypeId(GetTriggerUnit()) == 'Hart') or (GetUnitTypeId(GetTriggerUnit()) == 'Harf')) and (GetItemTypeId(GetManipulatedItem()) == 'nflg') and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'nflg') == true)) then
+        call UnitAddAbilityBJ('A05T', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "获得了梨花枪的隐藏能力！"))
+    
+    endif
+
+
+    // 以下为套装
+    // 朱雀
+    if (((GetItemTypeId(GetManipulatedItem()) == 'ofir') or (GetItemTypeId(GetManipulatedItem()) == 'crdt') or (GetItemTypeId(GetManipulatedItem()) == 'brag')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ofir') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'brag') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'crdt') == true)) then
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了 |Cff00ff00朱雀天火套"))
+        // 属性
+        call UnitAddAbilityBJ('A00T', GetTriggerUnit())
+        // 技能
+        call UnitAddAbilityBJ('Aadm', GetTriggerUnit())
+        // 天火
+        call UnitAddAbilityBJ('A087', GetTriggerUnit())
+         
+        return
+    endif
+    
+    // 玄铁
+    if (((GetItemTypeId(GetManipulatedItem()) == 'I00D') or (GetItemTypeId(GetManipulatedItem()) == 'I00E')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00D') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00E') == true)) then
+        call UnitAddAbilityBJ('A03G', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A03G')
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了 |Cff00ff00玄铁套装"))
+
+        return
+    endif
+
+    //干将莫邪
+    if (((GetItemTypeId(GetManipulatedItem()) == 'I01I') or (GetItemTypeId(GetManipulatedItem()) == 'I01H')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01I') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01H') == true)) then
+        
+            call UnitAddAbilityBJ('A065', GetTriggerUnit())
+            call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A065')
+        
+        call UnitAddAbilityBJ('A029', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A029')
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了 |Cff00ff00干将莫邪剑侣套"))
+
+        return
+    endif
+
+    // 真武
+    if (((GetItemTypeId(GetManipulatedItem()) == 'shen') or (GetItemTypeId(GetManipulatedItem()) == 'tlum')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'shen') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'tlum') == true)) then
+        
+            call UnitAddAbilityBJ('A05O', GetTriggerUnit())
+            call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A05O')
+       
+        call UnitAddAbilityBJ('A05P', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A05P')
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了 |Cff00ff00真武套装"))
+
+        return
+    endif
+
+    // 魔神
+    if (((GetItemTypeId(GetManipulatedItem()) == 'I006') or (GetItemTypeId(GetManipulatedItem()) == 'I00A') or (GetItemTypeId(GetManipulatedItem()) == 'I003')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00A') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I006') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I003') == true)) then
+        
+        // 毁天灭地+1
+        if ((GetUnitAbilityLevelSwapped('ANst', GetTriggerUnit()) > 0)) then
+            call SetUnitAbilityLevelSwapped('ANst', GetTriggerUnit(), (GetUnitAbilityLevelSwapped('ANst', GetTriggerUnit()) + 1))
+        endif
+
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了 |Cff00ff00魔神套装"))
+        
+        call UnitAddAbilityBJ('ACm2', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'ACm2')
+       
+        call UnitAddAbilityBJ('A02Y', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A02Y')
+     
+        return
+    endif
+
+    //青龙
+    if (((GetItemTypeId(GetManipulatedItem()) == 'sor7') or (GetItemTypeId(GetManipulatedItem()) == 'sfog') or (GetItemTypeId(GetManipulatedItem()) == 'sor8')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'sor7') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'sor8') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'sfog') == true)) then
+        
+            call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A02S')
+            call UnitAddAbilityBJ('A02S', GetTriggerUnit())
+         
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了 |Cff00ff00青龙套装"))
+        call UnitAddAbilityBJ('A00S', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A00S')
+     
+         
+    endif
+
+    //武圣
+    if (((GetItemTypeId(GetManipulatedItem()) == 'sor7') or (GetItemTypeId(GetManipulatedItem()) == 'I01A') or (GetItemTypeId(GetManipulatedItem()) == 'oslo')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'sor7') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'oslo') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01A') == true)) then
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了 |Cff00ff00武圣套装"))
+        
+            call UnitAddAbilityBJ('A0AR', GetTriggerUnit())
+            call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A02S')
+         
+        call UnitAddAbilityBJ('A05S', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A05S')
+
+        return
+    endif
+
+    // 项羽
+    if (((GetItemTypeId(GetManipulatedItem()) == 'ram2') or (GetItemTypeId(GetManipulatedItem()) == 'hbth') or (GetItemTypeId(GetManipulatedItem()) == 'rde0')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hbth') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ram2') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde0') == true)) then
+        // 若有战刃，不添加闪避
+        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'stre') == false)) then
+            
+            if ((GetUnitTypeId(GetTriggerUnit()) == 'Nbbc')) then
+                call SetPlayerAbilityAvailableBJ(true, 'A08N', GetOwningPlayer(GetTriggerUnit()))
+            else
+                call UnitAddAbilityBJ('A08N', GetTriggerUnit())
+            endif
+            
+        else
+        endif
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了|Cff00ff00西楚霸王套装"))
+        call UnitAddAbilityBJ('A00R', GetTriggerUnit())
+        call UnitAddAbilityBJ('AIt6', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'AIt6')
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A00R')
+     
+    endif
+
+    // 真项羽
+    if (((GetItemTypeId(GetManipulatedItem()) == 'stre') or (GetItemTypeId(GetManipulatedItem()) == 'ram2') or (GetItemTypeId(GetManipulatedItem()) == 'rde0')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'stre') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ram2') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde0') == true)) then
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了|Cff00ff00西楚霸王套装·真"))
+        call UnitAddAbilityBJ('A01C', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A01C')
+        if ((GetUnitTypeId(GetTriggerUnit()) == 'Ogrh')) then
+            // 关凤 65%
+            call UnitAddAbilityBJ('A055', GetTriggerUnit())
+            call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A055')
+        else
+            // 关兴 
+            if ((GetUnitTypeId(GetTriggerUnit()) == 'Nbbc')) then
+                call SetPlayerAbilityAvailableBJ(true, 'A019', GetOwningPlayer(GetTriggerUnit()))
+                call SetPlayerAbilityAvailableBJ(false, 'A08N', GetOwningPlayer(GetTriggerUnit()))
+            else
+            // 其他英雄
+                call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A019')
+                call UnitAddAbilityBJ('A019', GetTriggerUnit())
+                call UnitRemoveAbility(GetTriggerUnit(), 'A08N')
+            endif
+             
+        endif
+
+        return
+    endif
+
+    // 魔龙
+    if (((GetItemTypeId(GetManipulatedItem()) == 'pgin') or (GetItemTypeId(GetManipulatedItem()) == 'rej5') or (GetItemTypeId(GetManipulatedItem()) == 'gemt')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'pgin') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'gemt') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rej5') == true)) then
+        
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'Ansk')
+        call UnitAddAbilityBJ('Ansk', GetTriggerUnit())
+         
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了|Cff00ff00魔龙套装"))
+        call UnitAddAbilityBJ('A00R', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A00R')
+        return
+    endif
+
+    // 白虎战神
+    if (((GetItemTypeId(GetManipulatedItem()) == 'I01D') or (GetItemTypeId(GetManipulatedItem()) == 'I01C') or (GetItemTypeId(GetManipulatedItem()) == 'I01B')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01C') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01B') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01D') == true)) then
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了|Cff00ff00白虎战神套"))
+        
+            call UnitAddAbilityBJ('A04L', GetTriggerUnit())
+            call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A04L')
+        
+        call UnitAddAbilityBJ('A05R', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A05R')
+
+    endif
+
+    //白虎射手
+    if (((GetItemTypeId(GetManipulatedItem()) == 'I01K') or (GetItemTypeId(GetManipulatedItem()) == 'I01C') or (GetItemTypeId(GetManipulatedItem()) == 'I01B')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01C') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01B') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01K') == true)) then
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了|Cff00ff00白虎射手套"))
+        
+            call UnitAddAbilityBJ('ACat', GetTriggerUnit())
+        
+        call UnitAddAbilityBJ('A05R', GetTriggerUnit())
+        return
+    endif
+
+    // 后裔
+    if (((GetItemTypeId(GetManipulatedItem()) == 'oven') or (GetItemTypeId(GetManipulatedItem()) == 'ram4')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'oven') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ram4') == true)) then
+        call UnitAddAbilityBJ('A00U', GetTriggerUnit())
+        if ((GetUnitTypeId(GetTriggerUnit()) == 'Etyr')) then
+            call UnitAddAbilityBJ('A064', GetTriggerUnit())
+        else
+            
+                call UnitAddAbilityBJ('A030', GetTriggerUnit())
+            
+        endif
+        call UnitAddAbilityBJ('AIt6', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了 |Cff00ff00后羿射手套"))
+        return
+    endif
+
+    // 刑天
+    if (((GetItemTypeId(GetManipulatedItem()) == 'gsou') or (GetItemTypeId(GetManipulatedItem()) == 'cosl')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'cosl') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'gsou') == true)) then
+        call UnitAddAbilityBJ('A00Q', GetTriggerUnit())
+        call UnitAddAbilityBJ('A01A', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了 |Cff00ff00刑天套装"))
+        return
+    endif
+
+    // 封魔
+    if (((GetItemTypeId(GetManipulatedItem()) == 'I001') or (GetItemTypeId(GetManipulatedItem()) == 'I002')) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I002') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I001') == true)) then
+        
+        call UnitAddAbilityBJ('ACsi', GetTriggerUnit())
+         
+        call UnitAddAbilityBJ('A01I', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetHeroProperName(GetTriggerUnit()) + "恭喜！你集齐了 |Cff00ff00封魔镇魂套"))
+        return
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_TZ takes nothing returns nothing
+    set gg_trg_TZ = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_TZ, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_TZ, Condition(function Trig_TZConditions))
+    call TriggerAddAction(gg_trg_TZ, function Trig_TZActions)
+endfunction
+
