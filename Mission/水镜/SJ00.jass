@@ -1,0 +1,37 @@
+function Trig_SJ00Conditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_SJ00Actions takes nothing returns nothing
+    local integer i 
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'gmfr') == true)) then
+        set i =314
+        call DestroyTrigger(GetTriggeringTrigger())
+        call EnableTrigger(gg_trg_SJ01)
+        call UnitAddAbility(udg_NpcShuiJing, 'Aneu')
+         
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetEnteringUnit(), 'gmfr'))
+        
+        //水镜替换合成材料
+        call CreateItem(udg_wplx[GetRandomInt(126, 129)],-9441, -7213 )
+        call CreateItem(udg_wplx[GetRandomInt(126, 129)],-9348 ,-7330 )
+        call CreateItem(udg_wplx[GetRandomInt(126, 129)],-9348 ,-7125 )
+        call CreateItem(udg_wplx[GetRandomInt(126, 129)],-9254 ,-7213 )
+         
+    else
+        set i = 315
+    endif
+
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcShuiJing, udg_tsxuhun[310], null, udg_tsxuhun[i], bj_TIMETYPE_ADD, 0, true)
+
+endfunction
+
+//===========================================================================
+function InitTrig_SJ00 takes nothing returns nothing
+    set gg_trg_SJ00 = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_SJ00, gg_rct_shuijing)
+    call TriggerAddCondition(gg_trg_SJ00, Condition(function Trig_SJ00Conditions))
+    call TriggerAddAction(gg_trg_SJ00, function Trig_SJ00Actions)
+endfunction
+

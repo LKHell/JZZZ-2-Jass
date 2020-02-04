@@ -1,0 +1,38 @@
+function Trig_SJ01Conditions takes nothing returns boolean
+    // 提取
+    return ((GetItemTypeId(GetManipulatedItem()) == 'rre1'))
+endfunction
+
+function Trig_SJ01Func002A takes nothing returns nothing
+        if ((GetItemTypeId(GetEnumItem()) == 'ledg')) then
+        call RemoveItem(GetEnumItem())
+        call CreateItem('jpnt', -9352，-7210)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcShuiJing, udg_tsxuhun[310] , null, udg_tsxuhun[311], bj_TIMETYPE_ADD, 0, true)
+    elseif ((GetItemTypeId(GetEnumItem()) == 'I00T')) then
+        call RemoveItem(GetEnumItem())
+        call CreateItem('vamp', -9352，-7210)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcShuiJing, udg_tsxuhun[310] , null,  udg_tsxuhun[312], bj_TIMETYPE_ADD, 0, true)
+     
+    elseif ((GetItemTypeId(GetEnumItem()) == 'I015')) then
+        call RemoveItem(GetEnumItem())
+        call CreateItem('I01J', -9352，-7210)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcShuiJing, udg_tsxuhun[310] , null,  udg_tsxuhun[313]， bj_TIMETYPE_ADD, 0, true)
+    endif
+endfunction
+
+function Trig_SJ01Actions takes nothing returns nothing
+    
+    call EnumItemsInRectBJ(gg_rct_shuijing, function Trig_SJ01Func002A)
+     
+endfunction
+
+//===========================================================================
+function InitTrig_SJ01 takes nothing returns nothing
+    set gg_trg_SJ01 = CreateTrigger()
+    call DisableTrigger(gg_trg_SJ01)
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_SJ01, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_SJ01, Condition(function Trig_SJ01Conditions))
+    call TriggerAddAction(gg_trg_SJ01, function Trig_SJ01Actions)
+endfunction
+

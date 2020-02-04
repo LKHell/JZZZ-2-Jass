@@ -38,6 +38,7 @@ function Trig_KTY00Actions takes nothing returns nothing
         // 吸血
         call UnitAddAbility(udg_NpcLvBu, 'AUav')
         call SetUnitAbilityLevel(udg_NpcLvBu, 'AUav', 9)
+        // 崆峒印伪
         call UnitAddItemByIdSwapped('I02E', GetTriggerUnit())
         call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcLvBu, "??", null, "哈哈哈，是时候该休息一下了", bj_TIMETYPE_ADD, 0, true)
         call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcDiaoChan, "貂蝉", null, "奉先大人！你在哪里？", bj_TIMETYPE_ADD, 0, true)

@@ -69,6 +69,12 @@ function Trig_InitUnitNpc_Actions takes nothing returns nothing
     // 崆峒印-貂蝉
     set udg_NpcDiaoChan = CreateUnit (Player(PLAYER_NEUTRAL_PASSIVE),'edry',6395 ,-732 ,300)
  
+    // 任大头
+    set udg_NpcRenDaTou = 
+
+    // 水镜
+    set udg_NpcShuiJing=
+
     set u = null
     call DestroyTrigger(GetTriggeringTrigger())
 endfunction

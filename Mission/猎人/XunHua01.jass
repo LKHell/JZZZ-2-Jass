@@ -1,0 +1,61 @@
+function Trig_XunHua01Conditions takes nothing returns boolean
+    return ((GetItemTypeId(GetManipulatedItem()) == 'I02J') and (IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == false) and ((GetUnitTypeId(GetTriggerUnit()) == 'nwld') or (GetUnitTypeId(GetTriggerUnit()) == 'nwlg') or (GetUnitTypeId(GetTriggerUnit()) == 'ngz4') or (GetUnitTypeId(GetTriggerUnit()) == 'nqb4') or (GetUnitTypeId(GetTriggerUnit()) == 'n00H')))
+endfunction
+
+function Trig_XunHua01Actions takes nothing returns nothing
+local integer playerId = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))
+local integer index 
+     if ((GetUnitTypeId(GetTriggerUnit()) == 'ngz4')) then
+    //熊
+        set index = 'H009'
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'nwlg')) then
+    //狼
+        set index = 'H00I'
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'nwld')) then
+    //虎
+        set index = 'H00J'
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'nqb4')) then
+    //猪
+        set index = 'H00K'
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'n00H')) then
+    //鹰
+        set index = 'H00L'
+    endif
+    // 3389,-2378
+    //删除触发单位
+    call RemoveUnit(GetTriggerUnit())
+    
+    
+
+  
+    if ((udg_cww[playerId] != null)) then
+         
+        //已有物品
+        call UnitRemoveItemFromSlotSwapped(1, udg_cww[playerId])
+        call UnitRemoveItemFromSlotSwapped(2, udg_cww[playerId])
+        call UnitRemoveItemFromSlotSwapped(3, udg_cww[playerId])
+        call UnitRemoveItemFromSlotSwapped(4, udg_cww[playerId])
+        call UnitRemoveItemFromSlotSwapped(5, udg_cww[playerId])
+        call UnitRemoveItemFromSlotSwapped(6, udg_cww[playerId])
+        
+        call RemoveUnit(udg_cww[playerId])
+     
+    endif
+
+    set udg_cww[playerId] = CreateUnit(GetOwningPlayer(GetTriggerUnit()), index ，3389,-23780 )
+    //添加回归
+    call UnitAddAbility(udg_cww[playerId], 'A0AG')
+    //call SetHeroLevelBJ(udg_cww[playerId], 108, false)
+    
+    
+endfunction
+
+//===========================================================================
+function InitTrig_XunHua01 takes nothing returns nothing
+    set gg_trg_XunHua01 = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_XunHua01, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_XunHua01, Condition(function Trig_XunHua01Conditions))
+    call TriggerAddAction(gg_trg_XunHua01, function Trig_XunHua01Actions)
+endfunction
+

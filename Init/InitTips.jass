@@ -59,6 +59,13 @@ function Trig_InitTips_Actions takes nothing returns nothing
     set udg_tsxuhun[306] =  "你的宝宝长大了，我把它训练成了战骑。"
     set udg_tsxuhun[307] =  "你的宝宝长大了，我把它训练成了战宠。"
 
+    //tips
+    set udg_tsxuhun[310] =  "水镜先生"
+    set udg_tsxuhun[311] =  "此乃极邪之物，请将军慎重携带"
+    set udg_tsxuhun[312] =  "此物具有寒气，请将军慎重携带"
+    set udg_tsxuhun[313] =  "此物具有仙气，请将军慎重携带"
+    set udg_tsxuhun[314] =  "最近正在研究茶道，但是缺少生火的木柴，这可如何是好？"
+    set udg_tsxuhun[315] =  "谢谢你带来的柴火，这里有几个东西我也用不上，就送给你吧！"
 
 endfunction
 
