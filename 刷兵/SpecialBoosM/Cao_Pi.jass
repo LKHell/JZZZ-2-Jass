@@ -1,0 +1,21 @@
+function Trig_Cao_PiConditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Npbm_0141))
+endfunction
+
+function Trig_Cao_PiActions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    //call ShowUnitShow(gg_unit_Nbst_0142)
+    //call SetUnitPositionLoc(gg_unit_Nbst_0142, GetRectCenter(gg_rct_createSouth))
+    call SetUnitOwner(gg_unit_Nbst_0142, Player(10), true)
+    call DisplayTextToForce(GetPlayersAll(), "甄姬已经出现")
+endfunction
+
+//===========================================================================
+function InitTrig_Cao_Pi takes nothing returns nothing
+    set gg_trg_Cao_Pi = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_Cao_Pi, gg_rct_createWest)
+    call TriggerAddCondition(gg_trg_Cao_Pi, Condition(function Trig_Cao_PiConditions))
+    call TriggerAddAction(gg_trg_Cao_Pi, function Trig_Cao_PiActions)
+endfunction
+

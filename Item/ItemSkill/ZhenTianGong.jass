@@ -1,0 +1,63 @@
+function Trig_ZhenTianGongConditions takes nothing returns boolean
+    // 20% 非镜像 拥有后裔套部件
+    return (((GetRandomInt(1, 5) == 4) and (IsUnitIllusionBJ(GetAttacker()) == false) and ((UnitHasItemOfTypeBJ(GetAttacker(), 'oven') == true) or (UnitHasItemOfTypeBJ(GetAttacker(), 'ram4') == true))))
+endfunction
+
+function Trig_ZhenTianGongGroupDamage takes nothing returns boolean
+// 攻击单位的敌人
+    if ((IsUnitEnemyX() == true))  then
+        //法术强化伤害
+        call UnitDamageTargetBJ(GetAttacker(), GetFilterUnit(), udg_Hero_Damage , ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED)
+    endif
+ 
+    return false 
+endfunction
+
+ 
+ 
+
+ 
+
+function Trig_ZhenTianGongActions takes nothing returns nothing
+    local real x = GetWidgetX(GetTriggerUnit())
+    local real y = GetWidgetY(GetTriggerUnit())
+
+
+     
+    
+    // 创建陨石马甲
+    call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'hgyr', x ,y, 0)
+    if ((UnitHasItemOfTypeBJ(GetAttacker(), 'oven') == true) and (UnitHasItemOfTypeBJ(GetAttacker(), 'ram4') == true)) then
+       //拥有一套 伤害翻倍
+        set udg_Hero_Damage= (GetHeroAgi(GetAttacker(), true)) * 2
+        // 再创建一个马甲
+        call  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'hgyr', x ,y, 0)
+    else
+        set udg_Hero_Damage= (GetHeroAgi(GetAttacker(), true))
+    endif
+    
+
+    call GroupEnumUnitsInRange(udg_GroupFormItem, x, y ,300 , Condition (function Trig_ZhenTianGongGroupDamage))
+    
+
+    
+    // 漂浮文字
+    call CreateTextTagUnitBJ("陨石", GetAttacker(), 0, 20.00, 100.00, 0.00, 0.00, 30.00)
+    call SetTextTagPermanent(GetLastCreatedTextTag(), false)
+    call SetTextTagVelocityBJ(GetLastCreatedTextTag(), 64, 90)
+    call SetTextTagLifespan(GetLastCreatedTextTag(), 3.00)
+    call SetTextTagFadepoint(GetLastCreatedTextTag(), 2.00)
+    
+  
+
+endfunction
+
+//===========================================================================
+function InitTrig_ZhenTianGong takes nothing returns nothing
+    set gg_trg_ZhenTianGong = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ZhenTianGong, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerAddCondition(gg_trg_ZhenTianGong, Condition(function Trig_ZhenTianGongConditions))
+    call TriggerAddAction(gg_trg_ZhenTianGong, function Trig_ZhenTianGongActions)
+endfunction
+

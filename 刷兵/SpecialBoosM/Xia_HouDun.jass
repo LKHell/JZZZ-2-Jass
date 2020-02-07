@@ -1,0 +1,29 @@
+function Trig_Xia_HoudunConditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Uvng_0050))
+endfunction
+
+ 
+
+function Trig_Xia_HoudunActions takes nothing returns nothing
+    local unit b = gg_unit_Udth_0049
+    call DestroyTrigger(GetTriggeringTrigger())
+    
+    call SetUnitPositionLoc(b, GetRectCenter(gg_rct_createEast))
+    call SetUnitOwner(b, Player(10), true)
+   
+    call initA0AHLevel(b)
+   
+    call DisplayTextToForce(GetPlayersAll(), "夏侯渊已经出现！")
+    set b = null
+ 
+endfunction
+
+//===========================================================================
+function InitTrig_Xia_Houdun takes nothing returns nothing
+    set gg_trg_Xia_Houdun = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_Xia_Houdun, gg_rct_createWest)
+    call TriggerAddCondition(gg_trg_Xia_Houdun, Condition(function Trig_Xia_HoudunConditions))
+    call TriggerAddAction(gg_trg_Xia_Houdun, function Trig_Xia_HoudunActions)
+endfunction
+

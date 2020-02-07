@@ -1,0 +1,61 @@
+function Trig_dhzConditions takes nothing returns boolean
+ 
+    // ((攻击单位) 拥有 |cffffdead东皇钟) 等于 TRUE
+    // (被攻击单位) 不等于 |cffffdead武圣-关羽 0005 <预设>
+    // (随机整数,最小值: 1 最大值: 10) 等于 7
+
+    return (((UnitHasItemOfTypeBJ(GetAttacker(), 'dthb') == true) and (GetAttackedUnitBJ() != gg_unit_Hant_0005) and (GetRandomInt(1, 10) == 7)))
+endfunction
+
+ 
+function Trig_dhzGroupDamage takes nothing returns boolean
+    if(IsUnitEnemyX() == true  ) then
+        // 普通 强化
+        call UnitDamageTargetBJ(GetAttacker(), GetFilterUnit(), udg_Hero_Damage , ATTACK_TYPE_MELEE, DAMAGE_TYPE_ENHANCED)
+    endif
+
+    return false
+endfunction
+
+ 
+
+function Trig_dhzActions takes nothing returns nothing
+    local real x = GetWidgetX(GetAttackedUnitBJ())
+    local real y = GetWidgetY(GetAttackedUnitBJ())
+    local real r = GetUnitFacing(GetAttacker())
+
+  
+  
+    // 伤害值  敏捷 + 智力 +1000
+    set udg_Hero_Damage = (GetHeroAgi(GetAttacker(), true) + GetHeroInt(GetAttacker(), true)) + 1000
+
+    // 创建马甲  触发单位位置
+    call UnitApplyTimedLife(CreateUnit(   GetOwningPlayer(GetAttacker()),'h00E',x,y, r), 'BHwe', 2.00)
+    // 地图正北方 传送门
+    call UnitApplyTimedLife(CreateUnit(  GetOwningPlayer(GetAttacker()),'h00E', -370,16780, 270), 'BHwe', 2.00)
+    // 幻象 伤害减半
+    if ((IsUnitIllusionBJ(GetAttacker()) == true)) then
+        set udg_Hero_Damage = udg_Hero_Damage / 2
+    endif
+    
+   
+    
+    call GroupEnumUnitsInRange(udg_GroupFormItem , x  , y , 800 ,Condition(function Trig_dhzGroupDamage ))
+      
+    
+     
+    
+     
+  
+endfunction
+
+//===========================================================================
+function InitTrig_dhz takes nothing returns nothing
+    set gg_trg_dhz = CreateTrigger()
+   // call DisableTrigger(gg_trg_dhz)
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_dhz, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerAddCondition(gg_trg_dhz, Condition(function Trig_dhzConditions))
+    call TriggerAddAction(gg_trg_dhz, function Trig_dhzActions)
+endfunction
+

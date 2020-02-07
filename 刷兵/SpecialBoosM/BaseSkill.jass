@@ -1,0 +1,11 @@
+function initA0AHLevel takes unit u returns nothing
+       
+    if ((udg_Difficulty == 2)) then
+        call UnitAddAbility(u, 'A0AH')
+    elseif ((udg_Difficulty == 3)) then
+        call UnitAddAbility(u, 'A0AH')
+        call IncUnitAbilityLevel(u, 'A0AH')
+    endif
+    
+endfunction
+ 

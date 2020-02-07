@@ -67,6 +67,9 @@ function Trig_InitTips_Actions takes nothing returns nothing
     set udg_tsxuhun[314] =  "最近正在研究茶道，但是缺少生火的木柴，这可如何是好？"
     set udg_tsxuhun[315] =  "谢谢你带来的柴火，这里有几个东西我也用不上，就送给你吧！"
 
+    //陆逊
+    set udg_tsxuhun[320] = "陆逊"
+
 endfunction
 
 //===========================================================================

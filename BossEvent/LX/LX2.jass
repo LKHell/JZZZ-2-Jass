@@ -1,0 +1,20 @@
+function Trig_LX2Conditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Ogld_0044))
+endfunction
+
+function Trig_LX2Actions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    call EnableTrigger(gg_trg_LX4)
+    call EnableTrigger(gg_trg_LX3)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Ogld_0044,  udg_tsxuhun[320], null, "此地地形特殊，众将小心", bj_TIMETYPE_ADD, 0, true)
+endfunction
+
+//===========================================================================
+function InitTrig_LX2 takes nothing returns nothing
+    set gg_trg_LX2 = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_LX2, gg_rct________040)
+    call TriggerAddCondition(gg_trg_LX2, Condition(function Trig_LX2Conditions))
+    call TriggerAddAction(gg_trg_LX2, function Trig_LX2Actions)
+endfunction
+

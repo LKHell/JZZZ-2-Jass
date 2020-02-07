@@ -1,0 +1,26 @@
+function Trig_Zhou_TaiConditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Nplh_0140))
+endfunction
+
+function Trig_Zhou_TaiActions takes nothing returns nothing
+    local unit b = gg_unit_Hdgo_0080
+    call DestroyTrigger(GetTriggeringTrigger())
+    
+    // call SetUnitPositionLoc(b, GetRectCenter(gg_rct_wu))
+    call SetUnitOwner(b, Player(10), true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), b, "潘璋", null, "关羽纳命来！", bj_TIMETYPE_ADD, 0, true)
+    call DisplayTextToForce(GetPlayersAll(), "潘璋已经出现！")
+
+    set b = null
+endfunction
+
+//===========================================================================
+function InitTrig_Zhou_Tai takes nothing returns nothing
+    set gg_trg_Zhou_Tai = CreateTrigger()
+ 
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_Zhou_Tai, gg_rct_wu_boss)
+    call TriggerAddCondition(gg_trg_Zhou_Tai, Condition(function Trig_Zhou_TaiConditions))
+    call TriggerAddAction(gg_trg_Zhou_Tai, function Trig_Zhou_TaiActions)
+endfunction
+

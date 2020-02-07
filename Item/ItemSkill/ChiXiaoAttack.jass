@@ -1,0 +1,61 @@
+function Trig_ChiXiaoAttackConditions takes nothing returns boolean
+//条件
+// ((攻击单位) 是 英雄) 等于 TRUE
+// ((攻击单位) 拥有 |cffffdead赤霄) 等于 TRUE
+// (((攻击单位) 的所有者) 是 ((被攻击单位) 的所有者) 的盟友) 等于 FALSE
+// (随机整数,最小值: 1 最大值: 8) 等于 7
+
+return (((IsUnitType(GetAttacker(), UNIT_TYPE_HERO) == true) and (UnitHasItemOfTypeBJ(GetAttacker(), 'I01G') == true) and (IsPlayerAlly(GetOwningPlayer(GetAttacker()), GetOwningPlayer(GetAttackedUnitBJ())) == false) and (GetRandomInt(1, 8) == 7)))
+endfunction
+
+function Trig_ChiXiaoAttackGroupDamage takes nothing returns boolean
+    // 触发单位的敌对
+    if ((IsUnitAlly(GetFilterUnit(), GetOwningPlayer(GetTriggerUnit())) == true)) then
+    // 造成伤害
+        call UnitDamageTargetBJ(GetAttacker(), GetFilterUnit(), udg_Hero_Damage, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL)
+    endif
+
+    return false
+endfunction
+ 
+
+function Trig_ChiXiaoAttackActions takes nothing returns nothing
+    
+
+    local real x = GetWidgetX(GetTriggerUnit())
+    local real y = GetWidgetY(GetTriggerUnit())
+    local real xA= GetWidgetX(GetAttacker())
+    local real yA= GetWidgetY(GetAttacker())
+ 
+   
+    
+    set udg_Hero_Damage   = GetHeroAgi(GetAttacker(), true) + GetHeroInt(GetAttacker(), true) +1500
+     
+    //创建马甲 释放冲击波
+     
+    call IssuePointOrder(CreateUnit(GetOwningPlayer(GetAttacker()),'h00D',xA,yA,0), "shockwave", x , y )
+    
+    // 选取单位 
+    call GroupEnumUnitsInRange(udg_GroupFormItem , x , y , 500 ,Condition(function Trig_ChiXiaoAttackGroupDamage))
+    
+     
+
+    // 漂浮文字
+    call CreateTextTagUnitBJ("大风起兮云飞扬", GetTriggerUnit(), 0, 20.00, 0.00, 0.00, 100, 30.00)
+    call SetTextTagPermanent(GetLastCreatedTextTag(), false)
+    call SetTextTagVelocityBJ(GetLastCreatedTextTag(), 64, 90)
+    call SetTextTagLifespan(GetLastCreatedTextTag(), 3.00)
+    call SetTextTagFadepoint(GetLastCreatedTextTag(), 2.00)
+    
+    
+endfunction
+
+//===========================================================================
+function InitTrig_ChiXiaoAttack takes nothing returns nothing
+    set gg_trg_ChiXiaoAttack = CreateTrigger()
+
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ChiXiaoAttack, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerAddCondition(gg_trg_ChiXiaoAttack, Condition(function Trig_ChiXiaoAttackConditions))
+    call TriggerAddAction(gg_trg_ChiXiaoAttack, function Trig_ChiXiaoAttackActions)
+endfunction
+

@@ -1,0 +1,74 @@
+function Trig_yuanJunLingConditions takes nothing returns boolean
+    return ((GetSpellAbilityId() == 'ANsq'))
+endfunction
+function yuanJunLingSpecial takes integer i ,integer level returns nothing
+    // 如果魔免，召唤单位也是魔免
+            if ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_MAGIC_IMMUNE) == true)) then
+                call UnitAddAbility(udg_YuanJunLing[i], 'ACm3')
+            endif
+            if ((level > 90)) then
+            // 单位 -   添加 +攻速 65
+            // 单位 -   添加 能增加生命值的物品 1500
+            // 单位 -   添加 5.5倍一击15% (物品)
+                call UnitAddAbility(udg_YuanJunLing[i], 'A09I')
+                call UnitAddAbility(udg_YuanJunLing[i], 'AIlf')
+                call UnitAddAbility(udg_YuanJunLing[i], 'A02L')          
+            endif
+            if ((level > 70)) then
+           
+            // 单位 -   添加 +攻速 45
+            // 单位 -   添加 能增加生命值的物品 (1000)
+                call UnitAddAbility(udg_YuanJunLing[i], 'A01Z')
+                call UnitAddAbility(udg_YuanJunLing[i], 'AIl1')
+             
+            endif
+            if ((level > 50)) then 
+                // 单位 -   添加 能提高进攻速度的物品 (30%)
+                // 单位 -   添加 能增加生命值的物品 (500)
+                call UnitAddAbility(udg_YuanJunLing[i], 'AIs2')
+                call UnitAddAbility(udg_YuanJunLing[i], 'AIl2')
+            endif
+endfunction
+function Trig_yuanJunLingActions takes nothing returns nothing
+     
+    local real x=   GetUnitX(GetTriggerUnit())
+    local real y=   GetUnitY(GetTriggerUnit())
+    local integer level = GetHeroLevel(GetTriggerUnit())
+    
+    //张嶷
+    if ((GetRandomInt(1, 130) <= level)) then
+        if ((IsUnitDeadBJ(udg_YuanJunLing[0]) == false)) then
+            call RemoveUnit(udg_YuanJunLing[0])
+        endif
+            set udg_YuanJunLing[0] = CreateUnit(GetOwningPlayer(GetTriggerUnit()), 'n009', x , y, 0)
+            // 持续 英雄 等级 秒
+            call UnitApplyTimedLifeBJ(I2R(level), 'BTLF', udg_YuanJunLing[0])
+            // 移速为英雄的速度
+            call SetUnitMoveSpeed(udg_YuanJunLing[0], GetUnitMoveSpeed(GetTriggerUnit()))
+            call yuanJunLingSpecial(0,level)
+    endif
+ 
+    
+    // 张翼
+    if ((GetRandomInt(1, 130) <= level)) then
+        if ((IsUnitDeadBJ(udg_YuanJunLing[1]) == false)) then
+            call RemoveUnit(udg_YuanJunLing[1])
+        endif  
+            set udg_YuanJunLing[1] = CreateUnit(GetOwningPlayer(GetTriggerUnit()), 'hrif', x , y, 0)                      
+            call UnitApplyTimedLifeBJ(I2R(level), 'BTLF', udg_YuanJunLing[1])
+            call SetUnitMoveSpeed(udg_YuanJunLing[1], GetUnitMoveSpeed(GetTriggerUnit()))
+            call yuanJunLingSpecial(1,level)
+        endif
+     
+endfunction
+
+//===========================================================================
+function InitTrig_yuanJunLing takes nothing returns nothing
+    set gg_trg_yuanJunLing = CreateTrigger()
+    
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_yuanJunLing, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddCondition(gg_trg_yuanJunLing, Condition(function Trig_yuanJunLingConditions))
+    call TriggerAddAction(gg_trg_yuanJunLing, function Trig_yuanJunLingActions)
+endfunction
+

@@ -1,0 +1,38 @@
+function Trig_Le_JinConditions takes nothing returns boolean
+// 乐进进攻，张虎存活，封印存活
+    return ((GetTriggerUnit() == gg_unit_U006_0170) and (IsUnitAliveBJ(gg_unit_U005_0168) == true )  and (IsUnitAliveBJ(gg_unit_nfrm_0260)== true)  ) 
+endfunction
+
+function Trig_Le_JinActions takes nothing returns nothing
+
+
+ 
+    //触发器 - 删除 (当前触发)
+    //单位 - 显示 |cffffdead张虎 0168 <预设>
+    //单位 - 立即移动 |cffffdead张虎 0168 <预设> 到 (村子 <预设> 的中心点)
+    //单位 - 对 |cffffdead张虎 0168 <预设> 发布 攻击 命令到目标: 干将之印 0260 <预设>
+    //单位 - 改变 |cffffdead张虎 0168 <预设> 所属为 玩家11(暗绿) 并 改变颜色
+    //单位 - 设置 干将之印 0260 <预设> 可攻击的
+    //电影 - 对 (所有玩家) 播送信息,发言单位: |cffffdead张虎 0168 <预设> 显示名字: 张虎 ,播放音效: 没有音效 显示信息: 听闻村中有一... 持续时间: 添加 0.00 秒并 等待
+    //游戏 - 对 (所有玩家) 发送文本信息: 张虎出现在玄...
+ 
+
+    call DestroyTrigger(GetTriggeringTrigger())
+    // call ShowUnitShow(gg_unit_U005_0168)
+    call SetUnitPosition(gg_unit_U005_0168, GetRandomInt(-192,896) , GetRandomInt(12480,13504) )
+    call IssueTargetOrder(gg_unit_U005_0168, "attack", gg_unit_nfrm_0260)
+    call SetUnitOwner(gg_unit_U005_0168, Player(10), true)
+  //  call SetUnitInvulnerable(gg_unit_nfrm_0260, false)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_U005_0168, "张虎", null, "听闻村中有一宝物，可否交出？", bj_TIMETYPE_ADD, 0, true)
+    call DisplayTextToForce(GetPlayersAll(), "张虎出现在玄蛇村！")
+endfunction
+
+//===========================================================================
+function InitTrig_Le_Jin takes nothing returns nothing
+    set gg_trg_Le_Jin = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_Le_Jin, gg_rct_createWest)
+    call TriggerAddCondition(gg_trg_Le_Jin, Condition(function Trig_Le_JinConditions))
+    call TriggerAddAction(gg_trg_Le_Jin, function Trig_Le_JinActions)
+endfunction
+

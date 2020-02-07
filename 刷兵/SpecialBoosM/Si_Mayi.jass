@@ -1,0 +1,26 @@
+function Trig_Si_MayiConditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Nsjs_0070))
+endfunction
+
+function Trig_Si_MayiActions takes nothing returns nothing
+    local unit b = gg_unit_Ocb2_0071 
+    call DestroyTrigger(GetTriggeringTrigger())
+    // 敌方军营附件
+    call SetUnitPosition (b,-450 , 7227)
+    call SetUnitOwner(b, Player(10), true)
+    call initA0AHLevel(b)
+
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), b, "司马昭", null, "父亲且慢行，儿愿为先锋！", bj_TIMETYPE_ADD, 0, true)
+    call DisplayTextToForce(GetPlayersAll(), "司马昭已经出现！")
+    set b = null
+endfunction
+
+//===========================================================================
+function InitTrig_Si_Mayi takes nothing returns nothing
+    set gg_trg_Si_Mayi = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_Si_Mayi, gg_rct_pand)
+    call TriggerAddCondition(gg_trg_Si_Mayi, Condition(function Trig_Si_MayiConditions))
+    call TriggerAddAction(gg_trg_Si_Mayi, function Trig_Si_MayiActions)
+endfunction
+

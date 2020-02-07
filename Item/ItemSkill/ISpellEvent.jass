@@ -1,0 +1,65 @@
+function Trig_SpecialItemSkillConditions takes nothing returns boolean
+// Or - 任意条件成立
+//     条件
+//         (施放技能) 等于 妙手空空 (中立敌对)
+//         (施放技能) 等于 炼化 
+//         (施放技能) 等于 金
+//         (施放技能) 等于 治疗术3 (物品)
+    return (((GetSpellAbilityId() == 'ACen') or (GetSpellAbilityId() == 'A02I') or (GetSpellAbilityId() == 'AIpl') or (GetSpellAbilityId() == 'A009')))
+endfunction
+
+function Trig_SpecialItemSkillActions takes nothing returns nothing
+
+    if ((GetSpellAbilityId() == 'ACen')) then
+    // 妙手空空
+        if ((GetRandomInt(1, 5) == 2)) then
+            call AdjustPlayerStateBJ((GetUnitLevel(GetSpellTargetUnit()) * 100), GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
+            call DisplayTimedTextToForce(GetPlayersAll(), 6.00, (("从" + GetUnitName(GetSpellTargetUnit())) + ("身上偷到了：" + (I2S((GetUnitLevel(GetSpellTargetUnit()) * 100)) + "钱"))))
+        elseif ((GetRandomInt(1, 7) == 3)) then
+            call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(121, 125)], GetTriggerUnit())
+            call DisplayTimedTextToForce(GetPlayersAll(), 6.00, (("从" + GetUnitName(GetSpellTargetUnit())) + ("身上偷到了：" + GetItemName(GetLastCreatedItem()))))
+        elseif ((IsUnitType(GetSpellTargetUnit(), UNIT_TYPE_HERO) == true) and (GetRandomInt(1, 15) == 3)) then
+            call UnitAddItemByIdSwapped(ChooseRandomItemExBJ(1, ITEM_TYPE_ANY), GetTriggerUnit())
+        elseif ((GetHeroLevel(GetSpellTargetUnit()) >= 25) and (GetRandomInt(1, 30) == 3)) then
+            call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(1, 25)], GetTriggerUnit())
+            call DisplayTimedTextToForce(GetPlayersAll(), 6.00, (("从" + GetUnitName(GetSpellTargetUnit())) + ("身上偷到了：" + GetItemName(GetLastCreatedItem()))))
+        elseif ((GetHeroLevel(GetSpellTargetUnit()) >= 50) and (GetRandomInt(1, 75) == 4)) then
+            call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(25, 77)], GetTriggerUnit())
+            call DisplayTimedTextToForce(GetPlayersAll(), 6.00, (("从" + GetUnitName(GetSpellTargetUnit())) + ("身上偷到了：" + GetItemName(GetLastCreatedItem()))))
+        endif
+    elseif ((GetSpellAbilityId() == 'A02I') and (GetUnitTypeId(GetTriggerUnit()) != 'Hant')) then
+    // 炼化  且不是关羽
+        if ((GetRandomInt(1, 6) == 2)) then
+            call UnitAddItemByIdSwapped(ChooseRandomItemExBJ(GetRandomInt(2, 3), ITEM_TYPE_CHARGED), GetTriggerUnit())
+        elseif ((GetRandomInt(1, 18) == 5)) then
+            call UnitAddItemByIdSwapped(ChooseRandomItemExBJ(1, ITEM_TYPE_CHARGED), GetTriggerUnit())    
+        endif
+    elseif ((GetSpellAbilityId() == 'AIpl')) then
+    // 铜雀 金
+        call AdjustPlayerStateBJ((100 * GetHeroLevel(GetTriggerUnit())), GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
+    elseif ((GetSpellAbilityId() == 'A009')) then
+    // 雌雄剑 治疗术3
+        if ((IsPlayerEnemy(GetOwningPlayer(GetTriggerUnit()), GetOwningPlayer(GetSpellTargetUnit())) == false)) then
+            call SetUnitLifeBJ(GetSpellTargetUnit(), (GetUnitState(GetSpellTargetUnit(), UNIT_STATE_LIFE) + (I2R(GetHeroStr(GetTriggerUnit(), true)) * 2.00)))
+        else
+            call UnitDamageTargetBJ(GetTriggerUnit(), GetSpellTargetUnit(), ((I2R(GetHeroStr(GetTriggerUnit(), true)) + 900.00) * 2.00), ATTACK_TYPE_CHAOS, DAMAGE_TYPE_UNIVERSAL)
+        endif
+        call AddHeroXPSwapped((GetUnitLevel(GetSpellTargetUnit()) * 10), GetTriggerUnit(), true)
+        set udg_Tem_point[6] = GetUnitLoc(GetTriggerUnit())
+        call CreateTextTagLocBJ(I2S((GetUnitLevel(GetSpellTargetUnit()) * 10)), udg_Tem_point[6], 1.00, 15.00, 25.00, 100, 25.00, 10.00)
+        call SetTextTagVelocityBJ(bj_lastCreatedTextTag, 64, 90)
+        call SetTextTagPermanent(bj_lastCreatedTextTag, false)
+        call SetTextTagLifespan(bj_lastCreatedTextTag, 2.00)
+        call RemoveLocation(udg_Tem_point[6])   
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_ISpellEvent takes nothing returns nothing
+    set gg_trg_ISpellEvent = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ISpellEvent, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddCondition(gg_trg_ISpellEvent, Condition(function Trig_SpecialItemSkillConditions))
+    call TriggerAddAction(gg_trg_ISpellEvent, function Trig_SpecialItemSkillActions)
+endfunction
+

@@ -1,0 +1,49 @@
+function Trig_LX1Conditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Ogld_0044))
+endfunction
+
+function Trig_LX1Actions takes nothing returns nothing
+    local unit lvDai = gg_unit_Uwar_0144
+    local unit chengPu = gg_unit_Uear_0037
+    call DestroyTrigger(GetTriggeringTrigger())
+    call PingMinimapLocForForceEx(GetPlayersAll(), GetRectCenter(gg_rct________041), 15.00, bj_MINIMAPPINGSTYLE_FLASHY, 0.00, 100, 0.00)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Osam_0022, "马良", null, "将军有令！将吴军引进城西的石阵处！", bj_TIMETYPE_ADD, 0, true)
+    //改变吕岱所属
+    call SetUnitOwner(lvDai, Player(10), true)
+    if ((udg_Difficulty== 2)) then
+    //魔抗
+        call UnitAddAbility(lvDai, 'A0AH')
+    elseif ((udg_Difficulty== 3)) then
+            call UnitAddAbility(lvDai, 'A0AH')
+            call IncUnitAbilityLevel(lvDai, 'A0AH')
+        
+    endif
+ 
+    call ShowUnitShow(lvDai)
+    
+    call ShowUnitShow(chengPu)
+    call SetUnitPositionLoc(gg_unit_Uwar_0144, GetRectCenter(gg_rct_wu_boss))
+    call SetUnitOwner(chengPu, Player(10), true)
+    
+    if ((udg_system6 == true)) then
+        call SetUnitPositionLoc(chengPu, GetRectCenter(gg_rct_fsr))
+    else
+        call SetUnitPositionLoc(chengPu, GetRectCenter(gg_rct_wu))
+    endif
+    
+    call DestroyTrigger(gg_trg_boss_w)
+    call DestroyTrigger(gg_trg_shuabing_N)
+
+    set lvDai = null
+    set chengPu= null
+endfunction
+
+//===========================================================================
+function InitTrig_LX1 takes nothing returns nothing
+    set gg_trg_LX1 = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_LX1, gg_rct_wu_boss)
+    call TriggerAddCondition(gg_trg_LX1, Condition(function Trig_LX1Conditions))
+    call TriggerAddAction(gg_trg_LX1, function Trig_LX1Actions)
+endfunction
+

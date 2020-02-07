@@ -1,0 +1,27 @@
+function Trig_Xu_HuangActions takes nothing returns nothing
+    //关羽基础装备升级
+    if ((UnitHasItemOfTypeBJ(gg_unit_Hant_0005, 'rde2') == true)) then
+        call UnitAddItemByIdSwapped('I00O', gg_unit_Hant_0005)
+        call UnitAddItemByIdSwapped('I014', gg_unit_Hant_0005)
+        call UnitAddItemByIdSwapped('I00N', gg_unit_Hant_0005)
+    endif
+
+     
+
+    // 升级 攻击强化为 2 
+    // 铁甲 为2
+    call SetPlayerTechResearchedSwap('Rhme', 2, Player(10))
+    call SetPlayerTechResearchedSwap('Rhar', 2, Player(10))
+    //创建物品 钥匙
+    call CreateItem('mort', GetWidgetX(GetTriggerUnit()),  GetWidgetY(GetTriggerUnit()))
+    call DestroyTrigger(GetTriggeringTrigger())
+endfunction
+
+//===========================================================================
+function InitTrig_Xu_Huang takes nothing returns nothing
+    set gg_trg_Xu_Huang = CreateTrigger()
+ 
+    call TriggerRegisterUnitEvent(gg_trg_Xu_Huang, gg_unit_Nman_0041, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_Xu_Huang, function Trig_Xu_HuangActions)
+endfunction
+

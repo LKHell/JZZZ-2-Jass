@@ -1,0 +1,43 @@
+function Trig_Li_DianActions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_ohun_0190, "信使", null, "关将军，有特函送至。", bj_TIMETYPE_ADD, 0, true)
+    call DisplayTimedTextToForce(GetPlayersAll(), 15.00, "|c00FF8040书信云：益州已安，荆州已定，蜀中昌繁者落落兮，今有良将护蜀，定能北定中原，攘除奸雄，兴复汉室，还于旧都。|r")
+    call DisplayTimedTextToForce(GetPlayersAll(), 15.00, "|c00FF8040有诗曰：\n义薄云天关云长\n豪气盖世张翼德\n千军百战赵子龙\n宇虎神威马孟起\n老当益壮黄汉升\n\n五将屡建奇功，今日，册封：\n关羽为前将军（关家子嗣全能增加15）\n张飞为右将军（张家子嗣力量增加30）\n赵云为中领军（赵家子嗣力量敏捷加23）\n马超为左将军（马家子嗣尽为万户侯）\n黄忠为后将军（黄家子嗣敏捷增加30）\n后人共称曰：蜀汉五虎将。
+")
+    
+    // 关索
+    call ModifyHeroStat(bj_HEROSTAT_STR, gg_unit_Nalc_0065, bj_MODIFYMETHOD_ADD, 15)
+    call ModifyHeroStat(bj_HEROSTAT_AGI, gg_unit_Nalc_0065, bj_MODIFYMETHOD_ADD, 15)
+    call ModifyHeroStat(bj_HEROSTAT_INT, gg_unit_Nalc_0065, bj_MODIFYMETHOD_ADD, 15)
+    //关平
+    call ModifyHeroStat(bj_HEROSTAT_STR, gg_unit_Opgh_0027, bj_MODIFYMETHOD_ADD, 15)
+    call ModifyHeroStat(bj_HEROSTAT_AGI, gg_unit_Opgh_0027, bj_MODIFYMETHOD_ADD, 15)
+    call ModifyHeroStat(bj_HEROSTAT_INT, gg_unit_Opgh_0027, bj_MODIFYMETHOD_ADD, 15)
+    // 关凤
+    call ModifyHeroStat(bj_HEROSTAT_INT, gg_unit_Ogrh_0020, bj_MODIFYMETHOD_ADD, 15)
+    call ModifyHeroStat(bj_HEROSTAT_AGI, gg_unit_Ogrh_0020, bj_MODIFYMETHOD_ADD, 15)
+    call ModifyHeroStat(bj_HEROSTAT_STR, gg_unit_Ogrh_0020, bj_MODIFYMETHOD_ADD, 15)
+    // 关兴
+    call ModifyHeroStat(bj_HEROSTAT_INT, gg_unit_Nbbc_0030, bj_MODIFYMETHOD_ADD, 15)
+    call ModifyHeroStat(bj_HEROSTAT_AGI, gg_unit_Nbbc_0030, bj_MODIFYMETHOD_ADD, 15)
+    call ModifyHeroStat(bj_HEROSTAT_STR, gg_unit_Nbbc_0030, bj_MODIFYMETHOD_ADD, 15)
+    // 黄舞蝶 敏捷
+    call ModifyHeroStat(bj_HEROSTAT_AGI, gg_unit_H006_0112, bj_MODIFYMETHOD_ADD, 30)
+    // 张苞 力量
+    call ModifyHeroStat(bj_HEROSTAT_STR, gg_unit_Hlgr_0019, bj_MODIFYMETHOD_ADD, 30)
+    //赵广 力量 敏捷
+    call ModifyHeroStat(bj_HEROSTAT_STR, gg_unit_Hart_0167, bj_MODIFYMETHOD_ADD, 23)
+    call ModifyHeroStat(bj_HEROSTAT_AGI, gg_unit_Hart_0167, bj_MODIFYMETHOD_ADD, 23)
+    //赵统 力量 敏捷
+    call ModifyHeroStat(bj_HEROSTAT_STR, gg_unit_Harf_0061, bj_MODIFYMETHOD_ADD, 23)
+    call ModifyHeroStat(bj_HEROSTAT_AGI, gg_unit_Harf_0061, bj_MODIFYMETHOD_ADD, 23)
+endfunction
+
+//===========================================================================
+function InitTrig_Li_Dian takes nothing returns nothing
+    set gg_trg_Li_Dian = CreateTrigger()
+ 
+    call TriggerRegisterUnitEvent(gg_trg_Li_Dian, gg_unit_Ubal_0043, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_Li_Dian, function Trig_Li_DianActions)
+endfunction
+

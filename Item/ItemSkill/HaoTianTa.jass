@@ -1,0 +1,60 @@
+function Trig_HaoTianTaConditions takes nothing returns boolean
+    //   5% 触发
+    return ((UnitHasItemOfTypeBJ(GetAttacker(), 'k3m1') == true) and (GetRandomInt(1, 20) == 15)  )
+endfunction
+
+ 
+// 移动 并且 造成伤害 法术 强化
+function Trig_HaoTianTaGroupDamage takes nothing returns boolean
+    if(IsUnitEnemyX() == true ) then
+        call SetUnitPosition(GetFilterUnit() ,udg_realX ,udg_realY)
+        call UnitDamageTargetBJ(GetAttacker(), GetFilterUnit(), udg_Hero_Damage, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED)
+    endif
+    return false
+endfunction
+
+ 
+// 统计人数
+function Trig_HaoTianTaGroupCount takes nothing returns boolean
+    set udg_Count  =  udg_Count +1
+    return false
+endfunction
+ 
+
+function Trig_HaoTianTaActions takes nothing returns nothing
+   
+    set udg_realX = GetWidgetX(GetAttacker())
+    set udg_realY = GetWidgetY(GetAttacker())
+
+    set udg_Count  = 0
+    call GroupEnumUnitsInRange(udg_GroupFormItem ,  udg_realX , udg_realY , 512 ,Condition(function Trig_HaoTianTaGroupCount) )
+     
+    
+    // 设置伤害 幻象 50 * 选取单位数量
+    if ((IsUnitIllusionBJ(GetAttacker()) == true)) then
+        set udg_Hero_Damage = udg_Count * 50
+    else
+        //非幻象 225 * 单位数量
+        set udg_Hero_Damage =  udg_Count * 225
+    endif
+    
+    
+    
+    // 创建马甲 设置 生命周期 2s
+    call UnitApplyTimedLife(CreateUnit(GetOwningPlayer(GetAttacker()),'h00O',udg_realX,udg_realY,0), 'BHwe', 2.00)
+    
+    call GroupEnumUnitsInRange(udg_GroupFormItem ,  udg_realX , udg_realY , 512 ,Condition(function Trig_HaoTianTaGroupDamage) )
+     
+
+
+endfunction
+
+//===========================================================================
+function InitTrig_HaoTianTa takes nothing returns nothing
+    set gg_trg_HaoTianTa = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_HaoTianTa, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerAddCondition(gg_trg_HaoTianTa, Condition(function Trig_HaoTianTaConditions))
+    call TriggerAddAction(gg_trg_HaoTianTa, function Trig_HaoTianTaActions)
+endfunction
+

@@ -1,0 +1,25 @@
+ 
+
+function Trig_LX4Actions takes nothing returns nothing
+    
+    call DestroyTrigger(GetTriggeringTrigger())
+    call DisplayTimedTextToForce(GetPlayersAll(), 10.00, "TRIGSTR_7637")
+    call AddWeatherEffectSaveLast(gg_rct________041, 'RAhr')
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Ogld_0044,udg_tsxuhun[320], null, "遭！卧龙先生的八封阵！！吾命休以。", bj_TIMETYPE_ADD, 0, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_ncpn_0254, "TRIGSTR_2996", null, 东吴的都督啊，你若能全身而退，还望吴蜀日后可以化干戈为玉帛，以和为贵啊！, bj_TIMETYPE_ADD, 0, true)
+     
+    
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Ogld_0044,  udg_tsxuhun[320], null, "卧龙先生果神人也。", bj_TIMETYPE_ADD, 0, true)
+     
+endfunction
+
+//===========================================================================
+function InitTrig_LX4 takes nothing returns nothing
+    set gg_trg_LX4 = CreateTrigger()
+    call DisableTrigger(gg_trg_LX4)
+#ifdef DEBUG
+    call YDWESaveTriggerName(gg_trg_LX4, "LX4")
+#endif
+    call TriggerAddAction(gg_trg_LX4, function Trig_LX4Actions)
+endfunction
+

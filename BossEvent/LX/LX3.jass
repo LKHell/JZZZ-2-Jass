@@ -1,0 +1,51 @@
+function Trig_LX3Conditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Ogld_0044))
+endfunction
+
+function Trig_LX3Actions takes nothing returns nothing
+    local integer i = 0
+    local integer x 
+    local integer y 
+    call DestroyTrigger(GetTriggeringTrigger())
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Ogld_0044,  udg_tsxuhun[320], null, "不妙！怎么回事？？", bj_TIMETYPE_ADD, 0, true)
+    //删除天石术
+    call UnitRemoveAbility(GetTriggerUnit(), 'A01J')
+    //删除毁天灭地
+    call UnitRemoveAbility(GetTriggerUnit(), 'ANst')
+    call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "陆逊天石术与毁天灭地技能无效化。")
+     
+     
+    loop
+        exitwhen i > 5
+       
+       // 石头
+        set x = GetRandomInt(0,30) * 50 -7500
+        set y = GetRandomInt(0,30) * 30  -1000
+        call  CreateUnit(Player(8),'o000', x,y,0)
+
+        set x = GetRandomInt(0,30) * 50 -7500
+        set y = GetRandomInt(0,30) * 30  -1000
+        //50 秒卧龙闪电
+        call UnitApplyTimedLifeBJ( 50 , 'BTLF', CreateUnit(Player(8),'owtw', x,y,0))
+        
+        set x = GetRandomInt(0,30) * 50 -7500
+        set y = GetRandomInt(0,30) * 30  -1000
+        //50 秒卧龙闪电
+        call UnitApplyTimedLifeBJ( 50 , 'BTLF', CreateUnit(Player(8),'owtw', x,y,0))
+        set i = i + 1
+    endloop
+
+
+    call TriggerExecute(gg_trg_LX4)
+endfunction
+
+//===========================================================================
+function InitTrig_LX3 takes nothing returns nothing
+    set gg_trg_LX3 = CreateTrigger()
+    call DisableTrigger(gg_trg_LX3)
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_LX3, gg_rct________041)
+    call TriggerAddCondition(gg_trg_LX3, Condition(function Trig_LX3Conditions))
+    call TriggerAddAction(gg_trg_LX3, function Trig_LX3Actions)
+endfunction
+

@@ -1,0 +1,30 @@
+function Trig_Zhang_HeActions takes nothing returns nothing
+    //提升攻击强化与铁甲
+    call SetPlayerTechResearchedSwap('Rhme', 3, Player(10))
+    call SetPlayerTechResearchedSwap('Rhar', 3, Player(10))
+    // if (((GetUnitAbilityLevel(gg_unit_Hpal_0031, 'ACev') > 5) or (udg_system6 == true))) then
+    //     call SetPlayerTechResearchedSwap('Rhme', 3, Player(9))
+    // else
+    // endif
+    
+
+    //如果关羽有 五灵纶巾 创建 青龙刀和青龙铠甲 同时升级头盔
+    if ((UnitHasItemOfTypeBJ(gg_unit_Hant_0005, 'prvt') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Hant_0005, 'ratc'))
+        call UnitAddItemByIdSwapped('sfog', gg_unit_Hant_0005)
+        call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Hant_0005, 'rde3'))
+        call UnitAddItemByIdSwapped('sor7', gg_unit_Hant_0005)
+        call UnitAddItemByIdSwapped('I00O', gg_unit_Hant_0005)
+  
+    endif
+    call DestroyTrigger(GetTriggeringTrigger())
+endfunction
+
+//===========================================================================
+function InitTrig_Zhang_He takes nothing returns nothing
+    set gg_trg_Zhang_He = CreateTrigger()
+
+    call TriggerRegisterUnitEvent(gg_trg_Zhang_He, gg_unit_Edem_0038, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_Zhang_He, function Trig_Zhang_HeActions)
+endfunction
+

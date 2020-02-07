@@ -1,0 +1,127 @@
+function Trig_Lv_DaiConditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Uwar_0039))
+endfunction
+
+function Trig_Lv_DaiFunc014002002 takes nothing returns boolean
+    return (((GetOwningPlayer(GetFilterUnit()) == Player(9)) and ((IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == false) and ((GetUnitLevel(GetFilterUnit()) + 2) < GetHeroLevel(gg_unit_Hpal_0031)))))
+endfunction
+
+function Trig_Lv_DaiFunc015A takes nothing returns nothing
+    call RemoveUnit(GetEnumUnit())
+endfunction
+
+function Trig_Lv_DaiActions takes nothing returns nothing
+    local unit  b = b
+    call DestroyTrigger(GetTriggeringTrigger())
+   
+    call SetUnitOwner(b, Player(10), true)
+     
+    call initA0AHLevel(b)
+
+
+
+    // call ShowUnitShow(b)
+    call SetUnitPositionLoc(b, udg_global_East)
+    call IssuePointOrderLoc(b, "attack", udg_GuanYuLocation)
+     
+    call SetUnitPositionLoc(GetTriggerUnit(), GetRectCenter(gg_rct_wu))
+    call IssuePointOrderLoc(GetTriggerUnit(), "attack", udg_GuanYuLocation)
+    
+    
+    if ((udg_Difficulty) > 1) then
+    // 物品 - 删除 (|cffffdead陆逊 0044 <预设> 所持有的 |cffffdead太平清岭道)
+    // 英雄 - 创建 |Cff00ff00镇魂甲 给 |cffffdead陆逊 0044 <预设>
+    // 物品 - 删除 (|cffffdead贾诩 (巫妖) 0120 <预设> 所持有的 |Cffffff00天空盔)
+    // 英雄 - 创建 |Cffffff00仙虎 给 |cffffdead贾诩 (巫妖) 0120 <预设>
+    
+    //         物品 - 删除 (|cffffdead程普 (邪恶的) 0037 <预设> 所持有的 |Cffffff00绝影)
+    //         英雄 - 创建 |cffffdead雷霆魔翼 给 |cffffdead程普 (邪恶的) 0037 <预设>
+    //         物品 - 删除 (|cffffdead程普 (邪恶的) 0037 <预设> 所持有的 |cffffdead湛卢)
+    //         英雄 - 创建 |cffffdead轩辕剑 给 |cffffdead程普 (邪恶的) 0037 <预设>
+    //         物品 - 删除 (曹操 0047 <预设> 所持有的 |Cffffff00孙子兵法)
+    //         物品 - 删除 (|Cffffff00司马昭 (资料片) 0071 <预设> 所持有的 |Cffffff00大宛马)
+    //         英雄 - 创建 |Cff00ff00赤兔 给 |Cffffff00司马昭 (资料片) 0071 <预设>
+    //         物品 - 删除 (|cffffdead典韦 （魂） 0169 <预设> 所持有的 |Cffffff00真龙护手)
+    //         英雄 - 创建 |Cff00ff00真武盘龙盾 给 |cffffdead典韦 （魂） 0169 <预设>
+    //         物品 - 删除 (|cffffdead典韦 （魂） 0169 <预设> 所持有的 |cffffdead玄武斧)
+    //         英雄 - 创建 |cffffdead盘古斧 给 |cffffdead典韦 （魂） 0169 <预设>
+    //         物品 - 删除 (|cffffdead吕岱 0144 <预设> 所持有的 |Cff00ff00青龙铠甲)
+    //         英雄 - 创建 |Cff00ff00魔龙战盔 给 |cffffdead典韦 （魂） 0169 <预设>
+    //         英雄 - 创建 |Cff00ff00魔龙之心 给 |cffffdead吕岱 0144 <预设>
+    //         英雄 - 创建 |Cff00ff00魔龙战盔 给 曹操 0047 <预设>
+    //         英雄 - 创建 |cffffdead黄龙盾 给 |Cffffff00蒋钦 0051 <预设>
+    //         单位 - 为 |Cffffff00司马昭 (资料片) 0071 <预设> 添加 雷暴 天赋
+    //         单位 - 设置 周泰 0140 <预设> 的 会心一击 (必中) 等级为 6
+
+      
+            call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Ogld_0044, 'I00W'))
+            call UnitAddItemByIdSwapped('I002', gg_unit_Ogld_0044)
+            call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Uktl_0120, 'sprn'))
+            call UnitAddItemByIdSwapped('I016', gg_unit_Uktl_0120)
+                call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Uear_0037, 'I009'))
+                call UnitAddItemByIdSwapped('amrc', gg_unit_Uear_0037)
+                call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Uear_0037, 'mlst'))
+                call UnitAddItemByIdSwapped('I01M', gg_unit_Uear_0037)
+                call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Udea_0047, 'sor3'))
+                call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Ocb2_0071, 'blba'))
+                call UnitAddItemByIdSwapped('oslo', gg_unit_Ocb2_0071)
+                call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_H00A_0169, 'tels'))
+                call UnitAddItemByIdSwapped('tlum', gg_unit_H00A_0169)
+                call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_H00A_0169, 'ocor'))
+                call UnitAddItemByIdSwapped('I008', gg_unit_H00A_0169)
+                call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Uwar_0144, 'sor7'))
+                call UnitAddItemByIdSwapped('rej5', gg_unit_H00A_0169)
+                call UnitAddItemByIdSwapped('pgin', gg_unit_Uwar_0144)
+                call UnitAddItemByIdSwapped('rej5', gg_unit_Udea_0047)
+                call UnitAddItemByIdSwapped('tfar', gg_unit_Usyl_0051)
+                call UnitAddAbility(gg_unit_Ocb2_0071, 'A084')
+                call SetUnitAbilityLevel(gg_unit_Nplh_0140, 'A03E', 6)
+                if ((udg_Difficulty) > 2)  then
+
+                
+                //     单位 - 为 |Cffffff00司马昭 (资料片) 0071 <预设> 添加 雷动九天
+                //     英雄 - 修改 智力 对 |cffffdead贾诩 (巫妖) 0120 <预设> : 添加 1000 点
+                //     物品 - 删除 (周泰 0140 <预设> 所持有的 |cffffdead混天绫)
+                //     英雄 - 创建 |Cff00ff00魔龙战铠 给 |cffffdead吕岱 0144 <预设>
+                //     英雄 - 创建 |Cff00ff00真武盘龙盾 给 周泰 0140 <预设>
+                //     英雄 - 创建 |cffffdead神农鼎 给 |cffffdead司马懿 0070 <预设>
+                //     单位 - 设置 周泰 0140 <预设> 的 会心一击 (必中) 等级为 9
+                //     单位 - 为 |cffffdead典韦 （魂） 0169 <预设> 添加 魔法免疫 (龙)
+                //     单位 - 为 |Cffffff00司马昭 (资料片) 0071 <预设> 添加 魔法免疫 (龙)
+                //     单位 - 为 |cffffdead吕霸 0172 <预设> 添加 火焰刀 
+                //     单位 - 设置 |cffffdead吕霸 0172 <预设> 的 火焰刀  等级为 3
+                //     英雄 - 创建 |cffffdead九天算尺 给 |cffffdead吕霸 0172 <预设>
+                //     英雄 - 创建 |cffffdead雷霆魔翼 给 |cffffdead吕霸 0172 <预设>
+                //     英雄 - 创建 |Cff00ff00魔龙之心 给 |Cffffff00蒋钦 0051 <预设>
+                    call UnitAddAbility(gg_unit_Ocb2_0071, 'AUls')
+                    call ModifyHeroStat(bj_HEROSTAT_INT, gg_unit_Uktl_0120, bj_MODIFYMETHOD_ADD, 1000)
+                    call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Nplh_0140, 'rej2'))
+                    call UnitAddItemByIdSwapped('gemt', gg_unit_Uwar_0144)
+                    call UnitAddItemByIdSwapped('tlum', gg_unit_Nplh_0140)
+                    call UnitAddItemByIdSwapped('shtm', gg_unit_Nsjs_0070)
+                    call SetUnitAbilityLevel(gg_unit_Nplh_0140, 'A03E', 9)
+                    call UnitAddAbility(gg_unit_H00A_0169, 'ACm3')
+                    call UnitAddAbility(gg_unit_Ocb2_0071, 'ACm3')
+                    call UnitAddAbility(gg_unit_U007_0172, 'A00Z')
+                    call SetUnitAbilityLevel(gg_unit_U007_0172, 'A00Z', 3)
+                    call UnitAddItemByIdSwapped('I00C', gg_unit_U007_0172)
+                    call UnitAddItemByIdSwapped('amrc', gg_unit_U007_0172)
+                    call UnitAddItemByIdSwapped('pgin', gg_unit_Usyl_0051)
+                endif
+    endif
+    
+
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), b, "荀攸", null, "哈哈哈，谁能破我奇策？关羽纳命来！", bj_TIMETYPE_ADD, 0, true)
+    call DisplayTextToForce(GetPlayersAll(), "听闻：战场上出现吕岱的身影")
+    set  b = null 
+endfunction
+
+//===========================================================================
+function InitTrig_Lv_Dai takes nothing returns nothing
+    set gg_trg_Lv_Dai = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_Lv_Dai, gg_rct_pand)
+    call TriggerAddCondition(gg_trg_Lv_Dai, Condition(function Trig_Lv_DaiConditions))
+    call TriggerAddAction(gg_trg_Lv_Dai, function Trig_Lv_DaiActions)
+endfunction
+

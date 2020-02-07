@@ -1,0 +1,83 @@
+function Trig_Le_Jin2Conditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_U006_0170))
+endfunction
+
+ 
+function Trig_Le_Jin2Actions takes nothing returns nothing
+    
+    local unit  b =  gg_unit_U004_0109
+    call DestroyTrigger(GetTriggeringTrigger())
+     
+    call SetUnitOwner(b, Player(10), true)
+    if ((udg_Difficulty) == 2)) then
+        call UnitAddAbility(b, 'A0AH')
+    elseif ((udg_Difficulty) == 3)) then
+        call UnitAddAbility(b, 'A0AH')
+        call IncUnitAbilityLevel(b, 'A0AH')
+        
+    endif
+    
+    if ((udg_Difficulty) > 1) then
+        //英雄 - 创建 |Cffffff00真龙护手 给 |cffffdead吕岱 0039 <预设>
+        //英雄 - 创建 |cffffdead追日靴 给 |cffffdead许褚 0033 <预设>
+        //英雄 - 创建 |Cff00ff00项羽头盔 给 |cffffdead荀攸 0072 <预设>
+        //单位 - 为 |cffffdead荀攸 0072 <预设> 添加 重击 15% 2
+        //英雄 - 创建 |Cff00ff00真武盘龙盾 给 张辽 0143 <预设>
+        //单位 - 设置 |cffffdead许褚 0033 <预设> 的 天生蛮力  等级为 3
+        //单位 - 为 张辽 0143 <预设> 添加 分裂攻击 (23%)
+        call UnitAddItemByIdSwapped('tels', gg_unit_Uwar_0039)
+        call UnitAddItemByIdSwapped('I000', gg_unit_Hmbr_0033)
+        call UnitAddItemByIdSwapped('hbth', gg_unit_Ewrd_0072)
+        call UnitAddAbility(gg_unit_Ewrd_0072, 'ACbh')
+        call UnitAddItemByIdSwapped('tlum', gg_unit_Ucrl_0143)
+
+        call SetUnitAbilityLevel(gg_unit_Hmbr_0033, 'A011', 3)
+        call UnitAddAbility(gg_unit_Ucrl_0143, 'ACce')
+        
+        if (  (udg_Difficulty) > 2 ) then
+            //英雄 - 创建 |Cffffff00绝影 给 |cffffdead荀攸 0072 <预设>
+            //英雄 - 创建 |Cff00ff00项羽护手 给 |cffffdead荀攸 0072 <预设>
+            //单位 - 为 张辽 0143 <预设> 添加 白虎威风 (中立敌对)
+            //单位 - 为 |cffffdead荀攸 0072 <预设> 添加 分裂攻击 天赋
+            //单位 - 为 张辽 0143 <预设> 添加 魔龙看破 (CD15)
+            //单位 - 为 |cffffdead许褚 0033 <预设> 添加 魔法免疫 (龙)
+            //单位 - 设置 |cffffdead许褚 0033 <预设> 的 天生蛮力  等级为 4
+            //单位 - 设置 |cffffdead荀攸 0072 <预设> 的 分裂攻击 天赋 等级为 9
+            //英雄 - 创建 |cff55AAFF振奋项链 给 |cffffdead许褚 0033 <预设>
+            //英雄 - 创建 |Cff00ff00真武盘龙盾 给 |cffffdead许褚 0033 <预设>
+            //单位 - 为 |cffffdead吕岱 0039 <预设> 添加 真实残像 
+            //单位 - 为 |cffffdead吕岱 0144 <预设> 添加 真实残像 
+            call UnitAddItemByIdSwapped('I009', gg_unit_Ewrd_0072)
+            call UnitAddItemByIdSwapped('ram2', gg_unit_Ewrd_0072)
+            call UnitAddAbility(gg_unit_Ucrl_0143, 'A04L')
+            call UnitAddAbility(gg_unit_Ewrd_0072, 'A04M')
+            call UnitAddAbility(gg_unit_Ucrl_0143, 'A067')
+            call UnitAddAbility(gg_unit_Hmbr_0033, 'ACm3')
+            call SetUnitAbilityLevel(gg_unit_Hmbr_0033, 'A011', 4)
+            call SetUnitAbilityLevel(gg_unit_Ewrd_0072, 'A04M', 9)
+            call UnitAddItemByIdSwapped('ssan', gg_unit_Hmbr_0033)
+            call UnitAddItemByIdSwapped('tlum', gg_unit_Hmbr_0033)
+            call UnitAddAbility(gg_unit_Uwar_0039, 'A00K')
+            call UnitAddAbility(gg_unit_Uwar_0144, 'A00K')
+        endif
+     
+    endif
+    call ShowUnitShow(b)
+    call SetUnitPositionLoc(b, GetRectCenter(gg_rct_createEast))
+    
+ 
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), b, "乐琳", null, "吾来也！", bj_TIMETYPE_ADD, 0, true)
+    call DisplayTextToForce(GetPlayersAll(), "乐琳已经出现！")
+   
+   set b = null
+endfunction
+
+//===========================================================================
+function InitTrig_Le_Jin2 takes nothing returns nothing
+    set gg_trg_Le_Jin2 = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_Le_Jin2, gg_rct_createWest)
+    call TriggerAddCondition(gg_trg_Le_Jin2, Condition(function Trig_Le_Jin2Conditions))
+    call TriggerAddAction(gg_trg_Le_Jin2, function Trig_Le_Jin2Actions)
+endfunction
+

@@ -1,0 +1,26 @@
+function Trig_Lv_Meng_DeadActions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    call YDWESetLocalVariableUnit("B", gg_unit_Ogld_0044)
+    call SetUnitOwner(YDWEGetLocalVariableUnit("B"), Player(10), true)
+    if ((GetUnitAbilityLevel(gg_unit_efdr_0126, 'ACev') == 5)) then
+        call UnitAddAbility(YDWEGetLocalVariableUnit("B"), 'A0AH')
+    else
+        if ((GetUnitAbilityLevel(gg_unit_efdr_0126, 'ACev') == 6)) then
+            call UnitAddAbility(YDWEGetLocalVariableUnit("B"), 'A0AH')
+            call IncUnitAbilityLevel(YDWEGetLocalVariableUnit("B"), 'A0AH')
+        else
+        endif
+    endif
+    call YDWELocalVariableEnd()
+    call ShowUnitShow(gg_unit_Ogld_0044)
+    call SetUnitPositionLoc(gg_unit_Ogld_0044, GetRectCenter(gg_rct_wu_boss))
+endfunction
+
+//===========================================================================
+function InitTrig_Lv_Meng_Dead takes nothing returns nothing
+    set gg_trg_Lv_Meng_Dead = CreateTrigger()
+ 
+    call TriggerRegisterUnitEvent(gg_trg_Lv_Meng_Dead, gg_unit_E001_0119, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_Lv_Meng_Dead, function Trig_Lv_Meng_DeadActions)
+endfunction
+
