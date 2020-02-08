@@ -11,3 +11,18 @@ endglobals
 function IsUnitEnemyX takes nothing returns boolean
     return ((IsUnitEnemy(GetFilterUnit(), GetOwningPlayer(GetAttacker())) == true))
 endfunction
+
+
+
+// 玩家1 接受伤害事件
+// function Trig_demo_Actions takes nothing returns nothing
+//     call DisplayTextToForce( GetPlayersAll(), R2S(GetEventDamage()) )
+// endfunction
+
+// //===========================================================================
+// function InitTrig_demo takes nothing returns nothing
+//     set gg_trg_demo = CreateTrigger(  )
+//     call TriggerRegisterPlayerUnitEventSimple( gg_trg_demo, Player(0), EVENT_PLAYER_UNIT_DAMAGED)
+//     call TriggerAddAction( gg_trg_demo, function Trig_demo_Actions )
+// endfunction
+
