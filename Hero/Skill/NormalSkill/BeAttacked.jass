@@ -1,0 +1,118 @@
+function Trig_BeAttackedConditions takes nothing returns boolean
+// 攻击单位是英雄 
+    return (IsUnitType(GetAttacker(), UNIT_TYPE_HERO) == true)
+endfunction
+
+function Trig_BeAttackedFunc003Func003002003 takes nothing returns boolean
+    if ((IsUnitAlly(GetFilterUnit(), GetOwningPlayer(GetAttacker())) == false)) then    
+        call UnitDamageTargetBJ(GetAttacker(), GetEnumUnit(), udg_Hero_Damage  , ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED)
+    endif
+
+    return false
+endfunction
+
+function Trig_BeAttackedActions takes nothing returns nothing
+    local real x  = GetWidgetX(GetTriggerUnit()) 
+    local real y  = GetWidgetY(GetTriggerUnit())
+    local integer damage
+    if ((IsPlayerEnemy(GetOwningPlayer(GetTriggerUnit()), GetOwningPlayer(GetAttacker())) == true) and (UnitHasBuffBJ(GetAttacker(), 'BOwk') == true) and GetUnitAbilityLevel( GetAttacker(),'A05F') > 0  ) then   
+        // 关凤 隐身  删除buff
+        call UnitRemoveBuffBJ('BOwk', GetAttacker())
+        set damage = R2I((GetUnitFacing(GetTriggerUnit()))) - R2I((GetUnitFacing(GetAttacker())))
+        // 如果处于背后，伤害增加50%
+        if ((IAbsBJ(damage) <= 90)) then
+            set damage = GetHeroAgi(GetAttacker() ,true ) *3
+        else
+            set damage = GetHeroAgi(GetAttacker() ,true ) *2
+        endif
+
+        set damage = damage * GetUnitAbilityLevel( GetAttacker(),'A05F')
+        // 混乱强化伤害
+        call UnitDamageTargetBJ(GetAttacker(), GetTriggerUnit(), damage , ATTACK_TYPE_CHAOS, DAMAGE_TYPE_ENHANCED)
+        
+        call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Other\\Drain\\DrainTarget.mdl", GetTriggerUnit(), "overhead"))
+
+    elseif ((UnitHasBuffBJ(GetTriggerUnit(), 'BUsl') == true)) then
+        //睡眠
+        // 法术 强化
+        set damage =  ((GetHeroStr(GetAttacker(), true)) * 4 )
+        call UnitDamageTarget(GetAttacker(), GetTriggerUnit(), damage , true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED, WEAPON_TYPE_METAL_HEAVY_CHOP)
+    elseif ((IsPlayerEnemy(GetOwningPlayer(GetAttackedUnitBJ()), GetOwningPlayer(GetAttacker())) == true) and (GetUnitAbilityLevelSwapped('AHav', GetAttacker()) >= 1) and (GetOwningPlayer(GetAttacker()) != Player(PLAYER_NEUTRAL_AGGRESSIVE))) then
+        //力拔山兮气盖世
+
+        
+        set damage =  (GetHeroStr(GetAttacker(), true) * (GetUnitAbilityLevel(GetAttacker(), 'AHav')) / 2)
+        // 混乱 普通
+        call UnitDamageTarget(GetAttacker(), GetTriggerUnit(), damage, true, true, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_METAL_HEAVY_CHOP)
+        
+        //特效
+        call DestroyEffect(AddSpecialEffect ("war3mapImported\\DoubleEdgeTarget.mdx", x, y  ))
+       
+   
+    elseif ((GetUnitAbilityLevelSwapped('A011', GetAttacker()) >= 1) and (IsPlayerEnemy(GetOwningPlayer(GetAttackedUnitBJ()), GetOwningPlayer(GetAttacker())) == true) and (GetOwningPlayer(GetAttacker()) != Player(PLAYER_NEUTRAL_AGGRESSIVE)) and (GetRandomInt(1, 5) == 4)) then
+        //天生蛮力
+     
+       //特效
+        call DestroyEffect(AddSpecialEffect ("war3mapImported\\DoubleEdgeTarget.mdx",  x, y  ))
+       
+        
+       
+
+        if ((UnitHasBuffBJ(GetTriggerUnit(), 'BPSE') == true)) then
+           set udg_Hero_Damage =  GetHeroStr(GetAttacker(), true)  * 2
+        else
+            set udg_Hero_Damage =  GetHeroStr(GetAttacker(), true)  
+        endif
+
+        call GroupEnumUnitsInRange(udg_GroupFormHero , x , y , 300 , Condition(function Trig_BeAttackedFunc003Func003002003))
+        
+
+
+
+      
+    
+    
+    elseif ((GetUnitAbilityLevelSwapped('AHab', GetAttacker()) >= 1) and (IsPlayerEnemy(GetOwningPlayer(GetAttackedUnitBJ()), GetOwningPlayer(GetAttacker())) == true)) then
+        //混元  几率闪电链
+        if ((GetRandomInt(1, 6) == 4)) then
+            set bj_lastCreatedUnit = CreateUnit( GetOwningPlayer(GetAttacker()) ,'n00S' ,x , y ,0 )
+            
+            call UnitAddAbility(bj_lastCreatedUnit, 'AOcl')
+            call SetUnitAbilityLevel(bj_lastCreatedUnit, 'AOcl', GetUnitAbilityLevelSwapped('AOcl', GetAttacker()))
+            call IssueTargetOrder(bj_lastCreatedUnit, "chainlightning", GetTriggerUnit())
+             
+         
+        endif
+
+    // elseif ((GetUnitAbilityLevelSwapped('A02J', GetAttacker()) >= 1) and (IsPlayerEnemy(GetOwningPlayer(GetAttackedUnitBJ()), GetOwningPlayer(GetAttacker())) == true)) then
+    //     //疾风阵
+    //     call YDWESetLocalVariableGroup("Q", GetUnitsOfPlayerMatching(GetOwningPlayer(GetAttacker()), Condition(function Trig_BeAttackedFunc005Func001002002)))
+    //     call YDWESetLocalVariableInteger("A", CountUnitsInGroup(YDWEGetLocalVariableGroup("Q")))
+    //     call YDWESetLocalVariableInteger("C", GetUnitAbilityLevel(GetAttacker(), 'A02J'))
+    //     if ((YDWEGetLocalVariableInteger("A") < YDWEGetLocalVariableInteger("C")) and (GetRandomInt(1, 11) == 9)) then
+    //         call YDWESetLocalVariableLocation("B", GetUnitLoc(GetAttacker()))
+    //         call CreateNUnitsAtLoc(1, 'hwt3', GetOwningPlayer(GetAttacker()), YDWEGetLocalVariableLocation("B"), bj_UNIT_FACING)
+    //         call UnitRemoveAbility(bj_lastCreatedUnit, 'A05A')
+    //         call UnitAddAbility(bj_lastCreatedUnit, 'A083')
+    //         call SetUnitAbilityLevel(bj_lastCreatedUnit, 'A083', GetUnitAbilityLevel(GetAttacker(), 'A02J'))
+    //         call IssueTargetOrderById(GetLastCreatedUnit(), 852274, GetAttacker())
+    //         call RemoveLocation(YDWEGetLocalVariableLocation("B"))
+        
+    //     endif
+    //     call DestroyGroup(YDWEGetLocalVariableGroup("Q"))
+    
+    endif
+    
+endfunction
+
+//===========================================================================
+function InitTrig_BeAttacked takes nothing returns nothing
+    set gg_trg_BeAttacked = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_BeAttacked, EVENT_PLAYER_UNIT_ATTACKED)
+ 
+    call TriggerAddCondition(gg_trg_BeAttacked , Condition(function Trig_BeAttackedConditions))
+
+    call TriggerAddAction(gg_trg_BeAttacked, function Trig_BeAttackedActions)
+endfunction
+

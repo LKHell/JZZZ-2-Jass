@@ -1,0 +1,89 @@
+function Trig_ItemSkillAreaConditions takes nothing returns boolean
+    return ((GetSpellAbilityId() != 'AIpl') and (GetSpellAbilityId() != 'A02I') and (GetSpellAbilityId() != 'A04G') and (GetSpellAbilityId() != 'A0B0') and (GetSpellAbilityId() != 'A0AZ') and (GetSpellAbilityId() != 'A0AY'))
+endfunction
+
+ 
+function  Trig_ItemSkillAreaGroupDamage takes nothing returns boolean
+    if ((IsUnitAlly(GetFilterUnit(), GetOwningPlayer(GetTriggerUnit())) == false)) then
+        // 法术强化  
+        call UnitDamageTargetBJ(GetTriggerUnit(), GetFilterUnit(), udg_Hero_Damage , ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED)
+    endif
+    
+    return false
+endfunction
+
+ 
+
+ 
+
+ 
+
+function Trig_ItemSkillAreaActions takes nothing returns nothing
+    local real x 
+    local real y 
+ 
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00F') == true)) then
+        //鼎文帐
+        set x = GetWidgetX(GetTriggerUnit())
+        set y = GetWidgetY(GetTriggerUnit())
+
+        set udg_Hero_Damage = GetHeroInt(GetTriggerUnit(), true)
+        
+        call GroupEnumUnitsInRange(udg_GroupFormItem , x , y , 300 , Condition ( function  Trig_ItemSkillAreaGroupDamage))
+
+        call DestroyEffect(AddSpecialEffect ("Abilities\\Spells\\Human\\MarkOfChaos\\MarkOfChaosTarget.mdl",x , y))
+        
+       
+       
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'wolg') == true) and (GetRandomInt(1, 11) == 2)) then
+         //大圣之怒
+        set x = GetWidgetX(GetTriggerUnit())
+        set y = GetWidgetY(GetTriggerUnit())
+        set udg_Hero_Damage = GetHeroStr(GetTriggerUnit(), true) * 6
+
+        call GroupEnumUnitsInRange(udg_GroupFormItem , x , y , 500 , Condition ( function  Trig_ItemSkillAreaGroupDamage))
+        call DestroyEffect(AddSpecialEffect ("Abilities\\Spells\\Human\\Resurrect\\ResurrectCaster.mdl",x , y))
+
+
+        // 力量+1
+        call ModifyHeroStat(bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 1)
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I02F') == true) and (GetRandomInt(1, 14) == 2)) then
+        //乾坤袋
+        set x = GetWidgetX(GetTriggerUnit())
+        set y = GetWidgetY(GetTriggerUnit())
+        set udg_Hero_Damage = GetHeroInt(GetTriggerUnit(), true) * 7
+
+        call GroupEnumUnitsInRange(udg_GroupFormItem , x , y , 500 , Condition ( function  Trig_ItemSkillAreaGroupDamage))
+        call DestroyEffect(AddSpecialEffect ("Units\\NightElf\\Wisp\\WispExplode.mdl",x , y))
+
+        //智力+ 1
+        call ModifyHeroStat(bj_HEROSTAT_INT, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 1)
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ktrm') == true) and (GetRandomInt(1, 13) == 3)) then
+        //崆峒印
+        set x = GetWidgetX(GetTriggerUnit())
+        set y = GetWidgetY(GetTriggerUnit())
+        set udg_Hero_Damage = GetHeroAgi(GetTriggerUnit(), true) * 7
+
+        call GroupEnumUnitsInRange(udg_GroupFormItem , x , y , 500 , Condition ( function  Trig_ItemSkillAreaGroupDamage))
+        call DestroyEffect(AddSpecialEffect ("Objects\\Spawnmodels\\Undead\\UCancelDeath\\UCancelDeath.mdl",x , y))
+
+
+        
+
+        //敏捷+1
+        call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 1)
+    endif
+    
+
+
+endfunction
+
+//===========================================================================
+function InitTrig_ItemSkillArea takes nothing returns nothing
+    set gg_trg_ItemSkillArea = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ItemSkillArea, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddCondition(gg_trg_ItemSkillArea, Condition(function Trig_ItemSkillAreaConditions))
+    call TriggerAddAction(gg_trg_ItemSkillArea, function Trig_ItemSkillAreaActions)
+endfunction
+

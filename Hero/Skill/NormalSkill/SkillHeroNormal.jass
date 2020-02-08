@@ -1,0 +1,32 @@
+function Trig_SkillHeroNormalConditions takes nothing returns boolean
+    // 等于神出鬼没 或者 关凤隐身
+    return (((GetSpellAbilityId() == 'A04E') or (GetSpellAbilityId() == 'A05F')))
+endfunction
+
+function Trig_SkillHeroNormalActions takes nothing returns nothing
+   
+    local real x = GetWidgetX(GetTriggerUnit())
+    local real y = GetWidgetY(GetTriggerUnit())
+    
+
+    set bj_lastCreatedUnit = CreateUnit(GetOwningPlayer(GetTriggerUnit()) ,'nemi' , x, y ,0 )
+    call IssueTargetOrderById(GetLastCreatedUnit(), 852274, GetTriggerUnit())
+     
+    //拥有赤兔
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'oslo') == true)) then
+	    
+        call IssueTargetOrderById(GetLastCreatedUnit(), 852274, GetTriggerUnit())
+    endif
+  
+  
+endfunction
+
+//===========================================================================
+function InitTrig_SkillHeroNormal takes nothing returns nothing
+    set gg_trg_SkillHeroNormal = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_SkillHeroNormal, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddCondition(gg_trg_SkillHeroNormal, Condition(function Trig_SkillHeroNormalConditions))
+    call TriggerAddAction(gg_trg_SkillHeroNormal, function Trig_SkillHeroNormalActions)
+endfunction
+

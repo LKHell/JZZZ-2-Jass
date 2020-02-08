@@ -1,0 +1,32 @@
+function Trig_SkillKillUnitConditions takes nothing returns boolean
+// 条件
+//     (((死亡单位) 的所有者) 是 ((凶手单位) 的所有者) 的敌人) 等于 TRUE
+//     ((凶手单位) 是 英雄) 等于 TRUE
+
+    return ((IsPlayerEnemy(GetOwningPlayer(GetDyingUnit()), GetOwningPlayer(GetKillingUnit())) == true) and (IsUnitType(GetKillingUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_SkillKillUnitActions takes nothing returns nothing
+local integer healthInt
+    if ((GetUnitAbilityLevelSwapped('AUav', GetKillingUnit()) > 0)) then
+    //血刃
+        set healthInt =   GetHeroAgi(GetKillingUnit(), true) * GetUnitAbilityLevel (GetKillingUnit(),'AUav') / 10 
+
+        call SetUnitState(GetKillingUnit(), UNIT_STATE_LIFE, (GetUnitState(GetKillingUnit(), UNIT_STATE_LIFE) + healthInt ))
+      
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\HealTarget2\\HealTarget2.mdl", GetWidgetX(GetKillingUnit()) , GetWidgetY(GetKillingUnit())))
+       
+    
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_SkillKillUnit takes nothing returns nothing
+    set gg_trg_SkillKillUnit = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_SkillKillUnit, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_SkillKillUnit, Condition(function Trig_SkillKillUnitConditions))
+    call TriggerAddAction(gg_trg_SkillKillUnit, function Trig_SkillKillUnitActions)
+endfunction
+

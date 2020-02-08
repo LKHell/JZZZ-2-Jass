@@ -1,0 +1,78 @@
+function Trig_SkillHeroPointConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_SkillHeroPointActions takes nothing returns nothing
+    local integer damage
+    if ((GetSpellAbilityId() == 'Aprg') and (IsUnitAlly(GetTriggerUnit(), GetOwningPlayer(GetSpellTargetUnit())) == false)) then
+    // 天雷锁
+         // 技能等级 *  智力 /2  法术强化
+        set damage = (GetUnitAbilityLevel(GetTriggerUnit(),GetSpellAbilityId())) *  GetHeroInt(GetTriggerUnit() , true) * HeroDamageMulti()  / 2 
+        call UnitDamageTargetBJ(GetTriggerUnit(), GetSpellTargetUnit(), damage , ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED)
+       
+    elseif ((GetSpellAbilityId() == 'ACcb')) then
+    //玄冰神箭  
+        // 穿云箭 * 智力  /2 
+        set damage =   GetHeroInt(GetTriggerUnit() , true) * HeroDamageMulti()  / 2 
+        //李广
+        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'flag') == true)) then
+            set damage = damage *   (GetUnitAbilityLevel(GetTriggerUnit(), 'ANsh' )  + 3)
+        else
+            set damage = damage *   (GetUnitAbilityLevel(GetTriggerUnit(), 'ANsh' )  )
+        endif
+
+        // 法术通用
+        call UnitDamageTargetBJ(GetTriggerUnit(), GetSpellTargetUnit(), damage , ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL)
+    elseif ((GetSpellAbilityId() == 'A049')) then
+        // 法力燃烧 new 
+        // 技能等级 * 智力  / 2
+        set damage = (GetUnitAbilityLevel(GetTriggerUnit(),GetSpellAbilityId())) *  GetHeroInt(GetTriggerUnit() , true) * HeroDamageMulti()  / 2 
+       
+
+        call UnitDamageTargetBJ(GetTriggerUnit(), GetSpellTargetUnit(),  damage , ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL)
+
+        //烧蓝值
+        set damage =  GetUnitAbilityLevel( GetTriggerUnit(),'A049') * 200
+
+        //鼎文杖 加强烧蓝
+        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00F') == true)) then
+            set damage = damage +  GetHeroInt(GetTriggerUnit() , true)
+        endif
+
+        call SetUnitManaBJ(GetSpellTargetUnit(), (GetUnitStateSwap(UNIT_STATE_MANA, GetSpellTargetUnit()) -  damage))
+  
+    elseif ((GetSpellAbilityId() == 'A05B')) then
+        //缚杀计
+        set damage =   GetHeroInt(GetTriggerUnit() , true) * HeroDamageMulti()  
+       
+        call UnitDamageTargetBJ(GetTriggerUnit(), GetSpellTargetUnit(),  damage , ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL)
+    elseif ((GetSpellAbilityId() == 'A06C')) then
+        // 玄冰暴 天赋 
+        // 瑞雪冰心等级 * 智力 / 2
+        set damage =  GetUnitAbilityLevel( GetTriggerUnit(),'AEtq') * GetHeroInt(GetTriggerUnit() , true) * HeroDamageMulti()  / 2 
+       
+        call UnitDamageTargetBJ(GetTriggerUnit(), GetSpellTargetUnit(), damage, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL)
+    elseif ((GetSpellAbilityId() == 'ANso')) then
+        // 噬心咒
+        set damage = (GetUnitAbilityLevel(GetTriggerUnit(),GetSpellAbilityId())) *  GetHeroInt(GetTriggerUnit() , true) * HeroDamageMulti()   
+        call UnitDamageTargetBJ(GetTriggerUnit(), GetSpellTargetUnit(),  damage, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED)
+    elseif ((GetSpellAbilityId() == 'A08O') and (IsUnitAlly(GetTriggerUnit(), GetOwningPlayer(GetSpellTargetUnit())) == false)) then
+    // 净化之电  扇子
+
+
+        set damage = 4 *  GetHeroInt(GetTriggerUnit() , true) * HeroDamageMulti()   
+        call UnitDamageTargetBJ(GetTriggerUnit(), GetSpellTargetUnit(),damage , ATTACK_TYPE_MELEE, DAMAGE_TYPE_FIRE)
+     
+    endif
+     
+endfunction
+
+//===========================================================================
+function InitTrig_SkillHeroPoint takes nothing returns nothing
+    set gg_trg_SkillHeroPoint = CreateTrigger()
+
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_SkillHeroPoint, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddCondition(gg_trg_SkillHeroPoint, Condition(function Trig_SkillHeroPointConditions))
+    call TriggerAddAction(gg_trg_SkillHeroPoint, function Trig_SkillHeroPointActions)
+endfunction
+

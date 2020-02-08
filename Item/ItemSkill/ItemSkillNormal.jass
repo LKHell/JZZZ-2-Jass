@@ -1,0 +1,46 @@
+function Trig_ItemSkillNormalConditions takes nothing returns boolean
+    return ((GetSpellAbilityId() != 'AIpl') and (GetSpellAbilityId() != 'A02I') and (GetSpellAbilityId() != 'A04G') and (GetSpellAbilityId() != 'A0B0') and (GetSpellAbilityId() != 'A0AZ') and (GetSpellAbilityId() != 'A0AY'))
+endfunction
+
+function Trig_ItemSkillNormalActions takes nothing returns nothing
+    if ((GetSpellAbilityId() == 'A06O')) then
+        //天地灵气，重置技能cd
+        call UnitResetCooldown(GetTriggerUnit())
+         
+    elseif (((GetSpellAbilityId() == 'AImt') or (GetSpellAbilityId() == 'AIbk') or (GetSpellAbilityId() == 'AEbl')) and (GetTriggerUnit() == gg_unit_Hant_0005)) then
+        //阻止关羽 天地 盾
+        call IssueImmediateOrder(GetTriggerUnit(), "stop")
+         
+    elseif ((GetSpellAbilityId() == 'ANdo') and (GetSpellTargetUnit() == gg_unit_Hant_0005)) then
+    // 组织对 关羽 使用 炼妖壶
+        call IssueImmediateOrder(GetTriggerUnit(), "stop")
+         
+    elseif ((GetSpellAbilityId() == 'A05D')) then
+    // 时光倒流 释放 月亮石
+      
+        call IssueImmediateOrderById(gg_unit_uktg_0231, 852621)
+    elseif ((GetSpellAbilityId() == 'A07H')) then
+    // 金蝉脱壳
+       
+        
+        call CreateUnit( GetOwningPlayer(GetTriggerUnit()), 'nndr', GetWidgetX(GetTriggerUnit()),GetWidgetY(GetTriggerUnit()) , 0 )
+         
+    elseif ((GetSpellAbilityId() == 'A0AG')) then
+    //回归
+             
+            call SetUnitPosition(GetTriggerUnit()   ,  GetWidgetX( udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))]  ),    GetWidgetY( udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] )       )
+ 
+        
+        
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_ItemSkillNormal takes nothing returns nothing
+    set gg_trg_ItemSkillNormal = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ItemSkillNormal, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddCondition(gg_trg_ItemSkillNormal, Condition(function Trig_ItemSkillNormalConditions))
+    call TriggerAddAction(gg_trg_ItemSkillNormal, function Trig_ItemSkillNormalActions)
+endfunction
+

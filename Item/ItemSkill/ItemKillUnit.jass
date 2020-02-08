@@ -1,0 +1,40 @@
+function Trig_ItemKillUnitConditions takes nothing returns boolean
+    return ((IsPlayerEnemy(GetOwningPlayer(GetDyingUnit()), GetOwningPlayer(GetKillingUnit())) == true) and (IsUnitType(GetKillingUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_ItemKillUnitActions takes nothing returns nothing
+    if ((UnitHasItemOfTypeBJ(GetKillingUnit(), 'oli2') == true)) then
+    //  龙鳞铠甲
+        call SetUnitState(GetKillingUnit(), UNIT_STATE_LIFE, (GetUnitState(GetKillingUnit(), UNIT_STATE_LIFE) + (180.00 + (I2R(GetHeroStr(GetKillingUnit(), true)) * 0.50))))
+         
+         call DestroyEffect(AddSpecialEffect("Objects\\Spawnmodels\\Human\\HumanBlood\\BloodElfSpellThiefBlood.mdl", GetWidgetX(GetKillingUnit()) , GetWidgetY(GetKillingUnit())))
+       
+    elseif ((UnitHasItemOfTypeBJ(GetKillingUnit(), 'ram2') == true) and (UnitHasItemOfTypeBJ(GetKillingUnit(), 'rde0') == true) and (UnitHasItemOfTypeBJ(GetKillingUnit(), 'hbth') == true)) then
+    // 项羽套
+        call SetUnitState(GetKillingUnit(), UNIT_STATE_LIFE, (GetUnitState(GetKillingUnit(), UNIT_STATE_LIFE) + (I2R(GetHeroAgi(GetKillingUnit(), true)) * 0.80)))
+   
+        call DestroyEffect(AddSpecialEffect("Objects\\Spawnmodels\\Human\\HumanBlood\\BloodElfSpellThiefBlood.mdl", GetWidgetX(GetKillingUnit()) , GetWidgetY(GetKillingUnit())))
+       
+     
+    endif
+    
+    // 真项羽套
+    if ((UnitHasItemOfTypeBJ(GetKillingUnit(), 'ram2') == true) and (UnitHasItemOfTypeBJ(GetKillingUnit(), 'rde0') == true) and (UnitHasItemOfTypeBJ(GetKillingUnit(), 'stre') == true)) then
+        call SetUnitState(GetKillingUnit(), UNIT_STATE_LIFE, (GetUnitState(GetKillingUnit(), UNIT_STATE_LIFE) + (I2R((GetHeroAgi(GetTriggerUnit(), true) + GetHeroStr(GetTriggerUnit(), true))) / 2)))
+
+        call DestroyEffect(AddSpecialEffect("Objects\\Spawnmodels\\Human\\HumanBlood\\BloodElfSpellThiefBlood.mdl", GetWidgetX(GetKillingUnit()) , GetWidgetY(GetKillingUnit())))
+       
+    
+     
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_ItemKillUnit takes nothing returns nothing
+    set gg_trg_ItemKillUnit = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ItemKillUnit, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_ItemKillUnit, Condition(function Trig_ItemKillUnitConditions))
+    call TriggerAddAction(gg_trg_ItemKillUnit, function Trig_ItemKillUnitActions)
+endfunction
+

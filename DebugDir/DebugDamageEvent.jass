@@ -1,0 +1,39 @@
+function Trig_DebugDamageEventActions takes nothing returns nothing
+   
+        // if( BlzGetEventDamageType() == DAMAGE_TYPE_NORMAL  ) then 
+        //     call DisplayTextToForce( GetPlayersAll(), "1" )
+        
+        // elseif( BlzGetEventDamageType() == WEAPON_TYPE_WHOKNOWS  ) then 
+        //     call DisplayTextToForce( GetPlayersAll(), "2" )
+        // endif
+
+        // call DisplayTextToForce( GetPlayersAll(), "source"+GetUnitName(GetEventDamageSource()) )
+
+        // call DisplayTextToForce( GetPlayersAll(), "triggerUnit"+GetUnitName(GetTriggerUnit()) )
+
+        if(UnitHasBuffBJ(GetTriggerUnit() , 'BPSE') == true   ) then 
+                call DisplayTextToForce( GetPlayersAll(), "source has BPSE" ) 
+
+        endif
+
+         
+
+        call DisplayTextToForce( GetPlayersAll(), "source" + GetUnitName(GetEventDamageSource()) + "damage "+ R2S(GetEventDamage()) )
+
+    // call DisplayTextToForce( GetPlayersAll(), "source facing "+  R2S((GetUnitFacing(GetEventDamageSource()))) )
+   
+    // call DisplayTextToForce( GetPlayersAll(), "triggerUnit  facing "+  R2S((GetUnitFacing(GetTriggerUnit()))) )
+endfunction
+
+//===========================================================================
+function InitTrig_DebugDamageEvent takes nothing returns nothing
+    set gg_trg_DebugDamageEvent = CreateTrigger()
+ 
+    
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_DebugDamageEvent,  EVENT_PLAYER_UNIT_DAMAGED)
+
+    
+
+    call TriggerAddAction(gg_trg_DebugDamageEvent, function Trig_DebugDamageEventActions)
+endfunction
+

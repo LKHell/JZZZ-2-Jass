@@ -1,5 +1,5 @@
 globals
-     
+     //unit  array udg_hero
       group udg_GroupFormItem=CreateGroup()
      // integer udg_Hero_Damage
      // real udg_realX

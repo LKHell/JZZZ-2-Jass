@@ -1,0 +1,70 @@
+function Trig_SkillSummonUnitFunc002Func004002003 takes nothing returns boolean
+    return ((IsUnitAlly(GetFilterUnit(), GetOwningPlayer(GetTriggerUnit())) == false))
+endfunction
+
+function Trig_SkillSummonUnitFunc002Func006Func001A takes nothing returns nothing
+    call UnitDamageTargetBJ(GetTriggerUnit(), GetEnumUnit(), (YDWEGetLocalVariableReal("SH") * 3.00), ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED)
+endfunction
+
+function Trig_SkillSummonUnitFunc002Func006Func002A takes nothing returns nothing
+    call UnitDamageTargetBJ(GetTriggerUnit(), GetEnumUnit(), (YDWEGetLocalVariableReal("SH") * 1.00), ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED)
+endfunction
+
+function Trig_SkillSummonUnitActions takes nothing returns nothing
+    local group ydl_group
+    local unit ydl_unit
+    call YDWESetLocalVariableLocation("T", GetUnitLoc(GetTriggerUnit()))
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'h00N')) then
+        call UnitAddAbility(GetTriggerUnit(), 'A0AQ')
+        call IssueImmediateOrderById(GetTriggerUnit(), 852127)
+        call YDWESetLocalVariableReal("LL", I2R(GetHeroStr(GetSummoningUnit(), true)))
+        call YDWESetLocalVariableGroup("BB", GetUnitsInRangeOfLocMatching(300.00, YDWEGetLocalVariableLocation("T"), Condition(function Trig_SkillSummonUnitFunc002Func004002003)))
+        call YDWESetLocalVariableReal("SH", (I2R(GetUnitAbilityLevel(GetSummoningUnit(), 'A0AP')) * YDWEGetLocalVariableReal("LL")))
+        if ((UnitHasItemOfTypeBJ(GetSummoningUnit(), 'I00C') == true) and (YDWEGetLocalVariableInteger("J") > 7)) then
+            call ForGroupBJ(YDWEGetLocalVariableGroup("BB"), function Trig_SkillSummonUnitFunc002Func006Func001A)
+        else
+            call ForGroupBJ(YDWEGetLocalVariableGroup("BB"), function Trig_SkillSummonUnitFunc002Func006Func002A)
+        endif
+        call DestroyGroup(YDWEGetLocalVariableGroup("BB"))
+    else
+    endif
+    if (((GetUnitTypeId(GetSummonedUnit()) == 'efon') or (GetUnitTypeId(GetSummonedUnit()) == 'ngrk') or (GetUnitTypeId(GetSummonedUnit()) == 'nggr') or (GetUnitTypeId(GetSummonedUnit()) == 'ngst') or (GetUnitTypeId(GetSummonedUnit()) == 'narg') or (GetUnitTypeId(GetSummonedUnit()) == 'nwrg') or (GetUnitTypeId(GetSummonedUnit()) == 'nsgg') or (GetUnitTypeId(GetSummonedUnit()) == 'ninf') or (GetUnitTypeId(GetSummonedUnit()) == 'n00M'))) then
+        if ((UnitHasItemOfTypeBJ(GetSummoningUnit(), 'shtm') == true) and (GetUnitTypeId(GetSummoningUnit()) == 'H004')) then
+            if ((GetRandomInt(1, 4) == 3)) then
+                call DestroyEffect(AddSpecialEffectLoc("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", YDWEGetLocalVariableLocation("T")))
+                call CreateNUnitsAtLoc(1, GetUnitTypeId(GetSummonedUnit()), GetOwningPlayer(GetTriggerUnit()), YDWEGetLocalVariableLocation("T"), bj_UNIT_FACING)
+                call SetUnitAnimation(bj_lastCreatedUnit, "birth")
+                call UnitApplyTimedLife(bj_lastCreatedUnit, 'BEfn', 85.00)
+                call UnitAddAbility(bj_lastCreatedUnit, 'ACm3')
+            else
+            endif
+            call UnitAddAbility(GetSummonedUnit(), 'ACm3')
+            call UnitApplyTimedLife(GetSummonedUnit(), 'BEfn', 85.00)
+        else
+            call UnitApplyTimedLife(GetSummonedUnit(), 'BEfn', 70.00)
+            call UnitAddAbility(GetSummonedUnit(), 'ACsk')
+        endif
+    else
+    endif
+    if ((GetUnitTypeId(GetSummonedUnit()) == 'nbal') and (IsUnitType(GetSummoningUnit(), UNIT_TYPE_MAGIC_IMMUNE) == true)) then
+        call UnitAddAbility(GetSummonedUnit(), 'ACm3')
+    else
+    endif
+    if ((GetUnitTypeId(GetSummoningUnit()) == 'H006')) then
+        call UnitAddAbility(GetSummonedUnit(), 'ANtr')
+    else
+    endif
+    call RemoveLocation(YDWEGetLocalVariableLocation("T"))
+    call YDWELocalVariableEnd()
+    set ydl_group = null
+    set ydl_unit = null
+endfunction
+
+//===========================================================================
+function InitTrig_SkillSummonUnit takes nothing returns nothing
+    set gg_trg_SkillSummonUnit = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_SkillSummonUnit, EVENT_PLAYER_UNIT_SUMMON)
+    call TriggerAddAction(gg_trg_SkillSummonUnit, function Trig_SkillSummonUnitActions)
+endfunction
+

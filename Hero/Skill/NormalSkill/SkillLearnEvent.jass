@@ -1,0 +1,45 @@
+function Trig_SkillLearnEventActions takes nothing returns nothing
+    if ((GetLearnedSkillBJ() == 'A04M')) then
+        // 分裂 天赋  火之缚 提升
+        call IncUnitAbilityLevel(GetTriggerUnit(), 'A08K')
+        call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 8)
+    elseif ((GetLearnedSkillBJ() == 'A04R')) then
+        call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 8)
+    elseif ((GetLearnedSkillBJ() == 'ANsh') and (GetUnitTypeId(GetTriggerUnit()) == 'H006')) then
+        call SetPlayerTechResearchedSwap('Resm', GetUnitAbilityLevelSwapped(GetLearnedSkill(), GetTriggerUnit()), GetOwningPlayer(GetTriggerUnit()))
+    elseif ((GetLearnedSkillBJ() == 'S000')) then
+        call SetPlayerTechResearchedSwap('Remg', GetUnitAbilityLevelSwapped('S000', GetTriggerUnit()), GetOwningPlayer(GetTriggerUnit()))
+        if ((GetUnitAbilityLevelSwapped('AHfa', GetTriggerUnit()) < 1)) then
+        call UnitAddAbilityBJ('AHfa', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'AHfa')
+        else
+        call IncUnitAbilityLevelSwapped('AHfa', GetTriggerUnit())
+        endif
+    elseif ((GetLearnedSkillBJ() == 'A04N')) then
+        if ((GetUnitAbilityLevelSwapped('A04O', GetTriggerUnit()) < 1)) then
+        call UnitAddAbilityBJ('A04O', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A04O')
+        else
+        call IncUnitAbilityLevelSwapped('A04O', GetTriggerUnit())
+        endif
+    elseif ((GetLearnedSkillBJ() == 'A06A')) then
+        if ((GetUnitAbilityLevelSwapped('A09C', GetTriggerUnit()) < 1)) then
+        call UnitAddAbilityBJ('A09C', GetTriggerUnit())
+        call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A09C')
+        else
+        call IncUnitAbilityLevelSwapped('A09C', GetTriggerUnit())
+        endif
+    elseif ((GetLearnedSkillBJ() == 'A04Q')) then
+        call SetUnitAbilityLevel(GetTriggerUnit(), 'A04P', GetUnitAbilityLevel(GetTriggerUnit(), GetLearnedSkill()))
+
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_SkillLearnEvent takes nothing returns nothing
+    set gg_trg_SkillLearnEvent = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_SkillLearnEvent, EVENT_PLAYER_HERO_SKILL)
+    call TriggerAddAction(gg_trg_SkillLearnEvent, function Trig_SkillLearnEventActions)
+endfunction
+

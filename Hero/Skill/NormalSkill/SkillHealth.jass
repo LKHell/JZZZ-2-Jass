@@ -1,0 +1,48 @@
+function Trig_SkillHealthConditions takes nothing returns boolean
+    // Or - 任意条件成立
+    // 条件
+    //     (施放技能) 等于 止血回春
+    //     (施放技能) 等于 止血回春 (洛克汗)
+    //     (施放技能) 等于 五行罩 B天赋
+    //     (施放技能) 等于 玄冰甲 (+)
+    //     (施放技能) 等于 玄冰甲 (自动施放)
+
+    
+    return (((GetSpellAbilityId() == 'AOhw') or (GetSpellAbilityId() == 'ANhw') or (GetSpellAbilityId() == 'Aams') or (GetSpellAbilityId() == 'A03K') or (GetSpellAbilityId() == 'AUfu')))
+endfunction
+
+function Trig_SkillHealthActions takes nothing returns nothing
+   local integer Hero_Str = GetHeroStr( GetTriggerUnit(), true)
+  
+   local integer Hero_Int = GetHeroInt(  GetTriggerUnit(), true)
+   local integer health = GetUnitAbilityLevelSwapped(GetSpellAbilityId(), GetTriggerUnit())
+    
+    if ((GetSpellAbilityId() == 'AOhw')) then
+         //止血回春
+        set health = (health + 3) * Hero_Int
+        call SetUnitLifeBJ(GetTriggerUnit(), (GetUnitStateSwap(UNIT_STATE_LIFE, GetTriggerUnit()) + (health)))
+    elseif ((GetSpellAbilityId() == 'ANhw')) then
+        //止血回春
+        set health = (health ) * Hero_Int
+        call SetUnitLifeBJ(GetTriggerUnit(), (GetUnitStateSwap(UNIT_STATE_LIFE, GetTriggerUnit()) +  (health)))
+    elseif ((GetSpellAbilityId() == 'Aams')) then
+        //五行罩 关联无名火
+        set health = (((GetUnitAbilityLevel(GetTriggerUnit(), 'ACif') * 1) * Hero_Int))
+    elseif (((GetSpellAbilityId() == 'A03K') or (GetSpellAbilityId() == 'AUfu'))) then
+          // 玄冰甲 力量 + 80* 技能等级
+        set health =   ( (Hero_Str) + (80  *  (health)))
+    endif
+
+
+    call SetUnitLifeBJ(GetSpellTargetUnit(), (GetUnitState(GetSpellTargetUnit(), UNIT_STATE_LIFE) + health ))
+endfunction
+
+//===========================================================================
+function InitTrig_SkillHealth takes nothing returns nothing
+    set gg_trg_SkillHealth = CreateTrigger()
+
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_SkillHealth, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddCondition(gg_trg_SkillHealth, Condition(function Trig_SkillHealthConditions))
+    call TriggerAddAction(gg_trg_SkillHealth, function Trig_SkillHealthActions)
+endfunction
+

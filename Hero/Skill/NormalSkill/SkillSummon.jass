@@ -1,0 +1,31 @@
+function Trig_SkillSummonConditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'shtm') == true))
+endfunction
+
+function Trig_SkillSummonActions takes nothing returns nothing
+    call YDWESetLocalVariableLocation("T", GetUnitLoc(GetTriggerUnit()))
+    if ((GetSpellAbilityId() == 'ANsw') and (GetRandomInt(1, 4) == 1)) then
+        call DestroyEffect(AddSpecialEffectLoc("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", YDWEGetLocalVariableLocation("T")))
+        call CreateNUnitsAtLoc(1, 'n00K', GetTriggerPlayer(), YDWEGetLocalVariableLocation("T"), bj_UNIT_FACING)
+        call UnitAddAbility(bj_lastCreatedUnit, 'ANtr')
+        call UnitAddAbility(bj_lastCreatedUnit, 'ANtr')
+    else
+    endif
+    if ((GetSpellAbilityId() == 'Arsq') and (GetRandomInt(1, 5) == 1)) then
+        call DestroyEffect(AddSpecialEffectLoc("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", YDWEGetLocalVariableLocation("T")))
+        call CreateNUnitsAtLoc(1, 'n00L', GetTriggerPlayer(), YDWEGetLocalVariableLocation("T"), bj_UNIT_FACING)
+    else
+    endif
+    call RemoveLocation(YDWEGetLocalVariableLocation("T"))
+    call YDWELocalVariableEnd()
+endfunction
+
+//===========================================================================
+function InitTrig_SkillSummon takes nothing returns nothing
+    set gg_trg_SkillSummon = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_SkillSummon, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    call TriggerAddCondition(gg_trg_SkillSummon, Condition(function Trig_SkillSummonConditions))
+    call TriggerAddAction(gg_trg_SkillSummon, function Trig_SkillSummonActions)
+endfunction
+
