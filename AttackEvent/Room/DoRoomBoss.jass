@@ -1,0 +1,22 @@
+function Trig_DoRoomBossActions takes nothing returns nothing
+    local group g = GetUnitsInRectOfPlayer(gg_rct_BRoom, Player(10))
+    if ((CountUnitsInGroup(g) < 4)) then
+        call CreateNUnitsAtLoc(1, udg_unitEnemyBoss[GetRandomInt(1, 6)], Player(10), udg_RoomB_point, bj_UNIT_FACING)
+        call SetHeroLevelBJ(GetLastCreatedUnit(), (GetUnitAbilityLevelSwapped('ACev', gg_unit_Hpal_0031) + (GetUnitLevel(gg_unit_Hpal_0031) * 2)), false)
+        call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(1, 15)], GetLastCreatedUnit())
+        call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(1, 15)], GetLastCreatedUnit())
+    else
+    endif
+    call DestroyGroup(g)
+    set g = null
+endfunction
+
+//===========================================================================
+function InitTrig_DoRoomBoss takes nothing returns nothing
+    set gg_trg_DoRoomBoss = CreateTrigger()
+    call DisableTrigger(gg_trg_DoRoomBoss) 
+    call TriggerRegisterTimerEventPeriodic(gg_trg_DoRoomBoss, 12.00)
+    call TriggerAddAction(gg_trg_DoRoomBoss, function Trig_DoRoomBossActions)
+endfunction
+
+

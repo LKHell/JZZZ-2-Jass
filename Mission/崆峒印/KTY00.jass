@@ -1,3 +1,9 @@
+globals
+    unit udg_NpcDiaoChan
+    unit udg_NpcLvBu
+endglobals
+
+
 function Trig_KTY00Conditions takes nothing returns boolean
     return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
 endfunction

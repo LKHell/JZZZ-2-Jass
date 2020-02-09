@@ -1,0 +1,40 @@
+function Trig_BossKilledFunc001Func004001001 takes nothing returns boolean
+    return (((IsPlayerAlly(GetFilterPlayer(), Player(8)) == true) and ((GetPlayerController(GetFilterPlayer()) == MAP_CONTROL_USER) and (GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING))))
+endfunction
+
+function Trig_BossKilledFunc001Func004A takes nothing returns nothing
+    call AdjustPlayerStateBJ(udg_intTemp, GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD)
+    call AdjustPlayerStateBJ(GetHeroLevel(gg_unit_Hpal_0031), GetEnumPlayer(), PLAYER_STATE_RESOURCE_LUMBER)
+endfunction
+
+function Trig_BossKilledActions takes nothing returns nothing
+// 条件
+// ((死亡单位) 是 英雄) 等于 TRUE
+// ((死亡单位) 是镜像单位) 等于 FALSE
+// ((凶手单位) 是 玩家9(灰色) 的同盟单位) 等于 TRUE
+// ((死亡单位) 的类型) 不等于 unitEnemyBoss[1]
+// ((死亡单位) 的类型) 不等于 unitEnemyBoss[2]
+// ((死亡单位) 的类型) 不等于 unitEnemyBoss[3]
+// ((死亡单位) 的类型) 不等于 unitEnemyBoss[4]
+// ((死亡单位) 的类型) 不等于 unitEnemyBoss[5]
+// ((死亡单位) 的类型) 不等于 unitEnemyBoss[6]
+// ((死亡单位) 的类型) 不等于 |cffffdead吕玲绮
+    if (((IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true) and (IsUnitIllusionBJ(GetDyingUnit()) == false) and (IsUnitAlly(GetKillingUnitBJ(), Player(8)) == true) and (GetUnitTypeId(GetDyingUnit()) != udg_unitEnemyBoss[1]) and (GetUnitTypeId(GetDyingUnit()) != udg_unitEnemyBoss[2]) and (GetUnitTypeId(GetDyingUnit()) != udg_unitEnemyBoss[3]) and (GetUnitTypeId(GetDyingUnit()) != udg_unitEnemyBoss[4]) and (GetUnitTypeId(GetDyingUnit()) != udg_unitEnemyBoss[5]) and (GetUnitTypeId(GetDyingUnit()) != udg_unitEnemyBoss[6]) and (GetUnitTypeId(GetDyingUnit()) != 'O001'))) then
+        set udg_intTemp =  (GetHeroLevel(gg_unit_Hpal_0031) * 200)
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, (GetHeroProperName(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]) + ("|c00FF0000斩杀一名敌方大将，全员获得少量木材以及金钱：|r" + I2S(udg_intTemp))))
+        call ForForce(GetPlayersMatching(Condition(function Trig_BossKilledFunc001Func004001001)), function Trig_BossKilledFunc001Func004A)
+        set udg_intTemp = 0
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_BossKilled takes nothing returns nothing
+    set gg_trg_BossKilled = CreateTrigger()
+
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_BossKilled, Player(9), EVENT_PLAYER_UNIT_DEATH)
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_BossKilled, Player(10), EVENT_PLAYER_UNIT_DEATH)
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_BossKilled, Player(11), EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_BossKilled, function Trig_BossKilledActions)
+endfunction
+

@@ -1,0 +1,16 @@
+function Trig_Lv_Dai_DeadActions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Osam_0022, "马良", null, "将军，刚才战场上我好象看到东吴大将吕岱的身影。难道东吴已经和魏军暗自结盟？", bj_TIMETYPE_ADD, 0, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Hant_0005, "关羽", null, "你大可放心，东吴都督对吾是甚是恭敬，陆逊年纪轻轻，怎敢来我荆州造次。", bj_TIMETYPE_ADD, 0, true)
+ 
+    call DisplayTextToForce(GetPlayersAll(), "探子：报，最近南郡太守行动有点古怪。")
+endfunction
+
+//===========================================================================
+function InitTrig_Lv_Dai_Dead takes nothing returns nothing
+    set gg_trg_Lv_Dai_Dead = CreateTrigger()
+ 
+    call TriggerRegisterUnitEvent(gg_trg_Lv_Dai_Dead, gg_unit_Uwar_0039, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_Lv_Dai_Dead, function Trig_Lv_Dai_DeadActions)
+endfunction
+

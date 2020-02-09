@@ -1,3 +1,9 @@
+globals
+    // 宠物
+    unit array udg_cww
+endglobals
+
+
 function Trig_XunHua01Conditions takes nothing returns boolean
     return ((GetItemTypeId(GetManipulatedItem()) == 'I02J') and (IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == false) and ((GetUnitTypeId(GetTriggerUnit()) == 'nwld') or (GetUnitTypeId(GetTriggerUnit()) == 'nwlg') or (GetUnitTypeId(GetTriggerUnit()) == 'ngz4') or (GetUnitTypeId(GetTriggerUnit()) == 'nqb4') or (GetUnitTypeId(GetTriggerUnit()) == 'n00H')))
 endfunction
@@ -42,7 +48,7 @@ local integer index
      
     endif
 
-    set udg_cww[playerId] = CreateUnit(GetOwningPlayer(GetTriggerUnit()), index ，3389,-23780 )
+    set udg_cww[playerId] = CreateUnit(GetOwningPlayer(GetTriggerUnit()), index ,3389,-23780,230 )
     //添加回归
     call UnitAddAbility(udg_cww[playerId], 'A0AG')
     //call SetHeroLevelBJ(udg_cww[playerId], 108, false)

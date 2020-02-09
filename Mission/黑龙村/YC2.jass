@@ -1,0 +1,29 @@
+
+
+function Trig_YC2Actions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    call EnableTrigger(gg_trg_YC3)
+  
+    // 创建敌人
+    call CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE),'nrvi',8250,2250,90)
+    call CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE),'nrvi',8091,2968,270) 
+    call CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE),'nrvi',8573,2901,270)
+    call CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE),'nrvi',8573,2801,270)
+
+
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), GetTriggerUnit(), GetHeroProperName(GetTriggerUnit()), null, "何人在此鬼鬼祟祟？", bj_TIMETYPE_ADD, 0, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcZhongYou, "？？？", null, "哈哈哈，任务完成，我们撤。", bj_TIMETYPE_ADD, 0, true)
+    call QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_UPDATED, "被人投毒")
+    call DisplayTextToForce(GetPlayersAll(), "回渔村告诉村长实情。")
+endfunction
+
+//===========================================================================
+function InitTrig_YC2 takes nothing returns nothing
+    set gg_trg_YC2 = CreateTrigger()
+    call DisableTrigger(gg_trg_YC2)
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_YC2, gg_rct________________u)
+    call TriggerAddCondition(gg_trg_YC2, Condition(function BaseIsHero))
+    call TriggerAddAction(gg_trg_YC2, function Trig_YC2Actions)
+endfunction
+

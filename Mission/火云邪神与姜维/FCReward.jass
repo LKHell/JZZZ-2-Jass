@@ -1,0 +1,29 @@
+// 奖励
+function Trig_FCRewardConditions takes nothing returns boolean
+    return ((IsUnitIllusionBJ(GetEnteringUnit()) == false) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'dthb') == true))
+endfunction
+
+function Trig_FCRewardActions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    //创建兵书 24
+    call UnitAddItemByIdSwapped('crys', GetTriggerUnit())
+    //创建一装备
+    call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(32,87)], GetTriggerUnit())
+    // 不等于姜维 
+    if ((GetUnitTypeId(GetEnteringUnit()) != 'Hkal')) then
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcYangJia, "杨嘉", null, "感谢将军相助", bj_TIMETYPE_ADD, 0, true)
+    else
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcYangJia, "扬嘉", null, "将军，此乃你遗失的东西！", bj_TIMETYPE_ADD, 0, true)
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_FCReward takes nothing returns nothing
+    set gg_trg_FCReward = CreateTrigger()
+    call DisableTrigger(gg_trg_FCReward)
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_FCReward, gg_rct______________021)
+    call TriggerAddCondition(gg_trg_FCReward, Condition(function Trig_FCRewardConditions))
+    call TriggerAddAction(gg_trg_FCReward, function Trig_FCRewardActions)
+endfunction
+

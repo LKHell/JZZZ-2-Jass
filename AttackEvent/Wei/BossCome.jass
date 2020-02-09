@@ -1,0 +1,60 @@
+function Trig_BossComeActions takes nothing returns nothing
+    local integer level  = GetHeroLevel(gg_unit_Hpal_0031)
+    local location pointNormal = GetRectCenter(gg_rct_createWest)
+    local location pointSpecial = GetRandomLocInRect(gg_rct_createBoss)
+    //显示单位
+    call ShowUnitShow(udg_Boss[level])
+    if ((IsUnitAliveBJ(udg_Boss[level]) == false)) then
+        //若死亡 直接 进行下一波进攻
+        call TriggerExecute(gg_trg_NextAttack)
+        call TriggerExecute(gg_trg_ClearSpecialHero)
+        call MultiboardDisplay(udg_MB, true)
+        return
+    else
+    endif
+    call CreateNUnitsAtLoc(1, 'nder', Player(PLAYER_NEUTRAL_PASSIVE), pointSpecial, bj_UNIT_FACING)
+    // 单位计时器，用于记录停止进攻时间
+    set udg_DW123 = GetLastCreatedUnit()
+    // level mod 3  等级为3的倍数 最多持续6分钟
+    if ((ModuloInteger(level, 3) == 0)) then
+        call UnitApplyTimedLifeBJ(360.00, 'BEfn', udg_DW123)
+        call SetUnitPositionLoc(udg_Boss[level], pointNormal)
+        call DisplayTimedTextToForce(GetPlayersAll(), 6.00, (("敌主将：" + GetUnitName(udg_Boss[level])) + "已经出现，请小心应付！最多360秒后发动下一波进攻"))
+    else
+	// 普通进攻 设置 120 秒
+        call UnitApplyTimedLifeBJ(120.00, 'BEfn', udg_DW123)
+        call SetUnitPositionLoc(udg_Boss[level], pointSpecial)
+        if ((level != 17)) then
+            call DisplayTimedTextToForce(GetPlayersAll(), 6.00, (("敌主将：" + GetUnitName(udg_Boss[level])) + "已经出现，请小心应付！  最多120秒后发动下一波进攻"))
+        else
+            call DisplayTimedTextToForce(GetPlayersAll(), 6.00, (("敌主将：" + "荀攸") + "已经出现，请小心应付！  最多120秒后发动下一波进攻"))
+        endif
+    endif
+    // 难度3 添加 魔抗物品 等级 设为2 
+    if (udg_Difficulty == 3) then
+        call UnitAddAbility(udg_Boss[level], 'A0AH')
+        call IncUnitAbilityLevel(udg_Boss[level], 'A0AH')
+    else
+    endif
+    // 设置英雄所属为 玩家10  Player从0开始计算
+    call SetUnitOwner(udg_Boss[level], Player(9), true)
+    call IssuePointOrderLoc(udg_Boss[level], "attack", udg_GuanYuLocation)
+    //清除点
+    call RemoveLocation(pointNormal)
+    call RemoveLocation(pointSpecial)
+    set pointNormal = null
+    set pointSpecial = null
+    // 停止刷兵
+    call DisableTrigger(gg_trg_createSoldier)
+    call DisableTrigger(gg_trg_createBoss)
+    call DisableTrigger(gg_trg_createGhost)
+endfunction
+
+//===========================================================================
+function InitTrig_BossCome takes nothing returns nothing
+    set gg_trg_BossCome = CreateTrigger()
+
+    call TriggerRegisterTimerExpireEvent(gg_trg_BossCome, udg_JSQ)
+    call TriggerAddAction(gg_trg_BossCome, function Trig_BossComeActions)
+endfunction
+

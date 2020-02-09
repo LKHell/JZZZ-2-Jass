@@ -1,0 +1,36 @@
+
+
+function Trig_masConditions takes nothing returns boolean
+    //  And - 所有条件成立
+    //         条件
+    //             (Uint_MaSu 生命值大于零) 等于 TRUE
+    //             (Uint_MaSu 处于隐藏状态) 等于 FALSE
+    //             (Uint_MaSu 是镜像单位) 等于 FALSE
+    
+    return (((IsUnitAliveBJ(udg_Uint_MaSu) == true) and (IsUnitHiddenBJ(udg_Uint_MaSu) == false) and (IsUnitIllusionBJ(udg_Uint_MaSu) == false)))
+endfunction
+
+ 
+function Trig_masActions takes nothing returns nothing
+ 
+
+    local real x = GetWidgetX(udg_Uint_MaSu)
+    
+    local real y = GetWidgetY(udg_Uint_MaSu)
+    // 智力 * 雷动九天
+    set udg_Hero_Damage = GetHeroInt(udg_Uint_MaSu, true) * GetUnitAbilityLevelSwapped('AUls', udg_Uint_MaSu)
+    call GroupEnumUnitsInRange(udg_GroupFormHero , x, y , 300 , Condition (function GroupDamgeFilterUnitNormalUNIVERSAL))
+
+   
+endfunction
+
+//===========================================================================
+function InitTrig_mas takes nothing returns nothing
+    set gg_trg_mas = CreateTrigger()
+    call DisableTrigger(gg_trg_mas)
+ 
+    call TriggerRegisterTimerEventPeriodic(gg_trg_mas, 12.00)
+    call TriggerAddCondition(gg_trg_mas, Condition(function Trig_masConditions))
+    call TriggerAddAction(gg_trg_mas, function Trig_masActions)
+endfunction
+

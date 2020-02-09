@@ -1,0 +1,69 @@
+function Trig_fanpuConditions takes nothing returns boolean
+    return ((GetUnitTypeId(GetAttacker()) == 'Harf') and (IsPlayerAlly(GetOwningPlayer(GetAttackedUnitBJ()), Player(8)) == false))
+endfunction
+
+function Trig_fanpuActions takes nothing returns nothing
+    local real x 
+    local real y 
+    local unit uA= GetAttacker()
+    local unit uBA = GetAttackedUnitBJ()
+    local integer baseAgi= GetHeroAgi(udg_hero[GetConvertedPlayerId(GetOwningPlayer(uA))], true)
+    local integer i = 1
+    local real damageR 
+     
+    // x/6  并且拥有 怒意    并且 随机数 1-6 小于 孤军奋战等级
+    if (( GetUnitAbilityLevel (udg_hero[GetConvertedPlayerId(GetOwningPlayer(uA))] ,'Bbsk'  )> 0) and (GetRandomInt(1, 6) <= GetUnitAbilityLevel ( uA ,'A048'))) then
+         set i = GetRandomInt(2, (GetUnitAbilityLevel(uA, 'A048')))
+        
+        // 拥有青杠 额外附带 1-2 倍 敏捷
+        if ((UnitHasItemOfTypeBJ(uA, 'jdrn') == true)) then
+           set i = i+  GetRandomInt(1,2)
+        endif
+
+        // 镜像  80% 
+        if ((IsUnitIllusionBJ(uA) == true)) then
+            set damageR =  baseAgi * i * 0.8
+        else
+            set damageR =  baseAgi * i
+        endif
+
+
+         
+      
+        // 单位 - 命令 (攻击单位) 对 (被攻击单位) 造成 (敏捷 * 倍率 ) 点伤害(是 攻击伤害, 是远程攻击) 攻击类型: 法术 伤害类型: 通用 武器类型: 无
+        call UnitDamageTarget(uA, uBA, damageR , true, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
+        
+        // 被攻击单位 创建特效
+        set x = GetWidgetX(uBA)
+        set y = GetWidgetY(uBA)
+         call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\NightElf\\Starfall\\StarfallTarget.mdl", x, y))
+       
+        // 攻击单位 创建文字 不显示
+        // set udg_pointTemp = GetUnitLoc(uA)
+        // call CreateTextTagLocBJ("奋战", udg_pointTemp, 1.00, 15.00, 100.00, 100, 40.00, 20.00)
+        // call SetTextTagVelocityBJ(bj_lastCreatedTextTag, 30.00, 90)
+        // call SetTextTagPermanent(bj_lastCreatedTextTag, false)
+        // call SetTextTagLifespan(bj_lastCreatedTextTag, 1.00)
+        // call RemoveLocation(udg_pointTemp)
+         
+    else
+        // 默认攻击附带敏捷伤害      混乱（火）  普通
+        // 单位 - 命令 (攻击单位) 对 (被攻击单位) 造成 (敏捷 * 倍率 ) 点伤害(是 攻击伤害, 是远程攻击) 攻击类型: 混乱 伤害类型: 普通 武器类型: 无
+        call UnitDamageTarget(uA, uBA, baseAgi , true, true, ATTACK_TYPE_CHAOS, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+    endif
+    
+    set uA = null
+    set uBA = null
+endfunction
+
+//===========================================================================
+function InitTrig_fanpu takes nothing returns nothing
+    set gg_trg_fanpu = CreateTrigger()
+    // 默认关闭
+    call DisableTrigger(gg_trg_fanpu)
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_fanpu, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerAddCondition(gg_trg_fanpu, Condition(function Trig_fanpuConditions))
+    call TriggerAddAction(gg_trg_fanpu, function Trig_fanpuActions)
+endfunction
+

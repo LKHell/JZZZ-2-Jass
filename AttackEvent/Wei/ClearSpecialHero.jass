@@ -1,0 +1,21 @@
+function Trig_ClearSpecialHeroFunc001002002 takes nothing returns boolean
+    return (((IsUnitDeadBJ(GetFilterUnit()) == true) and (GetUnitPointValue(GetFilterUnit()) == 9)))
+endfunction
+
+function Trig_ClearSpecialHeroFunc002A takes nothing returns nothing
+    call RemoveUnit(GetEnumUnit())
+endfunction
+
+function Trig_ClearSpecialHeroActions takes nothing returns nothing
+    local group ydl_group = GetUnitsOfPlayerMatching(Player(10), Condition(function Trig_ClearSpecialHeroFunc001002002))
+    call ForGroupBJ(ydl_group, function Trig_ClearSpecialHeroFunc002A)
+    call DestroyGroup(ydl_group)
+    set ydl_group = null
+endfunction
+
+//===========================================================================
+function InitTrig_ClearSpecialHero takes nothing returns nothing
+    set gg_trg_ClearSpecialHero = CreateTrigger()
+    call TriggerAddAction(gg_trg_ClearSpecialHero, function Trig_ClearSpecialHeroActions)
+endfunction
+

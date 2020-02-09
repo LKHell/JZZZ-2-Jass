@@ -1,0 +1,34 @@
+globals
+    unit udg_NpcCunZhang
+endglobals
+
+function Trig_QDao1Conditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_QDao1Actions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    call SetUnitOwner(udg_NpcCunZhang, Player(8), true)
+    call EnableTrigger(gg_trg_QDao2)
+    call EnableTrigger(gg_trg_QDao3)
+    call QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_DISCOVERED, "为民除害")
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcCunZhang, "村长", null, "大人留步！", bj_TIMETYPE_ADD, 0, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcCunZhang, "村长", null, "东南方玄水池里有一群寒冰水蛇经常到村里来破坏，村民们都去了别的村落避难，如果你能将他们杀死，我会好好酬谢你的。", bj_TIMETYPE_ADD, 0, true)
+    call DisplayTextToForce(GetPlayersAll(), "寒冰水蛇 又出现了")
+
+    //创建小boss
+    call TriggerRegisterUnitEvent( gg_trg_QDBoss , CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'ncnk', 2389, 11354, 0), EVENT_UNIT_DEATH )
+    // 创建蛇胆
+    call CreateItem('I00T',GetRandomInt(2560,4443),GetRandomInt(12064,13408))
+
+endfunction
+
+//===========================================================================
+function InitTrig_QDao1 takes nothing returns nothing
+    set gg_trg_QDao1 = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_QDao1, gg_rct_______u)
+    call TriggerAddCondition(gg_trg_QDao1, Condition(function Trig_QDao1Conditions))
+    call TriggerAddAction(gg_trg_QDao1, function Trig_QDao1Actions)
+endfunction
+

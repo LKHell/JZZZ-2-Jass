@@ -1,0 +1,18 @@
+function Trig_NextAttackWActions takes nothing returns nothing
+    call DisplayTimedTextToForce(GetPlayersAll(), 6.00, "吴军发起了新一轮进攻")
+    // 训练场升级 
+    call SetHeroLevelBJ(gg_unit_Hpal_0031, (GetUnitLevel(gg_unit_Hpal_0031) + 1), false)
+    call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+    call StartTimerBJ(udg_JSQ, false, 60.00)
+    call CreateTimerDialogBJ(udg_JSQ, (GetUnitName(udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)]) + "出现倒记时!"))
+    call EnableTrigger(gg_trg_createSoldierW)
+endfunction
+
+//===========================================================================
+function InitTrig_NextAttackW takes nothing returns nothing
+    set gg_trg_NextAttackW = CreateTrigger()
+    call DisableTrigger(gg_trg_NextAttackW)
+
+    call TriggerAddAction(gg_trg_NextAttackW, function Trig_NextAttackWActions)
+endfunction
+

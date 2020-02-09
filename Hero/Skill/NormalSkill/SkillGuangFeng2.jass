@@ -1,0 +1,28 @@
+function Trig_SkillGuanFeng2Actions takes nothing returns nothing
+
+ 
+    // If - 条件
+    //     (关凤 0020 <预设> 的 属性附加 凤 技能等级) 大于 1
+    // Then - 动作
+    //     单位 - 使 关凤 0020 <预设> 的 属性附加 凤 等级降低1级
+    // Else - 动作
+    //     触发器 - 关闭 (当前触发)
+        
+
+    if ((GetUnitAbilityLevel(udg_unit_GuanFeng, 'A0BQ') > 1)) then
+        call DecUnitAbilityLevel(udg_unit_GuanFeng, 'A0BQ')
+    else
+        call DisableTrigger(GetTriggeringTrigger())
+        
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_SkillGuanFeng2 takes nothing returns nothing
+    set gg_trg_SkillGuanFeng2 = CreateTrigger()
+    call DisableTrigger(gg_trg_SkillGuanFeng2)
+ 
+    call TriggerRegisterTimerEventPeriodic(gg_trg_SkillGuanFeng2, 2.00)
+    call TriggerAddAction(gg_trg_SkillGuanFeng2, function Trig_SkillGuanFeng2Actions)
+endfunction
+

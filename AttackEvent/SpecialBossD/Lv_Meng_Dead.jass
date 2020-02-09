@@ -1,0 +1,19 @@
+function Trig_Lv_Meng_DeadActions takes nothing returns nothing
+    local unit b = gg_unit_Ogld_0044
+    call DestroyTrigger(GetTriggeringTrigger())
+  
+    call SetUnitOwner(b, Player(10), true)
+    call initA0AHLevel(b)  
+   
+    call ShowUnitShow(b)
+    //call SetUnitPositionLoc(b, GetRectCenter(gg_rct_wu_boss))
+endfunction
+
+//===========================================================================
+function InitTrig_Lv_Meng_Dead takes nothing returns nothing
+    set gg_trg_Lv_Meng_Dead = CreateTrigger()
+ 
+    call TriggerRegisterUnitEvent(gg_trg_Lv_Meng_Dead, gg_unit_E001_0119, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_Lv_Meng_Dead, function Trig_Lv_Meng_DeadActions)
+endfunction
+

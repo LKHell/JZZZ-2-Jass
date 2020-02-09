@@ -1,0 +1,21 @@
+function Trig_ToRoomAConditions takes nothing returns boolean
+    return ((GetItemTypeId(GetManipulatedItem()) == 'rwat'))
+endfunction
+
+function Trig_ToRoomAActions takes nothing returns nothing
+    if ((IsTriggerEnabled(gg_trg_DoRoomA) == false)) then
+        call EnableTrigger(gg_trg_DoRoomA)
+    else
+    endif
+    call SetUnitPositionLoc(GetTriggerUnit(), udg_RoomA_point)
+    call PanCameraToTimedLocForPlayer(GetTriggerPlayer(), udg_RoomA_point, 0)
+endfunction
+
+//===========================================================================
+function InitTrig_ToRoomA takes nothing returns nothing
+    set gg_trg_ToRoomA = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ToRoomA, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_ToRoomA, Condition(function Trig_ToRoomAConditions))
+    call TriggerAddAction(gg_trg_ToRoomA, function Trig_ToRoomAActions)
+endfunction
+

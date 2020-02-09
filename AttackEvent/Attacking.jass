@@ -1,0 +1,51 @@
+function Trig_AttackingFunc001002002 takes nothing returns boolean
+    return ((IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_AttackingFunc002002 takes nothing returns nothing
+    call IssuePointOrderLoc(GetEnumUnit(), "attack", udg_GuanYuLocation)
+endfunction
+
+function Trig_AttackingActions takes nothing returns nothing
+    local group vGroup =  GetUnitsOfPlayerMatching(Player(10), Condition(function Trig_AttackingFunc001002002))
+    set vGroup = GetUnitsOfPlayerMatching(Player(10), Condition(function Trig_AttackingFunc001002002))
+    call ForGroupBJ(vGroup, function Trig_AttackingFunc002002)
+    call DestroyGroup(vGroup)
+    set vGroup = GetUnitsInRectOfPlayer(gg_rct_createLeftUnit, Player(9))
+    call ForGroupBJ(vGroup, function Trig_AttackingFunc002002)
+    call DestroyGroup(vGroup)
+    set vGroup = GetUnitsInRectOfPlayer(gg_rct_createRightUnit, Player(9))
+    call ForGroupBJ(vGroup, function Trig_AttackingFunc002002)
+    call DestroyGroup(vGroup)
+    set vGroup = GetUnitsInRectOfPlayer(gg_rct_GhostWestArea, Player(9))
+    call ForGroupBJ(vGroup, function Trig_AttackingFunc002002)
+    call DestroyGroup(vGroup)
+    set vGroup = GetUnitsInRectOfPlayer(gg_rct_GhostEastArea, Player(9))
+    call ForGroupBJ(vGroup, function Trig_AttackingFunc002002)
+    call DestroyGroup(vGroup)
+    set vGroup = GetUnitsInRectOfPlayer(gg_rct_toux, Player(9))
+    call ForGroupBJ(vGroup, function Trig_AttackingFunc002002)
+    call DestroyGroup(vGroup)
+    set vGroup = GetUnitsInRectOfPlayer(gg_rct_fsr, Player(9))
+    call ForGroupBJ(vGroup, function Trig_AttackingFunc002002)
+    call DestroyGroup(vGroup)
+    set vGroup = GetUnitsInRectOfPlayer(gg_rct_wu, Player(9))
+    call ForGroupBJ(vGroup, function Trig_AttackingFunc002002)
+    call DestroyGroup(vGroup)
+    if (GetOwningPlayer(udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)]) != Player(11)) then
+        call IssuePointOrderLoc(udg_Boss[GetUnitLevel(gg_unit_Hpal_0031)], "attack", udg_GuanYuLocation)
+    else
+    endif
+    call IssuePointOrderLoc(udg_Boss[(GetUnitLevel(gg_unit_Hpal_0031) - 2)], "attack", udg_GuanYuLocation)
+    call IssuePointOrderLoc(udg_Boss[(GetUnitLevel(gg_unit_Hpal_0031) - 1)], "attack", udg_GuanYuLocation)
+    set vGroup = null
+endfunction
+
+//===========================================================================
+function InitTrig_Attacking takes nothing returns nothing
+    set gg_trg_Attacking = CreateTrigger()
+
+    call TriggerRegisterTimerEventPeriodic(gg_trg_Attacking, 8.00)
+    call TriggerAddAction(gg_trg_Attacking, function Trig_AttackingActions)
+endfunction
+

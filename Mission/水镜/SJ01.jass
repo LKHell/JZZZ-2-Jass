@@ -4,19 +4,22 @@ function Trig_SJ01Conditions takes nothing returns boolean
 endfunction
 
 function Trig_SJ01Func002A takes nothing returns nothing
-        if ((GetItemTypeId(GetEnumItem()) == 'ledg')) then
+    //黑鳞 换 黑龙玉
+    if ((GetItemTypeId(GetEnumItem()) == 'ledg')) then
         call RemoveItem(GetEnumItem())
-        call CreateItem('jpnt', -9352，-7210)
+        call CreateItem('jpnt', -9352,-7210)
         call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcShuiJing, udg_tsxuhun[310] , null, udg_tsxuhun[311], bj_TIMETYPE_ADD, 0, true)
     elseif ((GetItemTypeId(GetEnumItem()) == 'I00T')) then
+    // 蛇胆 换 吸血药水
         call RemoveItem(GetEnumItem())
-        call CreateItem('vamp', -9352，-7210)
+        call CreateItem('vamp', -9352,-7210)
         call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcShuiJing, udg_tsxuhun[310] , null,  udg_tsxuhun[312], bj_TIMETYPE_ADD, 0, true)
      
     elseif ((GetItemTypeId(GetEnumItem()) == 'I015')) then
+    // 虎幼崽 换 虎玉
         call RemoveItem(GetEnumItem())
-        call CreateItem('I01J', -9352，-7210)
-        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcShuiJing, udg_tsxuhun[310] , null,  udg_tsxuhun[313]， bj_TIMETYPE_ADD, 0, true)
+        call CreateItem('I01J', -9352,-7210)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcShuiJing, udg_tsxuhun[310] , null,  udg_tsxuhun[313], bj_TIMETYPE_ADD, 0, true)
     endif
 endfunction
 

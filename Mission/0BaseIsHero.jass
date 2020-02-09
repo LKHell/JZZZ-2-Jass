@@ -1,0 +1,3 @@
+function BaseIsHero takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction

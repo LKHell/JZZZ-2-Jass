@@ -1,3 +1,9 @@
+globals
+    // 任大头 初始化
+    unit udg_NpcRenDaTou
+endglobals
+
+
 function Trig_ShouPiConditions takes nothing returns boolean
     return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
 endfunction

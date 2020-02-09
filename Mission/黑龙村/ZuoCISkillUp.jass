@@ -1,0 +1,88 @@
+function Trig_ZuoCiSkillUpConditions takes nothing returns boolean
+    // 拥有最终强化
+    return ((GetItemTypeId(GetManipulatedItem()) == 'sorf'))
+endfunction
+
+function Trig_ZuoCiSkillUpActions takes nothing returns nothing
+//If - 条件
+    // ((触发单位) 拥有 |cffff8c00黑龙之玉) 等于 TRUE
+    // ((触发单位) 是 英雄) 等于 TRUE
+    // ((触发单位) 的英雄等级) 大于或等于 90
+    // ((触发单位) 的类型) 不等于 左慈
+    // zjjn[((触发玩家) 的玩家ID)] 等于 FALSE
+
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'jpnt') == true) and (IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true) and (GetHeroLevel(GetTriggerUnit()) >= 90) and (GetUnitTypeId(GetTriggerUnit()) != 'H000') and (udg_zjjn[GetConvertedPlayerId(GetTriggerPlayer())] == false)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'jpnt'))
+        set udg_zjjn[GetConvertedPlayerId(GetTriggerPlayer())] = true
+        // 火神降临
+        call IncUnitAbilityLevel  ( GetTriggerUnit(),'AUin')
+       // 天地元灵斩 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A01P')
+       // 毁天灭地 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'ANst')
+       // 武魂 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A08D')
+       // 风卷残云 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'ACwe')
+       // 雷动九天 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'AUls')
+       // 玄冰阵 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'AEsf')
+       // 圣泉 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'Ahwd')
+       // 混沌枪阵 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A00I')
+       // 愿以此力，斩杀敌军 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'ANcr')
+       // 克制 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A07C')
+       // 真实残像 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A00K')
+       // 圣灵护体 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A010')
+       // 万箭诀 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A00O')
+       // 巫云蔽日 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A04W')
+       // 终极闪避 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A04V')
+       // 力拔山兮气盖世 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'AHav')
+       // 火焰刀 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A00Z')
+       // 火山爆发 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'ANvc')
+       // 霜冻之域 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'AUdd')
+       // 星辰暴 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A01K')
+       // 援军令 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'ANsq')
+       // 天生蛮力 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A011')
+       // 孤军奋战 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A048')
+       // 鬼神听令 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A094')
+       // 十方圆舞曲 
+       call IncUnitAbilityLevel(GetTriggerUnit(), 'A08W')
+        
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_nrac_0212, "左慈之影", null, "终极技能已经提升", bj_TIMETYPE_ADD, 0, true)
+    else
+        if ((GetUnitTypeId(GetTriggerUnit()) != 'H000')) then
+            call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_nrac_0212, "左慈之影", null, "将军尚未达到吾之愿！", bj_TIMETYPE_ADD, 0, true)
+        else
+            call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_nrac_0212, "左慈", null, "我就是你，你就是我，你脑子有问题？", bj_TIMETYPE_ADD, 0, true)
+        endif
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_ZuoCiSkillUp takes nothing returns nothing
+    set gg_trg_ZuoCiSkillUp = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ZuoCiSkillUp, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_ZuoCiSkillUp, Condition(function Trig_ZuoCiSkillUpConditions))
+    call TriggerAddAction(gg_trg_ZuoCiSkillUp, function Trig_ZuoCiSkillUpActions)
+endfunction
+

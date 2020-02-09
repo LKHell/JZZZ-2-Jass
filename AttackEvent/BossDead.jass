@@ -1,0 +1,17 @@
+function Trig_BossDeadConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true) and (udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)] == GetTriggerUnit()))
+endfunction
+
+function Trig_BossDeadActions takes nothing returns nothing
+    call KillUnit(udg_DW123)
+endfunction
+
+//===========================================================================
+function InitTrig_BossDead takes nothing returns nothing
+    set gg_trg_BossDead = CreateTrigger()
+
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_BossDead, Player(9), EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_BossDead, Condition(function Trig_BossDeadConditions))
+    call TriggerAddAction(gg_trg_BossDead, function Trig_BossDeadActions)
+endfunction
+

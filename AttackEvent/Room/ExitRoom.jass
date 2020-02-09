@@ -1,0 +1,27 @@
+function Trig_ExitRoomConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true) and (GetOwningPlayer(GetTriggerUnit()) != Player(10)))
+endfunction
+
+function Trig_ExitRoomActions takes nothing returns nothing
+    local location temp = GetRectCenter(gg_rct_commanderArea)
+    call SetUnitPositionLoc(GetTriggerUnit(), temp)
+    call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetTriggerUnit()), temp, 0)
+
+
+ 
+
+    call RemoveLocation(temp)
+    set temp = null
+endfunction
+
+//===========================================================================
+function InitTrig_ExitRoom takes nothing returns nothing
+    set gg_trg_ExitRoom = CreateTrigger()
+
+    call TriggerRegisterEnterRectSimple(gg_trg_ExitRoom, gg_rct_ARoomExit)
+    call TriggerRegisterEnterRectSimple(gg_trg_ExitRoom, gg_rct_ARoom2Exit)
+    call TriggerRegisterEnterRectSimple(gg_trg_ExitRoom, gg_rct_BRoomExit)
+    call TriggerAddCondition(gg_trg_ExitRoom, Condition(function Trig_ExitRoomConditions))
+    call TriggerAddAction(gg_trg_ExitRoom, function Trig_ExitRoomActions)
+endfunction
+

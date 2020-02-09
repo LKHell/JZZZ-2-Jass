@@ -1,0 +1,41 @@
+function Trig_NextAttackActions takes nothing returns nothing
+    call DisplayTimedTextToForce(GetPlayersAll(), 6.00, "魏军发起了新一轮进攻")
+    call SetHeroLevelBJ(gg_unit_Hpal_0031, (GetUnitLevel(gg_unit_Hpal_0031) + 1), false)
+    call SetHeroLevelBJ(gg_unit_Hant_0005, (GetUnitLevel(gg_unit_Hant_0005) + 1), false)
+    set udg_hero[10] = udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)]
+    set udg_hero[11] = udg_Boss[(GetHeroLevel(gg_unit_Hpal_0031) - 1)]
+    call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+    if ((GetHeroLevel(gg_unit_Hpal_0031) > 14)) then
+        if ((GetHeroLevel(gg_unit_Hpal_0031) > 17)) then
+        //17 波后70 秒进攻
+            call StartTimerBJ(udg_JSQ, false, 70.00)
+        else
+        // 14-17 100秒进攻
+            call StartTimerBJ(udg_JSQ, false, 100.00)
+        endif
+    else
+    // 初期120秒进攻
+        call StartTimerBJ(udg_JSQ, false, 120.00)
+    endif
+    if ((GetUnitLevel(gg_unit_Hpal_0031) != 17)) then
+        call CreateTimerDialogBJ(udg_JSQ, (GetUnitName(udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)]) + "出现倒记时!"))
+    else
+        call CreateTimerDialogBJ(udg_JSQ, ("未知主将" + "出现倒记时!"))
+    endif
+    if ((ModuloInteger(GetUnitLevel(gg_unit_Hpal_0031), 3) == 0)) then
+        call SetTimeOfDay(18.50)
+        call DisplayTimedTextToForce(GetPlayersAll(), 6.00, "天象突变，小心鬼兵出没")
+        call EnableTrigger(gg_trg_createGhost)
+    else
+    endif
+    call EnableTrigger(gg_trg_createSoldier)
+    call EnableTrigger(gg_trg_createBoss)
+    call EnableTrigger(gg_trg_ItemClean)
+endfunction
+
+//===========================================================================
+function InitTrig_NextAttack takes nothing returns nothing
+    set gg_trg_NextAttack = CreateTrigger()
+    call TriggerAddAction(gg_trg_NextAttack, function Trig_NextAttackActions)
+endfunction
+

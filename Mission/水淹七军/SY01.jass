@@ -1,0 +1,93 @@
+ 
+
+// 奖励 10000 金币 15000 经验
+function Trig_SY01Func022A takes nothing returns nothing
+local integer i = 0
+loop 
+    exitwhen i>8
+    call AdjustPlayerStateBJ(10000, Player(i), PLAYER_STATE_RESOURCE_GOLD)
+    call AddHeroXPSwapped(15000, udg_hero[i+1], false)
+    set i = i+1
+endloop
+
+endfunction
+
+function Trig_SY01Func026002 takes nothing returns nothing
+    call SetUnitLifePercentBJ(GetEnumUnit(), 20.00)
+endfunction
+
+function Trig_SY01Actions takes nothing returns nothing
+   
+    call DestroyTrigger(GetTriggeringTrigger())
+    
+    call EnableTrigger(gg_trg_MYuJin)
+    call EnableTrigger(gg_trg_MPangDe)
+    // 循环创建特效
+    call EnableTrigger(gg_trg_SYLoop)
+    
+    
+   
+    
+    call  CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'n00Q', udg_global_PointYULIANG, 0)
+    call  CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'n00Q', udg_global_PointYULIANG, 0)
+    call  CreateUnitAtLoc(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'n00Q', udg_global_PointYULIANG, 0)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Hant_0005, "关羽", null, "好，让魏军见识一下吧！！", bj_TIMETYPE_ADD, 0, true)
+   // 特效
+    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Demon\\ReviveDemon\\ReviveDemon.mdl", gg_unit_Hant_0005, "overhead"))
+    call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Demon\\ReviveDemon\\ReviveDemon.mdl", GetTriggerUnit(), "overhead"))
+   
+    if ((IsUnitAliveBJ(gg_unit_Efur_0042) == true)) then
+        //传送特效
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl",GetWidgetX(gg_unit_Efur_0042),GetWidgetY(gg_unit_Efur_0042)))
+        //若于禁存活 移动到关羽面前
+        call SetUnitPosition (gg_unit_Efur_0042, -700,0 )
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl", -700,0))
+         
+    endif
+    
+    call DisplayTimedTextToForce(GetPlayersAll(), 15.00, "关羽发动水计：水淹七军")
+    set udg_pointTemp = GetRectCenter(gg_rct______________052)
+    call PingMinimapLocForForceEx(GetPlayersAll(), udg_pointTemp, 15.00, bj_MINIMAPPINGSTYLE_FLASHY, 100, 100, 100)
+    call RemoveLocation(udg_pointTemp)
+    call QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_COMPLETED, "水计成功，魏军大营被淹，敌营附近将士重伤，蜀军士气大增，所有玩家获得金钱奖励10000，经验值提升15000")
+    
+    
+     
+   call Trig_SY01Func022A()
+
+
+    // 涨潮
+    call SetDoodadAnimationRect(gg_rct______________052, 'IZrw', "stand", false)
+    
+    // 添加 八门金锁光环
+    call UnitAddAbility(gg_unit_Hant_0005, 'A03Y')
+    // boss 血量 减少
+    set udg_tempGroup = GetUnitsInRectOfPlayer(gg_rct______________052, Player(11))
+    call ForGroupBJ(udg_tempGroup, function Trig_SY01Func026002)
+    call DestroyGroup(udg_tempGroup)
+    
+    // 对话剧情
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_hbla_0084, "信使", null, "|Cff00ff00东吴信使参见关将军，此来特向将军送上书信一封。|r", bj_TIMETYPE_ADD, 0, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_hbla_0084, "信使", null, "|Cff00ff00我军新任都督陆逊大人常称赞道：关将军水淹七军，功过晋文公的城濮之战和韩信的背水破赵，还说，关羽一定可以夺取彻底胜利，攻下许昌擒下曹操已经是指日可待。|r", bj_TIMETYPE_ADD, 0, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Hant_0005, "关羽", null, "哈哈，好！好！回去后和他说，关某谢过都督，关某拿下许昌之日，一定请他大饮三天三夜，不醉不归！！", bj_TIMETYPE_ADD, 0, true)
+    call DisplayTimedTextToForce(GetPlayersAll(), 15.00, "探子：据说玄蛇村有强盗出没")
+    set udg_tsxuhun[10] = "据说玄蛇村外有强盗在和魏军交战"
+
+    // 关闭特效
+    call DisableTrigger(gg_trg_SYLoop)
+    call DestroyTrigger(gg_trg_SYLoop)
+
+    call DestroyTrigger(gg_trg_SY00)
+endfunction
+
+//===========================================================================
+function InitTrig_SY01 takes nothing returns nothing
+    set gg_trg_SY01 = CreateTrigger()
+ 
+    call TriggerRegisterUnitEvent(gg_trg_SY01, gg_unit_nntt_0136, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_SY01, function Trig_SY01Actions)
+endfunction
+
+
+
+

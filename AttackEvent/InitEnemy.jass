@@ -1,0 +1,230 @@
+function Trig_InitEnemyActions takes nothing returns nothing
+//设置 unitNormal[1] = 小孩
+  set udg_unitNormal[1] = 'nvlk'
+//设置 unitNormal[2] = 村民 (男性 2)
+  set udg_unitNormal[2] = 'nvl2'
+//设置 unitNormal[3] = 村民 (女性)
+  set udg_unitNormal[3] = 'nvlw'
+//设置 unitNormal[4] = 小孩 (2)
+  set udg_unitNormal[4] = 'nvk2'
+//设置 unitNormal[5] = 村民 (男性)
+  set udg_unitNormal[5] = 'nvil'
+//-------- ------------------------- --------
+  // -------------------------
+//设置 JNsuiji[1] = 霜冻护甲 (自动施放) (b)
+  set udg_JNsuiji[1] = 'ACfu'
+//设置 JNsuiji[2] = 浸毒武器 减速Boss
+  set udg_JNsuiji[2] = 'A076'
+//设置 JNsuiji[3] = 专注光环 (中立敌对)
+  set udg_JNsuiji[3] = 'ACav'
+//设置 JNsuiji[4] = 吸血光环 (B)
+  set udg_JNsuiji[4] = 'ACvp'
+//设置 JNsuiji[5] = 心灵之火 B
+  set udg_JNsuiji[5] = 'Ainf'
+//设置 JNsuiji[6] = 恐怖嚎叫 (B)
+  set udg_JNsuiji[6] = 'Acht'
+//设置 JNsuiji[7] = 消魔 Boss
+  set udg_JNsuiji[7] = 'A0BI'
+//设置 JNsuiji[8] = 重击 25% 0.1
+  set udg_JNsuiji[8] = 'A09O'
+//设置 JNsuiji[9] = 耐久光环 (BOSS)
+  set udg_JNsuiji[9] = 'S003'
+//设置 JNsuiji[10] = 致命一击 (20%3倍)
+  set udg_JNsuiji[10] = 'ACct'
+//设置 JNsuiji[11] = 荆棘光环 (中立敌对)
+  set udg_JNsuiji[11] = 'ACah'
+//设置 JNsuiji[12] = 致命一击 (20%3倍)
+  set udg_JNsuiji[12] = 'ACct'
+//设置 JNsuiji[13] = 黑暗冰毒
+  set udg_JNsuiji[13] = 'Apoi'
+//设置 JNsuiji[14] = 诅咒 Boss
+  set udg_JNsuiji[14] = 'A0BJ'
+//设置 JNsuiji[15] = +魔抗66 (物品)
+  set udg_JNsuiji[15] = 'A045'
+//设置 JNsuiji[16] = 反馈
+  set udg_JNsuiji[16] = 'Afbb'
+//设置 JNsuiji[17] = Z刑天2 
+  set udg_JNsuiji[17] = 'A015'
+//设置 JNsuiji[18] = Z青缸 
+  set udg_JNsuiji[18] = 'A01B'
+//设置 JNsuiji[19] = Z项羽刃 
+  set udg_JNsuiji[19] = 'A013'
+//设置 JNsuiji[20] = Z日月 
+  set udg_JNsuiji[20] = 'A01H'
+//设置 JNsuiji[21] = Z古锭 
+  set udg_JNsuiji[21] = 'A037'
+//设置 JNsuiji[22] = Z水神之球
+  set udg_JNsuiji[22] = 'AIll'
+//设置 unitEnemyBoss[1] = 牙门将军
+  set udg_unitEnemyBoss[1] = 'Hmkg'
+//设置 unitEnemyBoss[2] = 军师
+  set udg_unitEnemyBoss[2] = 'Hblm'
+//设置 unitEnemyBoss[3] = 裨将军
+  set udg_unitEnemyBoss[3] = 'Obla'
+//设置 unitEnemyBoss[4] = 中郎将
+  set udg_unitEnemyBoss[4] = 'Ofar'
+//设置 unitEnemyBoss[5] = 偏将军
+  set udg_unitEnemyBoss[5] = 'Otch'
+//设置 unitEnemyBoss[6] = 参军
+  set udg_unitEnemyBoss[6] = 'Oshd'
+//触发器 - 开启 createBoss <预设>
+  call EnableTrigger(gg_trg_createBoss)
+//-------- ------------------------- --------
+  // -------------------------
+//设置 unitEnemy[1] = 步兵
+  set udg_unitEnemy[1] = 'hfoo'
+//设置 unitEnemy[2] = 弓箭手 2
+  set udg_unitEnemy[2] = 'earc'
+//设置 unitEnemy[3] = （魂）刀斧手 3
+  set udg_unitEnemy[3] = 'nrog'
+//设置 unitEnemy[4] = 投矛兵 4
+  set udg_unitEnemy[4] = 'ohun'
+//设置 unitEnemy[5] = 铁甲步兵 5
+  set udg_unitEnemy[5] = 'ogru'
+//设置 unitEnemy[6] = （魂）掷斧手 6
+  set udg_unitEnemy[6] = 'nftb'
+//设置 unitEnemy[7] = 战车 7
+  set udg_unitEnemy[7] = 'ebal'
+//设置 unitEnemy[8] = 西凉女兵 8
+  set udg_unitEnemy[8] = 'esen'
+//设置 unitEnemy[9] = （魂）怨灵 9
+  set udg_unitEnemy[9] = 'uban'
+//设置 unitEnemy[10] = 巫师 10
+  set udg_unitEnemy[10] = 'nw2w'
+//设置 unitEnemy[11] = 羌骑兵 11
+  set udg_unitEnemy[11] = 'hcth'
+//设置 unitEnemy[12] = （魂）青州兵 12
+  set udg_unitEnemy[12] = 'nban'
+//设置 unitEnemy[13] = 幽魂 13
+  set udg_unitEnemy[13] = 'nchr'
+//设置 unitEnemy[14] = 投斧手 14
+  set udg_unitEnemy[14] = 'ndtb'
+//设置 unitEnemy[15] = （魂）鲜卑骑射 15
+  set udg_unitEnemy[15] = 'nbrg'
+//设置 unitEnemy[16] = 高级铁甲步兵 16
+  set udg_unitEnemy[16] = 'ogrk'
+//设置 unitEnemy[17] = 蛮兵 17
+  set udg_unitEnemy[17] = 'otau'
+//设置 unitEnemy[18] = （魂）虎贲营 18
+  set udg_unitEnemy[18] = 'nlrv'
+//设置 unitEnemy[19] = 丹阳兵 19
+  set udg_unitEnemy[19] = 'hhes'
+//设置 unitEnemy[20] = 霹雳车 20
+  set udg_unitEnemy[20] = 'ncat'
+//设置 unitEnemy[21] = （魂）陷阵营 21
+  set udg_unitEnemy[21] = 'nchg'
+//设置 unitEnemy[22] = 虎豹骑 22
+  set udg_unitEnemy[22] = 'owar'
+//设置 unitEnemy[23] = 东吴水兵（枪）
+  set udg_unitEnemy[23] = 'nbel'
+//设置 unitEnemy[24] = 东吴水兵（弩）
+  set udg_unitEnemy[24] = 'nhea'
+//设置 unitEnemy[25] = 东吴水兵（戟）
+  set udg_unitEnemy[25] = 'nbld'
+//设置 unitEnemy[26] = 东吴水兵（术士）
+  set udg_unitEnemy[26] = 'odkt'
+//设置 unitEnemy[27] = 东吴水兵（术士）
+  set udg_unitEnemy[27] = 'odkt'
+//触发器 - 开启 createSoldier <预设>
+  call EnableTrigger(gg_trg_createSoldier)
+//-------- ------------------------- --------
+  // -------------------------
+//设置 Boss[1] = |cffffdead庞会 1 0035 <预设>
+  set udg_Boss[1] = gg_unit_Hhkl_0035
+//设置 Boss[2] = |cffffdead曹仁 2 0032 <预设>
+  set udg_Boss[2] = gg_unit_Ocbh_0032
+//设置 Boss[3] = 满宠 3 0077 <预设>
+  set udg_Boss[3] = gg_unit_Hamg_0077
+//设置 Boss[4] = |cffffdead李典 0043 <预设>
+  set udg_Boss[4] = gg_unit_Ubal_0043
+//设置 Boss[5] = |cffffdead于禁 5 0042 <预设>
+  set udg_Boss[5] = gg_unit_Efur_0042
+//设置 Boss[6] = |cffffdead夏侯德 0052 <预设>
+  set udg_Boss[6] = gg_unit_Uanb_0052
+//设置 Boss[7] = |cffffdead杨修 0048 <预设>
+  set udg_Boss[7] = gg_unit_Npld_0048
+//设置 Boss[8] = |cffffdead徐晃 0041 <预设>
+  set udg_Boss[8] = gg_unit_Nman_0041
+//设置 Boss[9] = 曹丕 9 0141 <预设>
+  set udg_Boss[9] = gg_unit_Npbm_0141
+//设置 Boss[10] = |cffffdead张馨 10 0034 <预设>
+  set udg_Boss[10] = gg_unit_Othr_0034
+//设置 Boss[11] = 张合 0038 <预设>
+  set udg_Boss[11] = gg_unit_Edem_0038
+//设置 Boss[12] = |cffffdead乐进 0170 <预设>
+  set udg_Boss[12] = gg_unit_U006_0170
+//设置 Boss[13] = |cffffdead曹洪 13 0040 <预设>
+  set udg_Boss[13] = gg_unit_Utic_0040
+//设置 Boss[14] = |cffffdead庞德 0036 <预设>
+  set udg_Boss[14] = gg_unit_Uvar_0036
+//设置 Boss[15] = |cffffdead夏侯敦 0050 <预设>
+  set udg_Boss[15] = gg_unit_Uvng_0050
+//设置 Boss[16] = |cffffdead许褚 0033 <预设>
+  set udg_Boss[16] = gg_unit_Hmbr_0033
+//设置 Boss[17] = |cffffdead吕岱 0039 <预设>
+  set udg_Boss[17] = gg_unit_Uwar_0039
+//设置 Boss[18] = 张辽 0143 <预设>
+  set udg_Boss[18] = gg_unit_Ucrl_0143
+//设置 Boss[19] = |cffffdead贾诩 (巫妖) 0120 <预设>
+  set udg_Boss[19] = gg_unit_Uktl_0120
+//设置 Boss[20] = |cffffdead司马懿 0070 <预设>
+  set udg_Boss[20] = gg_unit_Nsjs_0070
+//设置 Boss[21] = 曹操 0047 <预设>
+  set udg_Boss[21] = gg_unit_Udea_0047
+//-------- 东吴 --------
+  // 东吴
+//设置 Boss[22] = |Cffffff00蒋钦 0051 <预设>
+  // set udg_Boss[22] = gg_unit_Usyl_0051
+//设置 Boss[23] = |Cffffff00蒋钦 0051 <预设>
+  set udg_Boss[23] = gg_unit_Usyl_0051
+//设置 Boss[24] = 周泰 0140 <预设>
+  set udg_Boss[24] = gg_unit_Nplh_0140
+//设置 Boss[25] = |cffffdead吕蒙 0119 <预设>
+  set udg_Boss[25] = gg_unit_E001_0119
+//-------- 特殊 --------
+  // 特殊
+//设置 Boss[26] = 甄姬 9- 0142 <预设>
+  set udg_Boss[26] = gg_unit_Nbst_0142
+//设置 Boss[27] = |cffffdead典韦 （魂） 0169 <预设>
+  set udg_Boss[27] = gg_unit_H00A_0169
+//设置 Boss[28] = |Cffffff00司马昭 (资料片) 0071 <预设>
+  set udg_Boss[28] = gg_unit_Ocb2_0071
+//设置 Boss[29] = |cffffdead荀攸 0072 <预设>
+  set udg_Boss[29] = gg_unit_Ewrd_0072
+//设置 Boss[30] = |Cffffff00夏侯渊（魂） 0049 <预设>
+  set udg_Boss[30] = gg_unit_Udth_0049
+//设置 Boss[31] = |cffffdead乐琳 0109 <预设>
+  set udg_Boss[31] = gg_unit_U004_0109
+//设置 Boss[32] = |cffffdead潘璋 0080 <预设>
+  set udg_Boss[32] = gg_unit_Hdgo_0080
+//设置 Boss[33] = |cffffdead吕岱 0144 <预设>
+  set udg_Boss[33] = gg_unit_Uwar_0144
+//设置 Boss[34] = |cffffdead程普 (邪恶的) 0037 <预设>
+  set udg_Boss[34] = gg_unit_Uear_0037
+//设置 Boss[35] = |cffffdead吕霸 0172 <预设>
+  set udg_Boss[35] = gg_unit_U007_0172
+//设置 Boss[36] = |Cffffff00曹仁 0053 <预设>
+  set udg_Boss[36] = gg_unit_Umal_0053
+//设置 Boss[37] = |cffffdead陆逊 0044 <预设>
+  set udg_Boss[37] = gg_unit_Ogld_0044
+//设置 Boss[38] = |cffffdead张虎 0168 <预设>
+  set udg_Boss[38] = gg_unit_U005_0168
+//设置 Boss[39] = |cffffdead夏侯尚 0303 <预设>
+  set udg_Boss[39] = gg_unit_U00A_0303
+//计时器 - 为 JSQ 创建计时器窗口,标题: ((Boss[(训练场长官 0031 <预设> 的英雄等级)] 的名字) + 出现倒记时!)
+  call CreateTimerDialogBJ(udg_JSQ, (GetUnitName(udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)]) + "出现倒记时!"))
+//计时器 - 运行 JSQ，模式: 一次，周期: 250.00 秒
+  call StartTimerBJ(udg_JSQ, false, 250.00)
+//触发器 - 开启 TS <预设>
+  call EnableTrigger(gg_trg_TipsTimer)
+//触发器 - 删除 (当前触发)
+  call DestroyTrigger(GetTriggeringTrigger())
+endfunction
+
+//===========================================================================
+function InitTrig_InitEnemy takes nothing returns nothing
+    set gg_trg_InitEnemy = CreateTrigger()
+    call TriggerRegisterTimerEventSingle(gg_trg_InitEnemy, 15.00)
+    call TriggerAddAction(gg_trg_InitEnemy, function Trig_InitEnemyActions)
+endfunction
+

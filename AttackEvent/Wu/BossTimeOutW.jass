@@ -1,0 +1,18 @@
+function Trig_JSQ22_wConditions takes nothing returns boolean
+    return ((GetUnitTypeId(GetTriggerUnit()) == 'nder'))
+endfunction
+
+function Trig_JSQ22_wActions takes nothing returns nothing
+    call TriggerExecute(gg_trg_NextAttackW)
+endfunction
+
+//===========================================================================
+function InitTrig_BossTimeOutW takes nothing returns nothing
+    set gg_trg_BossTimeOutW = CreateTrigger()
+    call DisableTrigger(gg_trg_BossTimeOutW)
+
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_BossTimeOutW, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_BossTimeOutW, Condition(function Trig_JSQ22_wConditions))
+    call TriggerAddAction(gg_trg_BossTimeOutW, function Trig_JSQ22_wActions)
+endfunction
+

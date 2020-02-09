@@ -1,0 +1,14 @@
+
+function Trig_AYEndActions takes nothing returns nothing
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcAYao, "阿瑶", null, "我一定会守护好这个地方，让它恢复以前的鸟语花香。谢谢你们，祝你们好运！", bj_TIMETYPE_ADD, 0, true)
+endfunction
+
+//===========================================================================
+function InitTrig_AYEnd takes nothing returns nothing
+    set gg_trg_AYEnd = CreateTrigger()
+    call DisableTrigger(gg_trg_AYEnd)
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_AYEnd, gg_rct_AY3)
+    call TriggerAddAction(gg_trg_AYEnd, function Trig_AYEndActions)
+endfunction
+

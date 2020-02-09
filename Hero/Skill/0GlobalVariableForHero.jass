@@ -2,7 +2,6 @@ globals
       // real udg_realX
       // real udg_realY
       group udg_GroupFormHero=CreateGroup()
-      
 endglobals
 
 
@@ -17,6 +16,15 @@ function GroupDamgeFilterUnitNormalENHANCED takes nothing returns boolean
     return false
 endfunction
 
+
+//对匹配单位造成 法术 通用 伤害
+function GroupDamgeFilterUnitNormalUNIVERSAL takes nothing returns boolean
+    if ((IsUnitAlly(GetFilterUnit(), GetOwningPlayer(GetTriggerUnit())) == false)) then 
+        call UnitDamageTargetBJ(GetTriggerUnit(), GetFilterUnit(), udg_Hero_Damage , ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL)
+    endif
+
+    return false
+endfunction
 
 function HeroDamageMulti takes nothing returns integer
     local integer i = 1

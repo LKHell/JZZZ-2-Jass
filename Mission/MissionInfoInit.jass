@@ -1,0 +1,11 @@
+// MissionInfoInit
+//     事件
+//         时间 - Elapsed game time is 15.00 seconds
+//     条件
+//     动作
+//         任务 - Create a 主要 quest titled 保护关羽 with the description |cffffcc00关羽箭..., using icon path ReplaceableTextures\CommandButtons\BTN_gy01.blp
+//         任务 - Create a 主要 quest titled 天下大势 with the description |cffffcc00曹操在..., using icon path ReplaceableTextures\CommandButtons\BTNPurge.blp
+//         任务 - Create a 主要 quest titled 关于本图 with the description 荆州之战系列..., using icon path ReplaceableTextures\CommandButtons\BTNPurge.blp
+//         任务 - Create a 主要 quest titled 游戏命令 with the description 所有玩家：  ..., using icon path ReplaceableTextures\CommandButtons\BTNUnloadPeon.blp
+//         -------- -------- --------
+//         任务 - Create a 主要 quest titled 游戏命令 with the description 所有玩家：  ..., using icon path ReplaceableTextures\CommandButtons\BTNUnloadPeon.blp

@@ -1,0 +1,43 @@
+function Trig_YC3Conditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_YC3Actions takes nothing returns nothing
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'envl') == true)) then
+        call DestroyTrigger(GetTriggeringTrigger())
+        
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'envl'))
+
+
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcXuHun, "许混", null, "真是太感谢你了。这是我给你的报酬，请收下吧！此乃仙器——琼浆玉露", bj_TIMETYPE_ADD, 0, true)
+        call QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_COMPLETED, "调查泉水（完成）")
+        call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(1, 30)], GetTriggerUnit())
+        call UnitAddItemByIdSwapped('shrs', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), "你得到了5000经验值，以及一件装备")
+        call AddHeroXPSwapped(5000, GetTriggerUnit(), true)
+       
+
+        // 新建泉水
+        call RemoveUnit(udg_NpcQuan)
+        set udg_NpcQuan =  CreateUnit(Player(8), 'ohwd',8342, 3045,270)
+        
+    else
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcXuHun, "许混", null, "没想到他们居然如此狠心，年轻人能否再请你帮我去黑龙山上的泉水处打一泉水？", bj_TIMETYPE_ADD, 0, true)
+      
+         
+
+        call PingMinimapEx(8395,-3120, 15,255, 255, 255, true)
+       
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_YC3 takes nothing returns nothing
+    set gg_trg_YC3 = CreateTrigger()
+    call DisableTrigger(gg_trg_YC3)
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_YC3, gg_rct____u)
+    call TriggerAddCondition(gg_trg_YC3, Condition(function Trig_YC3Conditions))
+    call TriggerAddAction(gg_trg_YC3, function Trig_YC3Actions)
+endfunction
+

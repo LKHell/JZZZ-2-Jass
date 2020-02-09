@@ -1,0 +1,39 @@
+function Trig_BossComeWActions takes nothing returns nothing
+    local location   tempPoint = GetRectCenter(gg_rct_wu_boss)
+    call ShowUnitShow(udg_Boss[GetUnitLevel(gg_unit_Hpal_0031)])
+    
+    if ((udg_system6 == true)) then
+        //添加狂暴
+        call UnitAddAbility(udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)], 'A0AO')
+    else
+    endif
+    if ((udg_Difficulty == 3)) then
+        //添加魔抗
+        call UnitAddAbility(udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)], 'A0AH')
+        call IncUnitAbilityLevel(udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)], 'A0AH')
+    else
+    endif
+    // 发布消息
+    call DisplayTimedTextToForce(GetPlayersAll(), 6.00, (("敌主将：" + GetUnitName(udg_Boss[GetUnitLevel(gg_unit_Hpal_0031)])) + "已经出现，请小心应付！"))
+    call SetUnitOwner(udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)], Player(9), true)
+    call IssuePointOrderLoc(udg_Boss[GetUnitLevel(gg_unit_Hpal_0031)], "attack", udg_GuanYuLocation)
+    //创建无色神鹿
+    call CreateNUnitsAtLoc(1, 'nder', Player(PLAYER_NEUTRAL_PASSIVE), tempPoint, bj_UNIT_FACING)
+    set udg_DW123 = GetLastCreatedUnit()
+    call UnitApplyTimedLifeBJ(60.00, 'BEfn', udg_DW123)
+    //清除点
+    call RemoveLocation(tempPoint)
+    set tempPoint = null
+    // 关闭刷兵
+    call DisableTrigger(gg_trg_createSoldierW)
+endfunction
+
+//===========================================================================
+function InitTrig_BossComeW takes nothing returns nothing
+    set gg_trg_BossComeW = CreateTrigger()
+    call DisableTrigger(gg_trg_BossComeW)
+
+    call TriggerRegisterTimerExpireEvent(gg_trg_BossComeW, udg_JSQ)
+    call TriggerAddAction(gg_trg_BossComeW, function Trig_BossComeWActions)
+endfunction
+

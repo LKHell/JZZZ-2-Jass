@@ -1,0 +1,29 @@
+function Trig_Lv_Dai_AConditions takes nothing returns boolean
+    return ((IsUnitAlly(GetTriggerUnit(), Player(8)) == true) and (IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_Lv_Dai_AActions takes nothing returns nothing
+    if ((IsUnitDeadBJ(gg_unit_Uwar_0039) == true)) then
+        call DestroyTrigger(GetTriggeringTrigger())
+        call SetUnitOwner(gg_unit_H00B_0194, Player(PLAYER_NEUTRAL_AGGRESSIVE), false)
+        call SetUnitInvulnerable(gg_unit_H00B_0194, false)
+        call SetUnitOwner(gg_unit_H00C_0193, Player(PLAYER_NEUTRAL_AGGRESSIVE), false)
+        call SetUnitInvulnerable(gg_unit_H00C_0193, false)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Uwar_0039, "？？", null, "那就有劳二位了", bj_TIMETYPE_ADD, 0, true)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Nalc_0065, "关索", null, "汝等作甚？吴国吕岱怎会在此？", bj_TIMETYPE_ADD, 0, true)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Nalc_0065, "关羽", null, "汝等竟敢私通吴军？来人速速将其拿下！", bj_TIMETYPE_ADD, 0, true)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_H00B_0194, "麋芳", null, "糟糕，合谋之事已经败露看来只能一战了！", bj_TIMETYPE_ADD, 0, true)
+    else
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_H00B_0194, "麋芳", null, "将军近来可好？", bj_TIMETYPE_ADD, 0, true)
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_Lv_Dai_A takes nothing returns nothing
+    set gg_trg_Lv_Dai_A = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_Lv_Dai_A, gg_rct______________074)
+    call TriggerAddCondition(gg_trg_Lv_Dai_A, Condition(function Trig_Lv_Dai_AConditions))
+    call TriggerAddAction(gg_trg_Lv_Dai_A, function Trig_Lv_Dai_AActions)
+endfunction
+

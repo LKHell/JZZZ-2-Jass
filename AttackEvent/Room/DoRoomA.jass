@@ -1,0 +1,17 @@
+function Trig_DoRoomAActions takes nothing returns nothing
+    local group g = GetUnitsInRectOfPlayer(gg_rct_ARoom, Player(10))
+    if ((CountUnitsInGroup(g) < 11)) then
+        call CreateNUnitsAtLoc(3, udg_unitEnemy[GetUnitLevel(gg_unit_Hpal_0031)], Player(10), udg_RoomA_point, bj_UNIT_FACING)
+    else
+    endif
+    call DestroyGroup(g)
+    set g = null
+endfunction
+
+//===========================================================================
+function InitTrig_DoRoomA takes nothing returns nothing
+    set gg_trg_DoRoomA = CreateTrigger()
+    call DisableTrigger(gg_trg_DoRoomA) 
+    call TriggerRegisterTimerEventPeriodic(gg_trg_DoRoomA, 2.00)
+    call TriggerAddAction(gg_trg_DoRoomA, function Trig_DoRoomAActions)
+endfunction

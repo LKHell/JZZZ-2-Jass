@@ -1,0 +1,18 @@
+globals
+    unit udg_NpcAYao
+endglobals
+
+function Trig_AYLuoShenDropActions takes nothing returns nothing
+    // 创建洛神
+    call CreateItem('cnhn',GetWidgetX(GetTriggerUnit()),GetWidgetY(GetTriggerUnit()))
+
+    call DestroyTrigger(GetTriggeringTrigger())
+endfunction
+
+//===========================================================================
+function InitTrig_AYLuoShenDrop takes nothing returns nothing
+    set gg_trg_AYLuoShenDrop = CreateTrigger()
+     
+
+    call TriggerAddAction(gg_trg_AYLuoShenDrop, function Trig_AYLuoShenDropActions)
+endfunction

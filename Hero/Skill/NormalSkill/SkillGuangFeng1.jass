@@ -1,0 +1,45 @@
+globals
+       
+      unit udg_unit_GuanFeng
+endglobals
+
+
+
+function Trig_SkillGuanFeng1Conditions takes nothing returns boolean
+    // 关凤发动技能效果 凤魂
+    return ((GetSpellAbilityId() == 'A0BP')) and (GetUnitTypeId(GetTriggerUnit()) == 'Ogrh')
+endfunction
+
+
+
+
+function Trig_SkillGuanFeng1Actions takes nothing returns nothing
+    local integer i = GetUnitAbilityLevel(GetTriggerUnit(), GetSpellAbilityId())
+    // 判断触发器是否开启
+    if ((IsTriggerEnabled(gg_trg_SkillGuanFeng2) == false)) then
+        call EnableTrigger(gg_trg_SkillGuanFeng2)
+    else
+        set i = i + GetUnitAbilityLevel(GetTriggerUnit(), 'A0BQ')
+        if ((i > 16)) then
+            set i = 16
+        endif
+    endif
+
+    set udg_unit_GuanFeng = GetTriggerUnit()
+
+    // 设置凤魂属性等级 
+    call SetUnitAbilityLevel(GetTriggerUnit(), 'A0BQ', i)
+endfunction
+
+//===========================================================================
+function InitTrig_SkillGuanFeng1 takes nothing returns nothing
+    set gg_trg_SkillGuanFeng1 = CreateTrigger()
+ 
+
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_SkillGuanFeng1, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+    
+    call TriggerAddCondition(gg_trg_SkillGuanFeng1 ,Condition(function Trig_SkillGuanFeng1Conditions)  )
+    
+    call TriggerAddAction(gg_trg_SkillGuanFeng1, function Trig_SkillGuanFeng1Actions)
+endfunction
+

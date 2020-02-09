@@ -1,0 +1,27 @@
+function Trig_MissionInfoInit2Actions takes nothing returns nothing
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "开局", "|cffffcc00不知道从何方出现一群强盗，它们无恶不作！偷了东海明珠，在西南附近出没。|n西方有很多鱼，据说杀死可以获得木材|n东方有东瀛人出没，快去处理了他们吧|n南方有飞龙出没，可以去清理一下么？|n城外的木头据说可以掉落护身符", "ReplaceableTextures\\CommandButtons\\BTNMonsterLure.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "水镜先生的难题", "|cffffcc00水镜先生想沏茶，但又没有木材起火，这可如何是好？", "ReplaceableTextures\\CommandButtons\\BTNPandarenBrewmaster.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "石场", "|cffffcc00白虎谷北方有很多石头，据说孔明在那里练过兵，不知道是真是假|n|r可以尝试将陆逊引到那里", "ReplaceableTextures\\CommandButtons\\BTNSentinel.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "神仙眷侣", "|cffffcc00西南方有个鸳鸯岛，上面住着一对神仙眷侣", "ReplaceableTextures\\CommandButtons\\BTNStormBrewmaster.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "魔神传说", "|cffffcc00传说这附近有项羽的陵墓，有刑天的洞穴，还有黑水玄蛇，洛神最近也有现世的现象，却不知道它们具体在什么位置。因为知道的人，早就没了性命，又怎么回得来？", "ReplaceableTextures\\CommandButtons\\BTNKiljaedin.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "为民除害", "|cffffcc00东北方的玄蛇村附近里住着一群玄蛇，严重影响了当地附近百姓的生活，当地村长十分烦恼，四处请人斩妖除魔。只是，蛇妖蛮横，常人都不敢越雷池半步。", "ReplaceableTextures\\CommandButtons\\BTNNagaMyrmidonRoyalGuard.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "关羽的伤", "|cffffcc00关羽箭伤严重，不知道当地有没有医术高明之士", "ReplaceableTextures\\CommandButtons\\BTNjuchi.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "圣坛", "|cffffcc00北方的圣坛最近总有一些躁动，百姓说是邪神要降临了。", "ReplaceableTextures\\CommandButtons\\BTNPortal.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "圣兽", "|cffffcc00上古圣兽青龙白虎玄武朱雀，守护华夏大地。相传若能得到它们的帮助，一定可以平定天下。|n|r城外有一位老者据说需要他们", "ReplaceableTextures\\CommandButtons\\BTNPurge.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "钟由盗甲", "|cffffcc00相传钟诗、由兄弟二人，好鸡鸣狗盗，坑蒙拐骗样要精通，终日游山玩水不务正业，却也不忘四处收刮敛财，更时常盗取世间宝物，实是为天下人所不齿。|n|r据说他们需要夜明珠", "ReplaceableTextures\\CommandButtons\\BTNVillagerMan1.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "神仙的宝贝", "|cffffcc00传说神仙左慈和南华老仙收集了许多奇珍异宝，、。另外，位于渔村的神仙左慈可以帮玩家重置技能CD。", "ReplaceableTextures\\CommandButtons\\BTNGhostMage.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "虎将之后", "|cffffcc00虎将吕布威慑四方，得吕布者可得天下，听闻吕布之女到处挑战天下豪杰", "ReplaceableTextures\\CommandButtons\\BTN_lb01.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "天下无双", "|cffffcc00一个是倾城倾国，一个是万夫莫敌。他们真的是阴阳相隔，再也无法在一起了吗？可是，她又总觉得他就在身边，从未分离。", "ReplaceableTextures\\CommandButtons\\BTNSorceress.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "终极提升", "|cffffcc00左慈最近研究出一种能够提升武将终极技能的方法，但是需要一样东西的辅助！|n|r90级以后带着黑龙之玉去找他吧", "ReplaceableTextures\\CommandButtons\\BTNKeeperGhostBlue.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "血匠传奇", "|cffffcc00城外有位自称血匠的人，异常神秘，并且还有一个巨大的炼炉，不知有何用。|r|n带着黄龙之血去找他们吧", "ReplaceableTextures\\CommandButtons\\BTNAdvancedUnholyStrength.blp")
+    call CreateQuestBJ(bj_QUESTTYPE_OPT_DISCOVERED, "玄冰谷的野鬼", "|cffffcc00有一个凡人无法进入的山谷，终年积雪，寸草不生，时常有人经过山谷附近，总会听到有个野鬼在喃喃自语，它从没出来害过别人，只有游荡于谷中，不离不弃。|n|r40级后去找训练场长官问问情况吧", "ReplaceableTextures\\CommandButtons\\BTNShade.blp")
+endfunction
+
+//===========================================================================
+function InitTrig_MissionInfoInit2 takes nothing returns nothing
+    set gg_trg_MissionInfoInit2 = CreateTrigger()
+ 
+    call TriggerRegisterTimerEventSingle(gg_trg_MissionInfoInit2, 15.00)
+    call TriggerAddAction(gg_trg_MissionInfoInit2, function Trig_MissionInfoInit2Actions)
+endfunction
+

@@ -1,0 +1,30 @@
+function Trig_MPangDeConditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Uvar_0036))
+endfunction
+
+function Trig_MPangDeActions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Uvar_0036, "庞德", null, "关羽，可敢一战？", bj_TIMETYPE_ADD, 0, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Hant_0005, "关羽", null, "庞令明，念汝是条好汉，快快束手就擒，可饶你不杀！", bj_TIMETYPE_ADD, 0, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Uvar_0036, "庞德", null, "关羽老匹夫，休要辱我，拿命来！", bj_TIMETYPE_ADD, 0, true)
+    
+    call DestroyEffect(AddSpecialEffect("Units\\Demon\\Infernal\\InfernalBirth.mdl",GetWidgetX(gg_unit_Uvar_0036),GetWidgetY(gg_unit_Uvar_0036)))
+
+  
+    call RemoveItem(UnitItemInSlotBJ(gg_unit_Uvar_0036, GetRandomInt(1, 4)))
+    call DisplayTextToForce(GetPlayersAll(), "关羽发动大招：乾坤武神霸斩，庞德装备被击毁。 \n 关羽习得新技能：鼓舞士气")
+    call AddHeroXPSwapped(5000, gg_unit_Hant_0005, true)
+    call UnitAddAbility(gg_unit_Hant_0005, 'A0AC')
+endfunction
+
+//===========================================================================
+function InitTrig_MPangDe takes nothing returns nothing
+    set gg_trg_MPangDe = CreateTrigger()
+    // 默认关闭
+    call DisableTrigger(gg_trg_MPangDe)
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_MPangDe, gg_rct________000)
+    call TriggerAddCondition(gg_trg_MPangDe, Condition(function Trig_MPangDeConditions))
+    call TriggerAddAction(gg_trg_MPangDe, function Trig_MPangDeActions)
+endfunction
+

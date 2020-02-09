@@ -1,0 +1,147 @@
+function Trig_NormalBossLearnSkillConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_NormalBossLearnSkillActions takes nothing returns nothing
+local integer x 
+    //军师
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'Hblm')) then
+        if ((GetUnitLevel(GetTriggerUnit()) >= 18)) then
+
+            set x = GetHeroLevel(GetTriggerUnit()) / 3
+            if(x>9) then 
+             set   x = 9
+            endif
+            //火之缚
+            call UnitAddAbility(GetTriggerUnit(), 'AHfs')
+            
+            call SetUnitAbilityLevel(GetTriggerUnit(), 'AHfs',x)
+                
+            
+            
+        endif
+        //中郎
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'Ofar')) then
+        if ((GetUnitLevel(GetTriggerUnit()) >= 18)) then
+        
+        
+            set x = GetHeroLevel(GetTriggerUnit()) / 3
+            if(x>9) then 
+              set  x = 9
+            endif
+            //落雷
+            call UnitAddAbility(GetTriggerUnit(), 'AOsh')
+            
+            call SetUnitAbilityLevel(GetTriggerUnit(), 'AOsh',x)
+
+        endif
+            //偏将军
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'Otch')) then
+        if ((GetUnitLevel(GetTriggerUnit()) >= 15)) then
+          set x = GetHeroLevel(GetTriggerUnit()) / 4
+            if(x>7) then 
+              set  x = 7
+            endif
+
+            //地裂
+            call SelectHeroSkill(GetTriggerUnit(), 'AOws')
+            
+            call SetUnitAbilityLevel(GetTriggerUnit(), 'AOws',x)
+          
+
+        endif
+        if ((GetUnitLevel(GetTriggerUnit()) >= 18)) then
+            //白马
+            set x = GetHeroLevel(GetTriggerUnit()) / 4
+              if(x>7) then 
+              set  x = 7
+            endif
+
+            call SelectHeroSkill(GetTriggerUnit(), 'AOae')
+            call SetUnitAbilityLevel(GetTriggerUnit(), 'AOae',x)
+            
+                
+        endif
+        if ((GetUnitLevel(GetTriggerUnit()) >= 33)) then
+            // 重生
+            call SelectHeroSkill(GetTriggerUnit(), 'AOre')
+            
+        endif
+        //牙门将军
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'Hmkg')) then
+        if ((GetUnitLevel(GetTriggerUnit()) >= 33)) then
+        //力拔山兮气盖世
+            call SelectHeroSkill(GetTriggerUnit(), 'AHav')
+            
+        endif
+        if ((GetUnitLevel(GetTriggerUnit()) >= 15)) then
+            //雷霆一击
+            call SelectHeroSkill(GetTriggerUnit(), 'AHtc')
+            set x = GetHeroLevel(GetTriggerUnit()) / 4
+            if(x>7) then 
+             set   x = 7
+            endif
+ 
+            call SetUnitAbilityLevel(GetTriggerUnit(), 'AHtc',x)
+        endif
+            //裨将军
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'Obla')) then
+        if ((GetUnitLevel(GetTriggerUnit()) >= 21)) then
+        //横扫
+            call SelectHeroSkill(GetTriggerUnit(), 'AOww')
+            set x = GetHeroLevel(GetTriggerUnit()) / 4
+            if(x>5) then 
+             set   x = 5
+            endif
+ 
+            call SetUnitAbilityLevel(GetTriggerUnit(), 'AOww',x)
+        endif
+        if ((GetUnitLevel(GetTriggerUnit()) >= 18)) then
+        //会心
+            call SelectHeroSkill(GetTriggerUnit(), 'AOcr')
+            set x = GetHeroLevel(GetTriggerUnit()) / 4
+            if(x>5) then 
+              set  x = 5
+            endif
+ 
+            call SetUnitAbilityLevel(GetTriggerUnit(), 'AOcr',x)
+        endif
+        if ((GetUnitLevel(GetTriggerUnit()) >= 9)) then 
+        //镜像
+            call SelectHeroSkill(GetTriggerUnit(), 'AOmi')
+            set x = GetHeroLevel(GetTriggerUnit()) / 4
+            if(x>5) then 
+             set   x = 5
+            endif
+ 
+            call SetUnitAbilityLevel(GetTriggerUnit(), 'AOmi',x)
+                
+        endif
+    elseif ((GetUnitTypeId(GetTriggerUnit()) == 'Oshd')) then
+        //参军
+        if ((GetUnitLevel(GetTriggerUnit()) >= 18)) then
+            //妖术
+            call SelectHeroSkill(GetTriggerUnit(), 'AOhx')
+            
+        endif
+        if ((GetUnitLevel(GetTriggerUnit()) >= 9)) then
+            // 血魔
+            call SelectHeroSkill(GetTriggerUnit(), 'AOhw')
+            // 止血
+            call SelectHeroSkill(GetTriggerUnit(), 'ANms')
+            
+        endif
+ 
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_NormalBossLearnSkill takes nothing returns nothing
+    set gg_trg_NormalBossLearnSkill = CreateTrigger()
+    call DisableTrigger(gg_trg_NormalBossLearnSkill)
+    
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_NormalBossLearnSkill, EVENT_PLAYER_HERO_LEVEL)
+    call TriggerAddCondition(gg_trg_NormalBossLearnSkill, Condition(function Trig_NormalBossLearnSkillConditions))
+    call TriggerAddAction(gg_trg_NormalBossLearnSkill, function Trig_NormalBossLearnSkillActions)
+endfunction
+

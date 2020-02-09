@@ -1,0 +1,84 @@
+// createSoldier
+//     事件
+//         时间 - Every (25.00 - (Real((Level of 闪避 (难度) for 训练场长官 0031<预设>)))) seconds of game time
+//     条件
+//     动作
+//         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//             If - 条件
+//                 Difficulty 等于 3
+//             Then - 动作
+//                 单位 - Create 3 unitEnemy[(Hero level of 训练场长官 0031<预设>)] for 玩家 10 (淡蓝色) at global_point1 facing 默认建筑朝向 degrees
+//                 单位 - Create 3 unitEnemy[((Hero level of 训练场长官 0031<预设>) + 1)] for 玩家 10 (淡蓝色) at global_point2 facing 默认建筑朝向 degrees
+//                 If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                     If - 条件
+//                         (Hero level of 训练场长官 0031<预设>) 大于 12
+//                     Then - 动作
+//                         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                             If - 条件
+//                                 (Hero level of 训练场长官 0031<预设>) 大于 17
+//                             Then - 动作
+//                                 单位 - Create 1 unitEnemy[20] for 玩家 10 (淡蓝色) at global_point1 facing 默认建筑朝向 degrees
+//                                 单位 - Create 1 unitEnemy[26] for 玩家 10 (淡蓝色) at global_point1 facing 默认建筑朝向 degrees
+//                                 单位 - Create 1 unitEnemy[22] for 玩家 10 (淡蓝色) at global_point2 facing 默认建筑朝向 degrees
+//                                 单位 - Create 1 unitEnemy[19] for 玩家 10 (淡蓝色) at global_point2 facing 默认建筑朝向 degrees
+//                             Else - 动作
+//                                 单位 - Create 2 unitEnemy[((Hero level of 训练场长官 0031<预设>) + 2)] for 玩家 10 (淡蓝色) at global_point1 facing 默认建筑朝向 degrees
+//                                 单位 - Create 2 unitEnemy[((Hero level of 训练场长官 0031<预设>) + 2)] for 玩家 10 (淡蓝色) at global_point2 facing 默认建筑朝向 degrees
+//                     Else - 动作
+//                         单位 - Create 1 unitEnemy[7] for 玩家 10 (淡蓝色) at global_point1 facing 默认建筑朝向 degrees
+//                         单位 - Create 2 unitEnemy[((Hero level of 训练场长官 0031<预设>) + 2)] for 玩家 10 (淡蓝色) at global_point2 facing 默认建筑朝向 degrees
+//             Else - 动作
+//                 单位 - Create 5 unitEnemy[(Hero level of 训练场长官 0031<预设>)] for 玩家 10 (淡蓝色) at global_point1 facing 默认建筑朝向 degrees
+//                 单位 - Create 5 unitEnemy[((Hero level of 训练场长官 0031<预设>) + 1)] for 玩家 10 (淡蓝色) at global_point2 facing 默认建筑朝向 degrees
+function Trig_createSoldier_Func002Func003Func001C takes nothing returns boolean
+    if ( not ( GetHeroLevel(gg_unit_Hpal_0031) > 17 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_createSoldier_Func002Func003C takes nothing returns boolean
+    if ( not ( GetHeroLevel(gg_unit_Hpal_0031) > 12 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_createSoldier_Func002C takes nothing returns boolean
+    if ( not ( udg_Difficulty == 3 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_createSoldier_Actions takes nothing returns nothing
+    if ( Trig_createSoldier_Func002C() ) then
+        call CreateNUnitsAtLoc( 3, udg_unitEnemy[GetHeroLevel(gg_unit_Hpal_0031)], Player(9), udg_global_point1, bj_UNIT_FACING )
+        call CreateNUnitsAtLoc( 3, udg_unitEnemy[( GetHeroLevel(gg_unit_Hpal_0031) + 1 )], Player(9), udg_global_point2, bj_UNIT_FACING )
+        if ( Trig_createSoldier_Func002Func003C() ) then
+            if ( Trig_createSoldier_Func002Func003Func001C() ) then
+                call CreateNUnitsAtLoc( 1, udg_unitEnemy[20], Player(9), udg_global_point1, bj_UNIT_FACING )
+                call CreateNUnitsAtLoc( 1, udg_unitEnemy[26], Player(9), udg_global_point1, bj_UNIT_FACING )
+                call CreateNUnitsAtLoc( 1, udg_unitEnemy[22], Player(9), udg_global_point2, bj_UNIT_FACING )
+                call CreateNUnitsAtLoc( 1, udg_unitEnemy[19], Player(9), udg_global_point2, bj_UNIT_FACING )
+            else
+                call CreateNUnitsAtLoc( 2, udg_unitEnemy[( GetHeroLevel(gg_unit_Hpal_0031) + 2 )], Player(9), udg_global_point1, bj_UNIT_FACING )
+                call CreateNUnitsAtLoc( 2, udg_unitEnemy[( GetHeroLevel(gg_unit_Hpal_0031) + 2 )], Player(9), udg_global_point2, bj_UNIT_FACING )
+            endif
+        else
+            call CreateNUnitsAtLoc( 1, udg_unitEnemy[7], Player(9), udg_global_point1, bj_UNIT_FACING )
+            call CreateNUnitsAtLoc( 2, udg_unitEnemy[( GetHeroLevel(gg_unit_Hpal_0031) + 2 )], Player(9), udg_global_point2, bj_UNIT_FACING )
+        endif
+    else
+        call CreateNUnitsAtLoc( 5, udg_unitEnemy[GetHeroLevel(gg_unit_Hpal_0031)], Player(9), udg_global_point1, bj_UNIT_FACING )
+        call CreateNUnitsAtLoc( 5, udg_unitEnemy[( GetHeroLevel(gg_unit_Hpal_0031) + 1 )], Player(9), udg_global_point2, bj_UNIT_FACING )
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_createSoldier takes nothing returns nothing
+    set gg_trg_createSoldier = CreateTrigger(  )
+    call TriggerRegisterTimerEventPeriodic( gg_trg_createSoldier, ( 25.00 - I2R(GetUnitAbilityLevelSwapped('ACev', gg_unit_Hpal_0031)) ) )
+    call TriggerAddAction( gg_trg_createSoldier, function Trig_createSoldier_Actions )
+endfunction
+

@@ -1,0 +1,51 @@
+// jw 转职
+function Trig_FCJWConditions takes nothing returns boolean
+    return ((GetUnitTypeId(GetEnteringUnit()) == 'Hkal') and (IsUnitIllusionBJ(GetEnteringUnit()) == false) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'dthb') == true))
+endfunction
+
+function Trig_FCJWActions takes nothing returns nothing
+// 创建姜维
+    local unit u = CreateUnit((GetOwningPlayer(GetTriggerUnit())) ,'H00F'  ,GetWidgetX(GetTriggerUnit()) ,GetWidgetY(GetTriggerUnit()) , 0)
+    local integer exp =  GetHeroXP(GetTriggerUnit())
+    local integer strValue = GetHeroStr(GetTriggerUnit(), false)
+    local integer agiValue = GetHeroAgi(GetTriggerUnit(), false)
+    local integer intValue = GetHeroInt(GetTriggerUnit(), false)
+    local integer i =1
+
+    call DestroyTrigger(GetTriggeringTrigger())
+   
+    loop
+        exitwhen i > 6
+        
+        // UnitItemInSlotBJ(GetTriggerUnit(), i) , udg_ItemUnit[index]
+        call UnitAddItemSwapped(UnitItemInSlotBJ(GetTriggerUnit(), i) , u)
+        set i = i + 1
+    endloop
+    //移除麒麟
+    call RemoveUnit(GetTriggerUnit())
+     
+   
+   //设置经验 以及属性
+    call SetHeroXP(u,  exp , false)
+    call SetHeroStr(u, strValue , true)
+    call SetHeroAgi(u, agiValue , true)
+    call SetHeroInt(u, intValue , true)
+
+    //call UnitAddItemByIdSwapped('crys', u)
+    set udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))] = u
+   
+    
+
+    set u = null
+endfunction
+
+//===========================================================================
+function InitTrig_FCJW takes nothing returns nothing
+    set gg_trg_FCJW = CreateTrigger()
+    
+    call DisableTrigger(gg_trg_FCJW)
+    call TriggerRegisterEnterRectSimple(gg_trg_FCJW, gg_rct______________021)
+    call TriggerAddCondition(gg_trg_FCJW, Condition(function Trig_FCJWConditions))
+    call TriggerAddAction(gg_trg_FCJW, function Trig_FCJWActions)
+endfunction
+

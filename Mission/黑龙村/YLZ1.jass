@@ -1,0 +1,50 @@
+globals
+    unit udg_NpcYuLong
+endglobals
+
+function Trig_YLZ1Conditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_YLZ1Actions takes nothing returns nothing
+    local real x = GetWidgetX(GetTriggerUnit())
+    local real y = GetWidgetY(GetTriggerUnit())
+
+  
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00S') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I00S'))
+        call UnitAddItemByIdSwapped('shwd', GetTriggerUnit())
+ 
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", x, y))
+
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcYuLong, "驭龙者", null, "啊，没想到此物竟在黑龙手里，此乃昆仑之宝镜也！", bj_TIMETYPE_ADD, 0, true)
+
+        
+    else
+    endif
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00Z') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I00Z'))
+        // 创建雄鹰 并且 添加背包物品栏
+        call UnitAddAbility(CreateUnit( GetOwningPlayer(GetTriggerUnit()),'n00H',x,y,0), 'A0AE')
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcYuLong, "驭龙者", null, "对就是此物，真是个了不起的人。这只鹰就赠与你了", bj_TIMETYPE_ADD, 0, true)
+    else
+    endif
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ledg') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ledg'))
+        call UnitAddItemByIdSwapped(udg_wplx[GetRandomInt(11, 21)], GetTriggerUnit())
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Items\\TomeOfRetraining\\TomeOfRetrainingCaster.mdl", x,y))
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcYuLong, "驭龙者", null, "对就是此物，真是个了不起的人。这是我给你的报酬，请收下吧！", bj_TIMETYPE_ADD, 0, true)
+    else
+    endif
+    
+endfunction
+
+//===========================================================================
+function InitTrig_YLZ1 takes nothing returns nothing
+    set gg_trg_YLZ1 = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_YLZ1, gg_rct_______11)
+    call TriggerAddCondition(gg_trg_YLZ1, Condition(function Trig_YLZ1Conditions))
+    call TriggerAddAction(gg_trg_YLZ1, function Trig_YLZ1Actions)
+endfunction
+

@@ -1,0 +1,165 @@
+function Trig_Xia_HoudeConditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Uanb_0052))
+endfunction
+
+function Trig_Xia_HoudeActions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    
+     
+    
+    
+    call ShowUnitShow(gg_unit_U00A_0303)
+    call ShowUnitShow(gg_unit_Umal_0053)
+    call SetUnitPositionLoc(gg_unit_U00A_0303, GetRectCenter(gg_rct_createSouth))
+    call SetUnitPositionLoc(gg_unit_Umal_0053, GetRectCenter(gg_rct_createEast))
+    call SetUnitOwner(gg_unit_U00A_0303, Player(10), true)
+    call SetUnitOwner(gg_unit_Umal_0053, Player(10), true)
+    //燃烧之油
+    call SetPlayerTechResearchedSwap('Robf', 1, Player(10))
+    call SetPlayerTechResearchedSwap('Robf', 1, Player(11))
+    call SetPlayerTechResearchedSwap('Robf', 1, Player(9))
+    // J闪避
+    call SetPlayerTechResearchedSwap('Rows', udg_Difficulty , Player(9))
+    // 攻击
+    call SetPlayerTechResearchedSwap('Rhme', 1, Player(10))
+    // 铁甲
+    call SetPlayerTechResearchedSwap('Rhar', 1, Player(10))
+
+ 
+    // 英雄 - 创建 |cff55AAFF生命指环 给 |cffffdead夏侯德 0052 <预设>
+    // 英雄 - 创建 |Cff00ff00白虎盔 给 |cffffdead乐琳 0109 <预设>
+    // 英雄 - 创建 |c00FF9300神木挂坠|r 给 |Cffffff00曹仁 0053 <预设>
+    // 单位 - 为 |cffffdead吕蒙 0119 <预设> 添加 分裂攻击 (16%)
+     
+    //         单位 - 为 |cffffdead徐晃 0041 <预设> 添加 雷霆战斧
+    //         英雄 - 创建 |Cff00ff00魔神之翼 给 |cffffdead乐进 0170 <预设>
+    //         英雄 - 创建 |cff55AAFF振奋项链 给 |cffffdead曹洪 13 0040 <预设>
+    //         英雄 - 创建 |cff55AAFF振奋项链 给 |cffffdead庞德 0036 <预设>
+    //         单位 - 为 |cffffdead庞德 0036 <预设> 添加 分裂攻击 (30%)
+    //         英雄 - 创建 |cff55AAFF振奋项链 给 |cffffdead徐晃 0041 <预设>
+    //         单位 - 为 曹丕 9 0141 <预设> 删除 Z湛卢 
+    //         英雄 - 创建 |cffffdead霸王破天枪 给 曹丕 9 0141 <预设>
+    //         物品 - 删除 (|Cffffff00夏侯渊（魂） 0049 <预设> 所持有的 |Cff00ff00九转修罗斩)
+    //         英雄 - 创建 |Cffffff00爪黄飞电 给 |cffffdead张馨 10 0034 <预设>
+    //         英雄 - 创建 |Cff00ff00项羽铠甲 给 |cffffdead张虎 0168 <预设>
+    //         英雄 - 创建 |cffffdead承影剑 给 |Cffffff00夏侯渊（魂） 0049 <预设>
+    //         英雄 - 创建 |Cff00ff00白虎护手 给 张合 0038 <预设>
+    //           英雄 - 创建 |Cffffff00黄金锁子甲 给 |cffffdead杨修 0048 <预设>
+    //                 单位 - 设置 |cffffdead徐晃 0041 <预设> 的 雷霆战斧 等级为 4
+    //                 单位 - 为 |Cffffff00夏侯渊（魂） 0049 <预设> 添加 分裂攻击 (30%)
+    //                 单位 - 为 |cffffdead吕蒙 0119 <预设> 添加 分裂攻击 (30%)
+            
+                   
+                 
+
+    if ( udg_Difficulty > 1 ) then
+         
+            call UnitAddItemByIdSwapped('tcas', gg_unit_Uanb_0052)
+            call UnitAddItemByIdSwapped('I01D', gg_unit_U004_0109)
+            call UnitAddItemByIdSwapped('desc', gg_unit_Umal_0053)
+            call UnitAddAbility(gg_unit_E001_0119, 'A02O')
+                 call UnitAddAbility(gg_unit_Nman_0041, 'ANsb')
+                call UnitAddItemByIdSwapped('I006', gg_unit_U006_0170)
+                call UnitAddItemByIdSwapped('ssan', gg_unit_Utic_0040)
+                call UnitAddItemByIdSwapped('ssan', gg_unit_Uvar_0036)
+                call UnitAddAbility(gg_unit_Uvar_0036, 'A01X')
+                call UnitAddItemByIdSwapped('ssan', gg_unit_Nman_0041)
+                call UnitRemoveAbility(gg_unit_Npbm_0141, 'A016')
+                call UnitAddItemByIdSwapped('oflg', gg_unit_Npbm_0141)
+                call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Udth_0049, 'I00A'))
+                call UnitAddItemByIdSwapped('sor2', gg_unit_Othr_0034)
+                call UnitAddItemByIdSwapped('rde0', gg_unit_U005_0168)
+                call UnitAddItemByIdSwapped('ofro', gg_unit_Udth_0049)
+                call UnitAddItemByIdSwapped('I01B', gg_unit_Edem_0038)
+                    call UnitAddItemByIdSwapped('shhn', gg_unit_Npld_0048)
+                    call SetUnitAbilityLevel(gg_unit_Nman_0041, 'ANsb', 4)
+                    call UnitAddAbility(gg_unit_Udth_0049, 'A01X')
+                    call UnitAddAbility(gg_unit_E001_0119, 'A01X')
+                if (udg_Difficulty > 2) then
+                //  玩家 - 设置 攻击强化LV1(|cffffcc00S|r) 的等级为 3 对 玩家10(淡蓝)
+                //     物品 - 删除 (|cffffdead夏侯敦 0050 <预设> 所持有的 |Cff00ff00项羽战刃)
+                //     物品 - 删除 (|cffffdead张虎 0168 <预设> 所持有的 |Cff00ff00项羽战刃)
+                //     物品 - 删除 (|cffffdead张馨 10 0034 <预设> 物品栏第 1 格的物品)
+                //     英雄 - 创建 |cffffdead承影剑 给 |cffffdead夏侯敦 0050 <预设>
+                //     英雄 - 创建 |cffffdead承影剑 给 |cffffdead张虎 0168 <预设>
+                //     单位 - 为 |cffffdead庞德 0036 <预设> 添加 魔法免疫 (龙)
+                //     英雄 - 创建 |cffffdead雷霆魔翼 给 |cffffdead乐琳 0109 <预设>
+                //     英雄 - 创建 |Cff00ff00魔魂盔 给 |cffffdead乐进 0170 <预设>
+                //     英雄 - 创建 |Cffffff00真龙护手 给 |cffffdead乐进 0170 <预设>
+                //     英雄 - 创建 |Cffffff00真龙护手 给 |cffffdead乐琳 0109 <预设>
+                //     单位 - 设置 |cffffdead徐晃 0041 <预设> 的 雷霆战斧 等级为 9
+                //     单位 - 为 |cffffdead庞德 0036 <预设> 添加 破甲阵+ 
+                //     单位 - 设置 |cffffdead庞德 0036 <预设> 的 破甲阵+  等级为 9
+                //     英雄 - 创建 |cffffdead削甲战甲 给 |cffffdead徐晃 0041 <预设>
+                //     单位 - 为 |Cffffff00夏侯渊（魂） 0049 <预设> 添加 白虎威风 (中立敌对)
+                //     单位 - 为 |cffffdead夏侯敦 0050 <预设> 添加 白虎威风 (中立敌对)
+                //     单位 - 为 魍魉 0253 <预设> 添加 粉碎 震山锤
+                //     单位 - 为 |cffffdead张馨 10 0034 <预设> 添加 并列 W
+                //     单位 - 设置 |cffffdead张馨 10 0034 <预设> 的 并列 W 等级为 9
+                //     英雄 - 创建 |Cff00ff00玄铁手戟 给 |cffffdead庞德 0036 <预设>
+                //     物品 - 删除 (张合 0038 <预设> 所持有的 |Cffffff00黄金锁子甲)
+                //     英雄 - 创建 |cffffdead风神衣 给 |cffffdead杨修 0048 <预设>
+                //     物品 - 删除 (|cffffdead吕蒙 0119 <预设> 所持有的 |cffffdead问天枪)
+                //     英雄 - 创建 |Cff00ff00白虎战袍 给 张合 0038 <预设>
+                //     物品 - 删除 (|cffffdead曹洪 13 0040 <预设> 所持有的 |Cffffff00古锭刀)
+                //     英雄 - 创建 |cffffdead真·问天枪 给 |cffffdead曹洪 13 0040 <预设>
+                //     英雄 - 创建 |Cff00ff00震天弓 给 |cffffdead张馨 10 0034 <预设>
+                //     英雄 - 创建 |Cff00ff00九转修罗斩 给 |cffffdead吕蒙 0119 <预设>
+                //     单位 - 为 |cffffdead吕蒙 0119 <预设> 添加 白虎威风 (中立敌对)
+                    call SetPlayerTechResearchedSwap('Rhme', 3, Player(9))
+                    call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Uvng_0050, 'stre'))
+                    call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_U005_0168, 'stre'))
+                    call RemoveItem(UnitItemInSlotBJ(gg_unit_Othr_0034, 1))
+                    call UnitAddItemByIdSwapped('ofro', gg_unit_Uvng_0050)
+                    call UnitAddItemByIdSwapped('ofro', gg_unit_U005_0168)
+                    call UnitAddAbility(gg_unit_Uvar_0036, 'ACm3')
+                    call UnitAddItemByIdSwapped('amrc', gg_unit_U004_0109)
+                    call UnitAddItemByIdSwapped('I003', gg_unit_U006_0170)
+                    call UnitAddItemByIdSwapped('tels', gg_unit_U006_0170)
+                    call UnitAddItemByIdSwapped('tels', gg_unit_U004_0109)
+                    call SetUnitAbilityLevel(gg_unit_Nman_0041, 'ANsb', 9)
+                    call UnitAddAbility(gg_unit_Uvar_0036, 'A03O')
+                    call SetUnitAbilityLevel(gg_unit_Uvar_0036, 'A03O', 9)
+                    call UnitAddItemByIdSwapped('rej6', gg_unit_Nman_0041)
+                    call UnitAddAbility(gg_unit_Udth_0049, 'A04L')
+                    call UnitAddAbility(gg_unit_Uvng_0050, 'A04L')
+                    call UnitAddAbility(gg_unit_n003_0253, 'A02E')
+                    call UnitAddAbility(gg_unit_Othr_0034, 'A04S')
+                    call SetUnitAbilityLevel(gg_unit_Othr_0034, 'A04S', 9)
+                    call UnitAddItemByIdSwapped('I00D', gg_unit_Uvar_0036)
+                    call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Edem_0038, 'shhn'))
+                    call UnitAddItemByIdSwapped('btst', gg_unit_Npld_0048)
+                    call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_E001_0119, 'I004'))
+                    call UnitAddItemByIdSwapped('I01C', gg_unit_Edem_0038)
+                    call RemoveItem(GetItemOfTypeFromUnitBJ(gg_unit_Utic_0040, 'fwss'))
+                    call UnitAddItemByIdSwapped('I00B', gg_unit_Utic_0040)
+                    call UnitAddItemByIdSwapped('ram4', gg_unit_Othr_0034)
+                    call UnitAddItemByIdSwapped('I00A', gg_unit_E001_0119)
+                    call UnitAddAbility(gg_unit_E001_0119, 'A04L')
+               
+                endif
+            
+        
+     
+    endif
+    call DisplayTextToForce(GetPlayersAll(), "探子：报！有两位猛士分别从城东城南单枪匹马而来")
+  
+   
+  
+    // call EnableTrigger(gg_trg_llq_come)
+    // call EnableTrigger(gg_trg_llq_come_2)
+    // call EnableTrigger(gg_trg_llq_d_zuangbei_1)
+    // call EnableTrigger(gg_trg_llq_d_zuangbei_2)
+    // call EnableTrigger(gg_trg_llq_die)
+    // call EnableTrigger(gg_trg_llq_killsomeone)
+endfunction
+
+//===========================================================================
+function InitTrig_Xia_Houde takes nothing returns nothing
+    set gg_trg_Xia_Houde = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_Xia_Houde, gg_rct_createWest)
+    call TriggerAddCondition(gg_trg_Xia_Houde, Condition(function Trig_Xia_HoudeConditions))
+    call TriggerAddAction(gg_trg_Xia_Houde, function Trig_Xia_HoudeActions)
+endfunction
+

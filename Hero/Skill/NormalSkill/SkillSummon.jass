@@ -1,23 +1,25 @@
 function Trig_SkillSummonConditions takes nothing returns boolean
+    //拥有神农
     return ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'shtm') == true))
 endfunction
 
 function Trig_SkillSummonActions takes nothing returns nothing
-    call YDWESetLocalVariableLocation("T", GetUnitLoc(GetTriggerUnit()))
+     local real x = GetWidgetX(GetTriggerUnit())
+     local real y = GetWidgetY(GetTriggerUnit())
     if ((GetSpellAbilityId() == 'ANsw') and (GetRandomInt(1, 4) == 1)) then
-        call DestroyEffect(AddSpecialEffectLoc("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", YDWEGetLocalVariableLocation("T")))
-        call CreateNUnitsAtLoc(1, 'n00K', GetTriggerPlayer(), YDWEGetLocalVariableLocation("T"), bj_UNIT_FACING)
-        call UnitAddAbility(bj_lastCreatedUnit, 'ANtr')
-        call UnitAddAbility(bj_lastCreatedUnit, 'ANtr')
-    else
+        //召唤战鹰
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",x,y ))
+   
+        call UnitAddAbility(   CreateUnit(GetTriggerPlayer() , 'n00K' , x, y, GetUnitFacing(GetTriggerUnit()) )   , 'ANtr')
+
+    elseif ((GetSpellAbilityId() == 'Arsq') and (GetRandomInt(1, 5) == 1)) then
+        //召唤野兽
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl",x,y ))
+ 
+        call CreateUnit(GetTriggerPlayer() , 'n00L' , x, y, GetUnitFacing(GetTriggerUnit()) )
+     
     endif
-    if ((GetSpellAbilityId() == 'Arsq') and (GetRandomInt(1, 5) == 1)) then
-        call DestroyEffect(AddSpecialEffectLoc("Abilities\\Spells\\Human\\Resurrect\\ResurrectTarget.mdl", YDWEGetLocalVariableLocation("T")))
-        call CreateNUnitsAtLoc(1, 'n00L', GetTriggerPlayer(), YDWEGetLocalVariableLocation("T"), bj_UNIT_FACING)
-    else
-    endif
-    call RemoveLocation(YDWEGetLocalVariableLocation("T"))
-    call YDWELocalVariableEnd()
+    
 endfunction
 
 //===========================================================================

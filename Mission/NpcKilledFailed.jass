@@ -1,0 +1,26 @@
+// NpcKilledFailed
+//     事件
+//         单位 - A unit owned by 中立被动 死亡
+//     条件
+//     动作
+//         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//             If - 条件
+//                 (Unit-type of (Triggering unit)) 等于 老者
+//             Then - 动作
+//                 触发器 - Turn off Shengshou<预设>
+//             Else - 动作
+//                 If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                     If - 条件
+//                         (Unit-type of (Triggering unit)) 等于 驭龙行者 (无骑手)
+//                     Then - 动作
+//                         触发器 - Turn off YLZ1<预设>
+//                     Else - 动作
+//                         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                             If - 条件
+//                                 Or - Any (Conditions) are true
+//                                     条件
+//                                         (Triggering unit) 等于 NpcZhongYou
+//                                         (Triggering unit) 等于 NpcZhongShi
+//                             Then - 动作
+//                                 触发器 - Turn off YeMingZhu<预设>
+//                             Else - 动作

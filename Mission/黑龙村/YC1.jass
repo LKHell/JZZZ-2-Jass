@@ -1,0 +1,35 @@
+globals
+    unit udg_NpcXuHun
+    unit udg_NpcQuan
+
+endglobals
+
+
+
+
+function Trig_YC1Actions takes nothing returns nothing
+    // 许混泉水
+    set udg_NpcQuan =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'ndfl',8342, 3045,270)
+    
+    call DestroyTrigger(GetTriggeringTrigger())
+    call EnableTrigger(gg_trg_YC2)
+    call QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_DISCOVERED, "净化泉水")
+    call SetDoodadAnimationRect(gg_rct____u, 'YOsw', "stand third", false)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcXuHun, "村长", null, "年轻人，我们渔村最近不知为何总有人病倒，请你前去上面的泉水处看看吧", bj_TIMETYPE_ADD, 0, true)
+    
+    //泉水信号
+    call PingMinimapEx(8342, 3045, 7, 255, 255, 255, true)
+    
+    
+    call DisplayTextToForce(GetPlayersAll(), "调查泉水")
+endfunction
+
+//===========================================================================
+function InitTrig_YC1 takes nothing returns nothing
+    set gg_trg_YC1 = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_YC1, gg_rct____u)
+    call TriggerAddCondition(gg_trg_YC1, Condition(function BaseIsHero))
+    call TriggerAddAction(gg_trg_YC1, function Trig_YC1Actions)
+endfunction
+

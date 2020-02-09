@@ -1,0 +1,23 @@
+function Trig_FBConditions takes nothing returns boolean
+    return ((IsPlayerEnemy(GetOwningPlayer(GetDyingUnit()), GetOwningPlayer(GetKillingUnitBJ())) == true) and (IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true) and (IsUnitType(GetKillingUnitBJ(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_FBActions takes nothing returns nothing
+    call DisableTrigger(GetTriggeringTrigger())
+    call AdjustPlayerStateBJ(5000, GetOwningPlayer(GetKillingUnitBJ()), PLAYER_STATE_RESOURCE_GOLD)
+    call CreateTextTagLocBJ("金钱+5000", GetUnitLoc(GetKillingUnitBJ()), 1.00, 15.00, 100.00, 100.00, 0.00, 10.00)
+    call SetTextTagPermanent(GetLastCreatedTextTag(), false)
+    call SetTextTagVelocityBJ(GetLastCreatedTextTag(), 64, 90)
+    call SetTextTagLifespan(GetLastCreatedTextTag(), 3.00)
+    call SetTextTagFadepoint(GetLastCreatedTextTag(), 2.00)
+endfunction
+
+//===========================================================================
+function InitTrig_FB takes nothing returns nothing
+    set gg_trg_FB = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_FB, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_FB, Condition(function Trig_FBConditions))
+    call TriggerAddAction(gg_trg_FB, function Trig_FBActions)
+endfunction
+

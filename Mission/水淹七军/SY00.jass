@@ -1,0 +1,20 @@
+function Trig_SY00Actions takes nothing returns nothing
+     
+ 
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Odrt_0028, "谋士", null, "将军，敌方进攻越来越猛，如果是好？", bj_TIMETYPE_ADD, 0, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_hbla_0084, "探子", null, "于禁在北方背山扎寨，地势较低。山旁有一泉眼。", bj_TIMETYPE_ADD, 0, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Hant_0005, "关羽", null, "哈哈哈，来人，去毁了那水门！", bj_TIMETYPE_ADD, 0, true)
+        
+    // 发信号
+    call PingMinimapEx(-5750,9550,5,255, 255, 255, true)
+
+endfunction
+
+//===========================================================================
+function InitTrig_SY00 takes nothing returns nothing
+    set gg_trg_SY00 = CreateTrigger()
+ 
+    call TriggerRegisterUnitEvent(gg_trg_SY00, gg_unit_Hhkl_0035, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_SY00, function Trig_SY00Actions)
+endfunction
+

@@ -1,0 +1,27 @@
+function Trig_createSoldierWActions takes nothing returns nothing
+    local location tempPointLeft = GetRectCenter(gg_rct_wu)
+    local location tempPointMid = GetRectCenter(gg_rct_fsr)
+    call CreateNUnitsAtLoc(5, udg_unitEnemy[GetUnitLevel(gg_unit_Hpal_0031)], Player(9), tempPointLeft, bj_UNIT_FACING)
+    call CreateNUnitsAtLoc(5, udg_unitEnemy[(GetUnitLevel(gg_unit_Hpal_0031) + 1)], Player(9), tempPointMid, bj_UNIT_FACING)
+    if ((udg_Difficulty == 3)) then
+        //难三额外创建单位
+        call CreateNUnitsAtLoc(2, udg_unitEnemy[20], Player(9), tempPointLeft, bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(2, udg_unitEnemy[20], Player(9), tempPointMid, bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(2, udg_unitEnemy[26], Player(9), tempPointLeft, bj_UNIT_FACING)
+        call CreateNUnitsAtLoc(2, udg_unitEnemy[26], Player(9), tempPointMid, bj_UNIT_FACING)
+    else
+    endif
+    call RemoveLocation(tempPointLeft)
+    call RemoveLocation(tempPointMid)
+    set tempPointLeft = null
+    set tempPointMid = null
+endfunction
+
+//===========================================================================
+function InitTrig_createSoldierW takes nothing returns nothing
+    set gg_trg_createSoldierW = CreateTrigger()
+    call DisableTrigger(gg_trg_createSoldierW)
+    call TriggerRegisterTimerEventPeriodic(gg_trg_createSoldierW, (17.00 - I2R(GetUnitAbilityLevelSwapped('ACev', gg_unit_Hpal_0031))))
+    call TriggerAddAction(gg_trg_createSoldierW, function Trig_createSoldierWActions)
+endfunction
+

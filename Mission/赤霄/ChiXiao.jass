@@ -1,0 +1,16 @@
+function Trig_ChiXiaoActions takes nothing returns nothing
+    local location tempLoc = GetUnitLoc(GetTriggerUnit())
+    call CreateItemLoc('I01G', tempLoc)
+    call RemoveLocation(tempLoc)
+    call DestroyTrigger(GetTriggeringTrigger())
+    set tempLoc = null
+endfunction
+
+//===========================================================================
+function InitTrig_ChiXiao takes nothing returns nothing
+    set gg_trg_ChiXiao = CreateTrigger()
+
+    call TriggerRegisterUnitEvent(gg_trg_ChiXiao, gg_unit_n003_0253, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_ChiXiao, function Trig_ChiXiaoActions)
+endfunction
+

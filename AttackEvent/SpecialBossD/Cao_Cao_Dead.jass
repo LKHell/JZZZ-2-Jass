@@ -1,0 +1,65 @@
+// CaoCaoDead
+//     事件
+//     条件
+//     动作
+//         触发器 - Turn off BossDead<预设>
+//         触发器 - Turn off NextAttack<预设>
+//         触发器 - Turn off BossTimeOut<预设>
+//         触发器 - Turn off BossCome<预设>
+function Trig_Cao_Cao_DeadActions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    
+    // 关闭魏国刷兵
+    call DisableTrigger( gg_trg_NextAttack )
+    call DisableTrigger( gg_trg_BossTimeOut )
+    call DisableTrigger( gg_trg_BossCome )
+    call DisableTrigger( gg_trg_createSoldier )
+    call DisableTrigger( gg_trg_createBoss )
+    call DisableTrigger( gg_trg_createGhost )    
+
+    call DestroyTrigger(gg_trg_Lv_Dai_A)
+    call DestroyTimerDialog(GetLastCreatedTimerDialogBJ())
+    call KillUnit(udg_DW123)
+    call SetUnitFacing(gg_unit_Hant_0005, Rad2Deg(180.00))
+	// 跳关到 22
+    call SetHeroLevelBJ(gg_unit_Hpal_0031, 23, false)
+    call UnitAddAbilityBJ('A058', gg_unit_Hant_0005)
+    call IssueImmediateOrder(gg_unit_Hant_0005, "mirrorimage")
+    call StopMusic(true)
+    call PlaySoundBJ(gg_snd_Orc3)
+    call UnitRemoveAbility(gg_unit_Hant_0005, 'A058')
+    if ((IsUnitAliveBJ(gg_unit_H00C_0193) == true)) then
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_H00C_0193, "？？？", null, "愿听都督吩咐！", bj_TIMETYPE_ADD, 0, true)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Osam_0022, "马良", null, "傅士仁造反！众将小心！", bj_TIMETYPE_ADD, 0, true)
+        call SetUnitOwner(gg_unit_H00C_0193, Player(10), true)
+        call SetUnitInvulnerable(gg_unit_H00C_0193, false)
+    else
+    endif
+    if ((IsUnitAliveBJ(gg_unit_H00B_0194) == true)) then
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Osam_0022, "马良", null, "糜芳造反！众将小心！", bj_TIMETYPE_ADD, 0, true)
+        call SetUnitInvulnerable(gg_unit_H00B_0194, false)
+        call SetUnitOwner(gg_unit_H00B_0194, Player(10), true)
+    else
+    endif
+    call CreateNUnitsAtLoc(1, 'halt', Player(8), udg_global_doorArea, bj_UNIT_FACING)
+    call StartTimerBJ(udg_JSQ, false, 50.00)
+    call CreateTimerDialogBJ(udg_JSQ, (GetUnitName(udg_Boss[GetHeroLevel(gg_unit_Hpal_0031)]) + "出现倒记时!"))
+    // 移动陆逊 到大本营
+    call ShowUnitShow(gg_unit_Ogld_0044)
+    // call SetUnitPositionLoc(gg_unit_Ogld_0044, GetRectCenter(gg_rct_Wu079))
+    
+    // 开启吴国 刷兵
+    call EnableTrigger(gg_trg_BossComeW)
+    call EnableTrigger(gg_trg_NextAttackW)
+    call EnableTrigger(gg_trg_BossTimeOutW)
+    call EnableTrigger(gg_trg_createSoldierW)
+endfunction
+
+//===========================================================================
+function InitTrig_Cao_Cao_Dead takes nothing returns nothing
+    set gg_trg_Cao_Cao_Dead = CreateTrigger()
+ 
+    call TriggerRegisterUnitEvent(gg_trg_Cao_Cao_Dead, gg_unit_Udea_0047, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_Cao_Cao_Dead, function Trig_Cao_Cao_DeadActions)
+endfunction
+

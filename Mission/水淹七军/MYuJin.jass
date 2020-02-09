@@ -1,0 +1,37 @@
+function Trig_MYuJinConditions takes nothing returns boolean
+    return ((GetTriggerUnit() == gg_unit_Efur_0042))
+endfunction
+
+function Trig_MYuJinActions takes nothing returns nothing
+    call DestroyTrigger(GetTriggeringTrigger())
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Efur_0042, "于禁", null, "关羽！汝竟敢淹我大营，纳命来！", bj_TIMETYPE_SET, 4.00, true)
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Hant_0005, "关羽", null, "何人赶来撒野？", bj_TIMETYPE_SET, 4.00, true)
+ 
+
+    
+    //创建特效
+    call DestroyEffect(AddSpecialEffect("Units\\Demon\\Infernal\\InfernalBirth.mdl",GetWidgetX(gg_unit_Efur_0042),GetWidgetY(gg_unit_Efur_0042)))
+    //设置血量为500
+    call SetUnitLifeBJ(gg_unit_Efur_0042, 500.00)
+  
+    
+    call AddHeroXPSwapped(3000, gg_unit_Hant_0005, true)
+    call ModifyHeroStat(bj_HEROSTAT_STR, gg_unit_Hant_0005, bj_MODIFYMETHOD_ADD, 20)
+    call ModifyHeroStat(bj_HEROSTAT_AGI, gg_unit_Hant_0005, bj_MODIFYMETHOD_ADD, 20)
+    call ModifyHeroStat(bj_HEROSTAT_INT, gg_unit_Hant_0005, bj_MODIFYMETHOD_ADD, 20)
+
+
+    call DisplayTextToForce(GetPlayersAll(), "关羽发动：乾坤武神斩！ \n 于禁奄奄一息")
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Efur_0042, "于禁", null, "吾虽敌不过汝等，但已请兵增援，汝等必将亡于此！", bj_TIMETYPE_SET, 4.00, true)
+endfunction
+
+//===========================================================================
+function InitTrig_MYuJin takes nothing returns nothing
+    set gg_trg_MYuJin = CreateTrigger()
+    call DisableTrigger(gg_trg_MYuJin)
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_MYuJin, gg_rct________000)
+    call TriggerAddCondition(gg_trg_MYuJin, Condition(function Trig_MYuJinConditions))
+    call TriggerAddAction(gg_trg_MYuJin, function Trig_MYuJinActions)
+endfunction
+

@@ -1,0 +1,21 @@
+function Trig_AYDeadActions takes nothing returns nothing
+    // 创建大圣
+    call CreateItem('wolg',GetWidgetX(GetTriggerUnit()),GetWidgetY(GetTriggerUnit()))
+
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcAYao, "阿瑶", null, "我一定会守护好这个地方，让它恢复以前的鸟语花香。谢谢你们，祝你们好运！", bj_TIMETYPE_ADD, 0, true)
+ 
+    //5023, 5723,223 
+    call ReviveHero(udg_NpcAYao, 5023, 5723, true) 
+    call SetUnitOwner(udg_NpcAYao, Player(PLAYER_NEUTRAL_PASSIVE), true)
+    call SetUnitInvulnerable(udg_NpcAYao, true)
+    call DestroyTrigger(GetTriggeringTrigger())
+    call EnableTrigger(gg_trg_AYEnd)
+endfunction
+
+//===========================================================================
+function InitTrig_AYDead takes nothing returns nothing
+    set gg_trg_AYDead = CreateTrigger()
+    call DisableTrigger(gg_trg_AYDead)
+
+    call TriggerAddAction(gg_trg_AYDead, function Trig_AYDeadActions)
+endfunction

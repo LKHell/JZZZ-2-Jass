@@ -1,0 +1,21 @@
+function Trig_ToRoomBossConditions takes nothing returns boolean
+    return ((GetItemTypeId(GetManipulatedItem()) == 'rspd'))
+endfunction
+
+function Trig_ToRoomBossActions takes nothing returns nothing
+    call SetUnitPositionLoc(GetTriggerUnit(), udg_RoomB_point)
+    call PanCameraToTimedLocForPlayer(GetTriggerPlayer(), udg_RoomB_point, 0)
+    if ((IsTriggerEnabled(gg_trg_DoRoomBoss) == false)) then
+        call EnableTrigger(gg_trg_DoRoomBoss)
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_ToRoomBoss takes nothing returns nothing
+    set gg_trg_ToRoomBoss = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ToRoomBoss, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_ToRoomBoss, Condition(function Trig_ToRoomBossConditions))
+    call TriggerAddAction(gg_trg_ToRoomBoss, function Trig_ToRoomBossActions)
+endfunction
+

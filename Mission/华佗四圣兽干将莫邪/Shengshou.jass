@@ -1,0 +1,65 @@
+globals
+    integer udg_MissonShengshou = 0
+endglobals
+
+
+function Trig_ShengshouConditions takes nothing returns boolean
+// 是英雄
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_ShengshouFunc002Func005001001 takes nothing returns boolean
+// 用户 且 正在游戏
+    return (((GetPlayerController(GetFilterPlayer()) == MAP_CONTROL_USER) and (GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING)))
+endfunction
+
+function Trig_ShengshouFunc002Func005A takes nothing returns nothing
+// 人口 + 5
+    call AdjustPlayerStateBJ(5, GetEnumPlayer(), PLAYER_STATE_RESOURCE_FOOD_CAP)
+endfunction
+
+function Trig_ShengshouActions takes nothing returns nothing
+    local location x = GetUnitLoc(GetTriggerUnit())
+    //拥有四圣兽
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'k3m2') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'glsk') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'k3m3') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'gopr') == true)) then
+        // 设置完成 状态
+	set udg_MissonShengshou = 1
+        call DisableTrigger(GetTriggeringTrigger())
+         
+        // 判定庞燕
+        if ((GetUnitTypeId(GetTriggerUnit()) == 'Nbrn')) then
+            call CreateItemLoc(udg_wplx[GetRandomInt(30, 88)], GetRectCenter(gg_rct_pt))
+            
+
+            call TransmissionFromUnitTypeWithNameBJ(GetPlayersAll(), Player(PLAYER_NEUTRAL_PASSIVE), 'n00T', "庞统", x, null, "哈哈，女儿，这东西对你可能有用，拿去吧！", bj_TIMETYPE_ADD, 4, true)
+
+        else
+            call TransmissionFromUnitTypeWithNameBJ(GetPlayersAll(), Player(PLAYER_NEUTRAL_PASSIVE), 'n00T', "老者", x, null, "谢谢，圣兽的力量果然惊人！要好好研究！！我这里有一把宝剑，就赠与你了！原来我只是一位隐士啊！", bj_TIMETYPE_ADD, 4, true)
+
+        endif
+        call ForForce(GetPlayersMatching(Condition(function Trig_ShengshouFunc002Func005001001)), function Trig_ShengshouFunc002Func005A)
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "人口+5")
+        // 创建莫邪
+	call CreateItemLoc('I01H',  x )
+        // 隐藏 庞统
+        //call RemoveUnit(gg_unit_ncpn_0254)
+        // call DestroyTrigger(GetTriggeringTrigger())
+    else
+        call TransmissionFromUnitTypeWithNameBJ(GetPlayersAll(), Player(PLAYER_NEUTRAL_PASSIVE), 'n00T', "失忆老人", x, null, "我想借助圣兽的力量来知道我到底是谁，可不可以帮我将四个圣兽请来，我愿赠你军粮。", bj_TIMETYPE_ADD, 4, true)
+        
+    endif
+
+    call RemoveLocation(x)
+    set x = null
+endfunction
+
+//===========================================================================
+function InitTrig_Shengshou takes nothing returns nothing
+    set gg_trg_Shengshou = CreateTrigger()
+      call DisableTrigger(gg_trg_Shengshou ) 
+    //任意单位进入 pt
+    call TriggerRegisterEnterRectSimple(gg_trg_Shengshou, gg_rct_pt)
+    call TriggerAddCondition(gg_trg_Shengshou, Condition(function Trig_ShengshouConditions))
+    call TriggerAddAction(gg_trg_Shengshou, function Trig_ShengshouActions)
+endfunction
+

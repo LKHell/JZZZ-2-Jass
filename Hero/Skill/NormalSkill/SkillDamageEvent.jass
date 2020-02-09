@@ -1,0 +1,56 @@
+function Trig_SkillDamageEventConditions takes nothing returns boolean
+// 伤害来源是英雄  或是 镜像
+    return (IsUnitType(GetEventDamageSource(), UNIT_TYPE_HERO) == true) or (IsUnitIllusion(GetEventDamageSource()) == true)
+endfunction
+
+
+function Trig_SkillDamageEventActions takes nothing returns nothing
+    local integer damage 
+    local integer heroInt 
+    local integer heroStr
+    
+ 
+    
+    // 普通伤害事件 物理攻击
+    if( BlzGetEventDamageType() == DAMAGE_TYPE_NORMAL ) then 
+   
+        if ((GetUnitTypeId(GetEventDamageSource()) == 'Ogrh') and (GetUnitAbilityLevel(GetEventDamageSource(), 'A0AJ') > 0)) then
+        // 春秋刀法  法术 强化
+            call UnitDamageTarget(GetEventDamageSource(), GetTriggerUnit(),  (GetHeroAgi( udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))]    , true))  , true, false, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED, WEAPON_TYPE_METAL_HEAVY_CHOP)
+        elseif ( (GetUnitAbilityLevel(GetEventDamageSource() , 'A0BM') > 1) ) then
+            // 陈道 重锤一 辅助技能 每次攻击后降低
+            call DecUnitAbilityLevel(GetEventDamageSource(), 'A0BM')
+            call DestroyEffect(AddSpecialEffectTarget("Abilities\\Spells\\Undead\\Possession\\PossessionTarget.mdl", GetTriggerUnit(), "overhead"))
+        
+        elseif ((IsPlayerEnemy(GetOwningPlayer(GetTriggerUnit()), GetOwningPlayer(GetEventDamageSource())) == true) and (GetUnitAbilityLevel (GetEventDamageSource(),'A04Q') >= 1)) then
+        // 马良  反馈
+                set heroStr = GetHeroStr(GetEventDamageSource(), true)
+                set heroInt = GetHeroStatBJ(bj_HEROSTAT_INT, GetEventDamageSource(), true)
+                // 伤害来源 增加生命值
+                call SetUnitLifeBJ(GetEventDamageSource(),  (GetUnitState(GetEventDamageSource(), UNIT_STATE_LIFE) +  (heroStr)))
+
+                // 目标减少魔法 或 造成伤害  
+                if ((GetUnitState(GetTriggerUnit(), UNIT_STATE_MANA) < 30.00)) then
+                // 法术通用
+                    call UnitDamageTargetBJ(GetEventDamageSource(), GetTriggerUnit(), (heroInt)  , ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL)
+                else
+                    call SetUnitManaBJ(GetTriggerUnit(), (GetUnitState(GetTriggerUnit(), UNIT_STATE_MANA) -  (heroInt)))
+                endif
+            
+        endif
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_SkillDamageEvent takes nothing returns nothing
+    set gg_trg_SkillDamageEvent = CreateTrigger()
+ 
+  
+    
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_SkillDamageEvent,  EVENT_PLAYER_UNIT_DAMAGED)
+   
+    call TriggerAddCondition(gg_trg_SkillDamageEvent , Condition(function Trig_SkillDamageEventConditions))
+
+    call TriggerAddAction(gg_trg_SkillDamageEvent, function Trig_SkillDamageEventActions)
+endfunction
+

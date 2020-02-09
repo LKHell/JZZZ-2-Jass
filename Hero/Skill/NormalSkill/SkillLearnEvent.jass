@@ -4,10 +4,13 @@ function Trig_SkillLearnEventActions takes nothing returns nothing
         call IncUnitAbilityLevel(GetTriggerUnit(), 'A08K')
         call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 8)
     elseif ((GetLearnedSkillBJ() == 'A04R')) then
+        // 射手天赋
         call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 8)
-    elseif ((GetLearnedSkillBJ() == 'ANsh') and (GetUnitTypeId(GetTriggerUnit()) == 'H006')) then
+    elseif ((GetLearnedSkillBJ() == 'ANsh') and (GetUnitTypeId(GetTriggerUnit()) == 'H006')) then  
+        //穿云箭 且 为 黄舞蝶
         call SetPlayerTechResearchedSwap('Resm', GetUnitAbilityLevelSwapped(GetLearnedSkill(), GetTriggerUnit()), GetOwningPlayer(GetTriggerUnit()))
     elseif ((GetLearnedSkillBJ() == 'S000')) then
+        // 索命长矛
         call SetPlayerTechResearchedSwap('Remg', GetUnitAbilityLevelSwapped('S000', GetTriggerUnit()), GetOwningPlayer(GetTriggerUnit()))
         if ((GetUnitAbilityLevelSwapped('AHfa', GetTriggerUnit()) < 1)) then
         call UnitAddAbilityBJ('AHfa', GetTriggerUnit())
@@ -16,6 +19,7 @@ function Trig_SkillLearnEventActions takes nothing returns nothing
         call IncUnitAbilityLevelSwapped('AHfa', GetTriggerUnit())
         endif
     elseif ((GetLearnedSkillBJ() == 'A04N')) then
+        //风之护甲 非天火
         if ((GetUnitAbilityLevelSwapped('A04O', GetTriggerUnit()) < 1)) then
         call UnitAddAbilityBJ('A04O', GetTriggerUnit())
         call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A04O')
@@ -23,6 +27,7 @@ function Trig_SkillLearnEventActions takes nothing returns nothing
         call IncUnitAbilityLevelSwapped('A04O', GetTriggerUnit())
         endif
     elseif ((GetLearnedSkillBJ() == 'A06A')) then
+        //烽火连天
         if ((GetUnitAbilityLevelSwapped('A09C', GetTriggerUnit()) < 1)) then
         call UnitAddAbilityBJ('A09C', GetTriggerUnit())
         call UnitMakeAbilityPermanent(GetTriggerUnit(), true, 'A09C')
@@ -30,6 +35,7 @@ function Trig_SkillLearnEventActions takes nothing returns nothing
         call IncUnitAbilityLevelSwapped('A09C', GetTriggerUnit())
         endif
     elseif ((GetLearnedSkillBJ() == 'A04Q')) then
+        // 反馈
         call SetUnitAbilityLevel(GetTriggerUnit(), 'A04P', GetUnitAbilityLevel(GetTriggerUnit(), GetLearnedSkill()))
 
     endif

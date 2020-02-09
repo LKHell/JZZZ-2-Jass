@@ -1,0 +1,41 @@
+function Trig_createBossActions takes nothing returns nothing
+    local location tempPoint = GetRandomLocInRect(gg_rct_createBoss)
+    call CreateNUnitsAtLoc(1, udg_unitEnemyBoss[GetRandomInt(1, 6)], Player(10), tempPoint, bj_UNIT_FACING)
+    call SetHeroLevelBJ(GetLastCreatedUnit(), (GetUnitLevel(gg_unit_Hpal_0031) * 3), false)
+    call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(1, 16)], GetLastCreatedUnit())
+    call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(1, 15)], GetLastCreatedUnit())
+    if ((GetHeroLevel(gg_unit_Hpal_0031) > 12)) then
+        call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(17, 22)], GetLastCreatedUnit())
+    else
+    endif
+    call CreateNUnitsAtLoc(1, udg_unitEnemyBoss[GetRandomInt(1, 6)], Player(10), tempPoint, bj_UNIT_FACING)
+    call SetHeroLevelBJ(GetLastCreatedUnit(), (GetUnitLevel(gg_unit_Hpal_0031) * 3), false)
+    call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(1, 16)], GetLastCreatedUnit())
+    call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(1, 15)], GetLastCreatedUnit())
+    if ((GetHeroLevel(gg_unit_Hpal_0031) > 12)) then
+        call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(17, 22)], GetLastCreatedUnit())
+    else
+    endif
+    call RemoveLocation(tempPoint)
+    set tempPoint = GetRandomLocInRect(gg_rct_createWest)
+    call CreateNUnitsAtLoc(1, udg_unitEnemyBoss[GetRandomInt(1, 6)], Player(10), tempPoint, bj_UNIT_FACING)
+    call SetHeroLevelBJ(GetLastCreatedUnit(), (GetUnitLevel(gg_unit_Hpal_0031) * 3), false)
+    call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(1, 16)], GetLastCreatedUnit())
+    call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(1, 15)], GetLastCreatedUnit())
+    if ((GetHeroLevel(gg_unit_Hpal_0031) > 12)) then
+        call UnitAddAbilityBJ(udg_JNsuiji[GetRandomInt(17, 22)], GetLastCreatedUnit())
+    else
+    endif
+    call RemoveLocation(tempPoint)
+    set tempPoint = null
+endfunction
+
+//===========================================================================
+function InitTrig_createBoss takes nothing returns nothing
+    set gg_trg_createBoss = CreateTrigger()
+    call DisableTrigger(gg_trg_createBoss)
+
+    call TriggerRegisterTimerEventPeriodic(gg_trg_createBoss, (45.00 - (I2R(GetUnitAbilityLevel(gg_unit_Hpal_0031, 'ACev')) * 2.00)))
+    call TriggerAddAction(gg_trg_createBoss, function Trig_createBossActions)
+endfunction
+

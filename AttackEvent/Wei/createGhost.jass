@@ -1,0 +1,14 @@
+function Trig_createGhostActions takes nothing returns nothing
+    call CreateNUnitsAtLoc(3, udg_unitEnemy[GetUnitLevel(gg_unit_Hpal_0031)], Player(9), udg_global_South, bj_UNIT_FACING)
+    call CreateNUnitsAtLoc(3, udg_unitEnemy[GetUnitLevel(gg_unit_Hpal_0031)], Player(9), udg_global_West, bj_UNIT_FACING)
+    call CreateNUnitsAtLoc(3, udg_unitEnemy[GetUnitLevel(gg_unit_Hpal_0031)], Player(9), udg_global_East, bj_UNIT_FACING)
+endfunction
+
+//===========================================================================
+function InitTrig_createGhost takes nothing returns nothing
+    set gg_trg_createGhost = CreateTrigger()
+    call DisableTrigger(gg_trg_createGhost)
+    call TriggerRegisterTimerEventPeriodic(gg_trg_createGhost, (25.00 - I2R(GetUnitAbilityLevelSwapped('ACev', gg_unit_Hpal_0031))))
+    call TriggerAddAction(gg_trg_createGhost, function Trig_createGhostActions)
+endfunction
+

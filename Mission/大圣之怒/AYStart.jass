@@ -1,0 +1,27 @@
+
+function Trig_AYStartActions takes nothing returns nothing
+
+//拥有洛神
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'cnhn') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetEnteringUnit(), 'cnhn'))
+        // 添加阿瑶死亡事件
+        call TriggerRegisterUnitEvent( gg_trg_AYDead, udg_NpcAYao, EVENT_UNIT_DEATH )
+        call DestroyTrigger(GetTriggeringTrigger())
+        call EnableTrigger(gg_trg_AYDead)
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcAYao, "阿瑶", null, "谢谢，为了报答你，给你一个我最重要的东西。但是你要把我打败，以证明你的实力。", bj_TIMETYPE_ADD, 0, true)
+        call SetHeroLevel(udg_NpcAYao,99,false)
+        call SetUnitInvulnerable(udg_NpcAYao, false)
+        call SetUnitOwner(udg_NpcAYao, Player(PLAYER_NEUTRAL_AGGRESSIVE), true)
+        
+    else
+        call TransmissionFromUnitWithNameBJ(GetPlayersAll(), udg_NpcAYao, "阿瑶", null, "这里本来是诗情画意的花果山，他被压五行山之后，天神下罪此处，没有谁愿意留在这里，除了我。我已经没有水灌溉这棵小树了。我要洛神印。", bj_TIMETYPE_ADD, 0, true)
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_AYStart takes nothing returns nothing
+    set gg_trg_AYStart = CreateTrigger()
+ 
+    call TriggerRegisterEnterRectSimple(gg_trg_AYStart, gg_rct_AY3)
+    call TriggerAddAction(gg_trg_AYStart, function Trig_AYStartActions)
+endfunction

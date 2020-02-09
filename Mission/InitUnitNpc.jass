@@ -48,11 +48,10 @@ function Trig_InitUnitNpc_Actions takes nothing returns nothing
     set udg_NpcZhongYou =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'ndog', 1497, 12773, 221)
     //=============================================================== 
      // 许混
-    set udg_NpcXuHun =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'oosc', 1497, 12773, 221)
+    set udg_NpcXuHun =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'oosc', 7401, -474, 278)
 
 
-    // 许混泉水
-    set udg_NpcQuan =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'ndfl',8342, 3045,270)
+
     //=============================================================== 
     //大圣之怒	
     // 阿瑶
@@ -70,10 +69,10 @@ function Trig_InitUnitNpc_Actions takes nothing returns nothing
     set udg_NpcDiaoChan = CreateUnit (Player(PLAYER_NEUTRAL_PASSIVE),'edry',6395 ,-732 ,300)
  
     // 任大头
-    set udg_NpcRenDaTou = 
-
+    set udg_NpcRenDaTou =  CreateUnit (Player(PLAYER_NEUTRAL_PASSIVE),'nhew',3130 ,-2636 ,322)
+    call CreateUnit (Player(PLAYER_NEUTRAL_PASSIVE),'n00D',2983 ,-2823 ,322)
     // 水镜
-    set udg_NpcShuiJing=
+    set udg_NpcShuiJing=CreateUnit (Player(PLAYER_NEUTRAL_PASSIVE),'nckb',-9492 ,-7835 ,81)
 
     set u = null
     call DestroyTrigger(GetTriggeringTrigger())
