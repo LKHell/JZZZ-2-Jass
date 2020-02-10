@@ -1,0 +1,25 @@
+function Trig_VisionDownActions takes nothing returns nothing
+    set udg_CSSJ[GetConvertedPlayerId(GetTriggerPlayer())] = (udg_CSSJ[GetConvertedPlayerId(GetTriggerPlayer())] + 1.00)
+    if ((udg_CSSJ[GetConvertedPlayerId(GetTriggerPlayer())] > 550.00)) then
+        set udg_CSSJ[GetConvertedPlayerId(GetTriggerPlayer())] = (udg_CSSJ[GetConvertedPlayerId(GetTriggerPlayer())] - 300.00)
+        call SetCameraFieldForPlayer(GetTriggerPlayer(), CAMERA_FIELD_TARGET_DISTANCE, udg_CSSJ[GetConvertedPlayerId(GetTriggerPlayer())], 2.00)
+        call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0.00, 0.00, 1.00, ("镜头距离" + R2S(udg_CSSJ[GetConvertedPlayerId(GetTriggerPlayer())])))
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_VisionDown takes nothing returns nothing
+    set gg_trg_VisionDown = CreateTrigger()
+ 
+    call TriggerRegisterPlayerChatEvent(gg_trg_VisionDown, Player(0), "--", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_VisionDown, Player(1), "--", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_VisionDown, Player(2), "--", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_VisionDown, Player(3), "--", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_VisionDown, Player(4), "--", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_VisionDown, Player(5), "--", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_VisionDown, Player(6), "--", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_VisionDown, Player(7), "--", true)
+    call TriggerAddAction(gg_trg_VisionDown, function Trig_VisionDownActions)
+endfunction
+

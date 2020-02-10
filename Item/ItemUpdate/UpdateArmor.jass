@@ -1,0 +1,42 @@
+function Trig_UpdateArmorConditions takes nothing returns boolean
+    return ((GetItemTypeId(GetManipulatedItem()) == 'I014'))
+endfunction
+
+function Trig_UpdateArmorActions takes nothing returns nothing
+// 铁索
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rag1') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rag1'))
+        call UnitAddItemByIdSwapped('rde3', GetTriggerUnit())
+    else
+    // 连环
+        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde3') == true)) then
+            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rde3'))
+            call UnitAddItemByIdSwapped('shhn', GetTriggerUnit())
+        else
+        // 鹤髦
+            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ssil') == true)) then
+                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ssil'))
+                call UnitAddItemByIdSwapped('ciri', GetTriggerUnit())
+            else
+            // 百花
+                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ciri') == true)) then
+                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ciri'))
+                    call UnitAddItemByIdSwapped('rat3', GetTriggerUnit())
+                else
+                    call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cffffff00材料不足！")
+                    call AdjustPlayerStateBJ(3000, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
+                endif
+            endif
+        endif
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_UpdateArmor takes nothing returns nothing
+    set gg_trg_UpdateArmor = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_UpdateArmor, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_UpdateArmor, Condition(function Trig_UpdateArmorConditions))
+    call TriggerAddAction(gg_trg_UpdateArmor, function Trig_UpdateArmorActions)
+endfunction
+

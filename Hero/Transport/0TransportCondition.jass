@@ -1,0 +1,3 @@
+function Trig_TsBaseConditions takes nothing returns boolean
+    return ((IsPlayerAlly(GetOwningPlayer(GetTriggerUnit()), Player(8)) == true))
+endfunction

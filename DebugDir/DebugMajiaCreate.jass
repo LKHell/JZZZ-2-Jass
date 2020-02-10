@@ -1,0 +1,21 @@
+// DebugMajiaCreate
+//     事件
+//         玩家 - 玩家 1 (红色) types a chat message containing -majia as 完全匹配
+//     条件
+//     动作
+//         单位 - Create 1 测试马甲 for 中立敌对 at (Center of 矩形区域 023<预设>) facing 默认建筑朝向 degrees
+//         触发器 - Add to DeBugMajia<预设> the event (单位 - (Last created unit) 接受伤害)
+
+
+function Trig_DebugMajiaCreate_Actions takes nothing returns nothing
+    call CreateNUnitsAtLoc( 1, 'TSUN', Player(PLAYER_NEUTRAL_AGGRESSIVE), GetRectCenter(gg_rct______________023), bj_UNIT_FACING )
+    call TriggerRegisterUnitEvent( gg_trg_DeBugMajia, GetLastCreatedUnit(), EVENT_UNIT_DAMAGED )
+endfunction
+
+//===========================================================================
+function InitTrig_DebugMajiaCreate takes nothing returns nothing
+    set gg_trg_DebugMajiaCreate = CreateTrigger(  )
+    call TriggerRegisterPlayerChatEvent( gg_trg_DebugMajiaCreate, Player(0), "-majia", true )
+    call TriggerAddAction( gg_trg_DebugMajiaCreate, function Trig_DebugMajiaCreate_Actions )
+endfunction
+

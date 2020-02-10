@@ -1,0 +1,31 @@
+function Trig_HWDConditions takes nothing returns boolean
+    return ((GetUnitTypeId(GetTriggerUnit()) == 'H006'))
+endfunction
+
+function Trig_HWDActions takes nothing returns nothing
+    //额外添加科技
+    if ((GetHeroLevel(GetTriggerUnit()) >= (27 + (3 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped('A00O', GetTriggerUnit()) < 1)) then
+        call SetPlayerTechResearchedSwap('Rhan', 1, GetOwningPlayer(GetTriggerUnit()))
+        call UnitAddAbilityBJ('A00O', GetTriggerUnit())
+       call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "领悟了终级技能：|Cff00ff00万箭诀！同时鹰的能力加强！"))
+    elseif ((GetHeroLevel(GetTriggerUnit()) >= (47 + (3 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped('A00O', GetTriggerUnit()) < 2)) then
+        call SetPlayerTechResearchedSwap('Rhan', 2, GetOwningPlayer(GetTriggerUnit()))
+        call IncUnitAbilityLevelSwapped('A00O', GetTriggerUnit())
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0,(GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "|Cff00ff00万箭诀的等级已经提升了！鹰已经加强！"))
+    elseif ((GetHeroLevel(GetTriggerUnit()) >= (67 + (3 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped('A00O', GetTriggerUnit()) < 3)) then
+        call SetPlayerTechResearchedSwap('Rhan', 3, GetOwningPlayer(GetTriggerUnit()))
+        call IncUnitAbilityLevelSwapped('A00O', GetTriggerUnit())
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "|Cff00ff00万箭诀的等级已经提升了！鹰已经加强！"))
+        call DestroyTrigger(GetTriggeringTrigger())
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_HWDF takes nothing returns nothing
+    set gg_trg_HWDF = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_HWDF, EVENT_PLAYER_HERO_LEVEL)
+    call TriggerAddCondition(gg_trg_HWDF, Condition(function Trig_HWDConditions))
+    call TriggerAddAction(gg_trg_HWDF, function Trig_HWDActions)
+endfunction
+

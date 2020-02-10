@@ -1,0 +1,42 @@
+function Trig_UpdateHelmetConditions takes nothing returns boolean
+    return ((GetItemTypeId(GetManipulatedItem()) == 'I00O'))
+endfunction
+
+function Trig_UpdateHelmetActions takes nothing returns nothing
+// 头盔
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'lgdh') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'lgdh'))
+        call UnitAddItemByIdSwapped('hcun', GetTriggerUnit())
+    else
+    //紫金盔
+        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hcun') == true)) then
+            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'hcun'))
+            call UnitAddItemByIdSwapped('sprn', GetTriggerUnit())
+        else
+        // 诸葛巾
+            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde2') == true)) then
+                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rde2'))
+                call UnitAddItemByIdSwapped('prvt', GetTriggerUnit())
+            else
+            // 五灵纶巾
+                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'prvt') == true)) then
+                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'prvt'))
+                    call UnitAddItemByIdSwapped('rugt', GetTriggerUnit())
+                else
+                    call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cffffff00材料不足！")
+                    call AdjustPlayerStateBJ(3000, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
+                endif
+            endif
+        endif
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_UpdateHelmet takes nothing returns nothing
+    set gg_trg_UpdateHelmet = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_UpdateHelmet, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_UpdateHelmet, Condition(function Trig_UpdateHelmetConditions))
+    call TriggerAddAction(gg_trg_UpdateHelmet, function Trig_UpdateHelmetActions)
+endfunction
+

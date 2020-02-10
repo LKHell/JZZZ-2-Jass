@@ -1,0 +1,17 @@
+//左慈  天地灵气 刷新 技能cd
+function Trig_RefreashConditions takes nothing returns boolean
+    return ((GetItemTypeId(GetManipulatedItem()) == 'rspl'))
+endfunction
+
+function Trig_RefreashActions takes nothing returns nothing
+    call UnitResetCooldown(GetTriggerUnit())
+endfunction
+
+//===========================================================================
+function InitTrig_Refreash takes nothing returns nothing
+    set gg_trg_Refreash = CreateTrigger() 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_Refreash, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_Refreash, Condition(function Trig_RefreashConditions))
+    call TriggerAddAction(gg_trg_Refreash, function Trig_RefreashActions)
+endfunction
+

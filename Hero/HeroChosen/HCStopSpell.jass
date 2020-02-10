@@ -1,0 +1,7 @@
+// HCStopSpell
+//     事件
+//         单位 - A unit 开始施放技能
+//     条件
+//         (Level of 选择英雄1 111 for (Triggering unit)) 等于 1
+//     动作
+//         单位 - Order (Triggering unit) to 停止.

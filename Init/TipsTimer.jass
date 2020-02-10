@@ -1,0 +1,21 @@
+function Trig_TSTimerActions takes nothing returns nothing
+    if ((udg_TS == true)) then
+        call DisplayTextToForce(GetPlayersAll(), udg_tsxuhun[udg_tishi])
+        call DisplayTextToForce(GetPlayersAll(), "提示：输入-ts可以开启/关闭此信息")
+        if ((udg_tishi == 25)) then
+            set udg_tishi = 0
+        else
+            set udg_tishi = (udg_tishi + 1)
+        endif
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_TipsTimer takes nothing returns nothing
+    set gg_trg_TipsTimer = CreateTrigger()
+    call DisableTrigger(gg_trg_TipsTimer)
+    call TriggerRegisterTimerEventPeriodic(gg_trg_TipsTimer, 60.00)
+    call TriggerAddAction(gg_trg_TipsTimer, function Trig_TSTimerActions)
+endfunction
+

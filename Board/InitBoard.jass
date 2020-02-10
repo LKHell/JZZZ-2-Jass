@@ -1,0 +1,58 @@
+function Trig_InitBoardActions takes nothing returns nothing
+    // 5列 9 行
+    local integer x = 5
+    local integer y = 9
+
+    local integer iy = 1
+    local integer ix = 1
+
+ 
+
+    call CreateMultiboardBJ(x, y, (("难度 |Cff00ff00" + I2S(udg_Difficulty)) + "|r  玩家信息"))
+    set udg_MB = GetLastCreatedMultiboard()
+    call MultiboardDisplayBJ(true, udg_MB)
+    // 第一行为标题
+    call MultiboardSetItemValueBJ(udg_MB, 1, 1, "|cffD9D919玩家姓名|r")
+    call MultiboardSetItemValueBJ(udg_MB, 2, 1, "|cffFFFFFF杀怪数|r")
+    call MultiboardSetItemValueBJ(udg_MB, 3, 1, "|cffFF870F斩将数|r")
+    call MultiboardSetItemValueBJ(udg_MB, 4, 1, "|c000080FF武勋|r")
+    call MultiboardSetItemValueBJ(udg_MB, 5, 1, "|cffFF870F阵亡次数|r")
+    // 所有行列 显示文字 隐藏图标
+    call MultiboardSetItemStyleBJ(udg_MB, 0, 0, true, false)
+    call MultiboardSetItemWidthBJ(udg_MB, 0, 0, 7.00)
+
+     //1-9
+    loop
+        exitwhen iy > y
+       
+        // set ix = 1
+        // 1-5
+        // loop
+        //     exitwhen ix > x
+        //     call MultiboardSetItemStyleBJ(udg_MB, ix, iy, true, false)
+        //     call MultiboardSetItemWidthBJ(udg_MB, ix, iy, 7.00)
+        //     set ix = ix + 1
+        // endloop
+        set iy = iy + 1
+        call MultiboardSetItemValueBJ(udg_MB, 1, iy, ("|cffCFB53B" + (GetPlayerName(Player(iy - 2)) + "|r")))
+        
+    endloop
+    // 最大化
+    call MultiboardMinimizeBJ(false, udg_MB)
+
+     
+    // 关闭当前触发， 开启三个计数触发
+    call EnableTrigger(gg_trg_Death )
+    call EnableTrigger(gg_trg_KillUnits)
+    call EnableTrigger(gg_trg_KillBoss)
+    call DisableTrigger(GetTriggeringTrigger())
+endfunction
+
+//===========================================================================
+function InitTrig_InitBoard takes nothing returns nothing
+    set gg_trg_InitBoard = CreateTrigger()
+ 
+    call TriggerRegisterTimerEventSingle(gg_trg_InitBoard, 25.00)
+    call TriggerAddAction(gg_trg_InitBoard, function Trig_InitBoardActions)
+endfunction
+

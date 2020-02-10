@@ -1,0 +1,35 @@
+function Trig_CXJ2Conditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))], 'sksh') == true) and ((UnitHasItemOfTypeBJ(GetKillingUnitBJ(), 'sksh') == true) or (GetUnitPointValue(GetKillingUnitBJ()) == 55)))
+endfunction
+
+function Trig_CXJ2Actions takes nothing returns nothing
+    set udg_SSSSSSS[3] = (udg_SSSSSSS[3] + 1)
+    if ((IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true)) then
+        set udg_SSSSSSS[3] = (udg_SSSSSSS[3] + 4)
+    else
+    endif
+    if ((udg_SSSSSSS[3] >= 150)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))], 'sksh'))
+        call UnitAddItemByIdSwapped('lnrn', udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ())) + "|Cffffff00恭喜！你的雌雄一对剑已升至终级"))
+        call DestroyTrigger(gg_trg_CXJ1)
+        call DestroyTrigger(GetTriggeringTrigger())
+    else
+        call DoNothing()
+    endif
+    if ((udg_n == true)) then
+        call DisplayTimedTextToForce(GetPlayersAll(), 1.00, ("雌雄一对剑" + (I2S(udg_SSSSSSS[3]) + "/150")))
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_CXJ2 takes nothing returns nothing
+    set gg_trg_CXJ2 = CreateTrigger()
+    call DisableTrigger(gg_trg_CXJ2)
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_CXJ2, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_CXJ2, Condition(function Trig_CXJ2Conditions))
+    call TriggerAddAction(gg_trg_CXJ2, function Trig_CXJ2Actions)
+endfunction
+

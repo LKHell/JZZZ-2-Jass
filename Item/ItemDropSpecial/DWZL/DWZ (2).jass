@@ -1,0 +1,35 @@
+function Trig_DWZ2Conditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))], 'I00H') == true) and ((UnitHasItemOfTypeBJ(GetKillingUnitBJ(), 'I00H') == true) or (GetUnitPointValue(GetKillingUnitBJ()) == 55)))
+endfunction
+
+function Trig_DWZ2Actions takes nothing returns nothing
+    set udg_SSSSSSS[8] = (udg_SSSSSSS[8] + 1)
+    if ((IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true)) then
+        set udg_SSSSSSS[8] = (udg_SSSSSSS[8] + 4)
+    else
+    endif
+    if ((udg_SSSSSSS[8] >= 120)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))], 'I00H'))
+        call UnitAddItemByIdSwapped('I00F', udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ())) + "|Cffffff00恭喜！你的鼎文杖已升至终级"))
+        call DestroyTrigger(gg_trg_DWZ1)
+        call DestroyTrigger(GetTriggeringTrigger())
+    else
+        call DoNothing()
+    endif
+    if ((udg_n == true)) then
+        call DisplayTimedTextToForce(GetPlayersAll(), 1.00, ("鼎文杖" + (I2S(udg_SSSSSSS[8]) + "/120")))
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_DWZ2 takes nothing returns nothing
+    set gg_trg_DWZ2 = CreateTrigger()
+    call DisableTrigger(gg_trg_DWZ2)
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_DWZ2, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_DWZ2, Condition(function Trig_DWZ2Conditions))
+    call TriggerAddAction(gg_trg_DWZ2, function Trig_DWZ2Actions)
+endfunction
+

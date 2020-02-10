@@ -1,0 +1,33 @@
+function Trig_HeroDeadConditions takes nothing returns boolean
+//And - 所有条件成立
+            // 条件
+            //     ((触发单位) 是 玩家9(灰色) 的同盟单位) 等于 TRUE
+            //     ((触发单位) 的所有者) 不等于 玩家9(灰色)
+            //     ((触发单位) 是 英雄) 等于 TRUE
+            //     ((触发单位) 是镜像单位) 等于 FALSE
+            //     (触发单位) 等于 hero[(((触发单位) 的所有者) 的玩家ID)]
+    return (((IsUnitAlly(GetTriggerUnit(), Player(8)) == true) and (GetOwningPlayer(GetTriggerUnit()) != Player(8)) and (IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true) and (IsUnitIllusionBJ(GetTriggerUnit()) == false) and (GetTriggerUnit() == udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))])))
+endfunction
+
+function Trig_HeroDeadActions takes nothing returns nothing
+    local integer id = GetConvertedPlayerId(GetTriggerPlayer())
+    set udg_DW[id] = null
+    set udg_heroDead[id] = GetDyingUnit()
+    // 判定玄铁减甲 技能，如果有删除
+    if ((GetUnitAbilityLevel(GetTriggerUnit(), 'A03H') > 0)) then
+        call UnitRemoveAbility(GetTriggerUnit(), 'A03H')
+    
+    endif
+    call StartTimerBJ(udg_time[id], false, 15.00)
+    call DisplayTimedTextToPlayer(GetTriggerPlayer(), 0, 0, 5.00, "15秒后复活,请耐心等待!")
+endfunction
+
+//===========================================================================
+function InitTrig_HeroDead takes nothing returns nothing
+    set gg_trg_HeroDead = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_HeroDead, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_HeroDead, Condition(function Trig_HeroDeadConditions))
+    call TriggerAddAction(gg_trg_HeroDead, function Trig_HeroDeadActions)
+endfunction
+

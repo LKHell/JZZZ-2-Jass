@@ -1,0 +1,29 @@
+ function Trig_QXD1Conditions takes nothing returns boolean
+    return ((GetItemTypeId(GetManipulatedItem()) == 'esaz'))
+endfunction
+
+function Trig_QXD1Actions takes nothing returns nothing
+    set udg_SSSSSSS[4] = (udg_SSSSSSS[4] + 1)
+    if ((udg_SSSSSSS[4] >= 10) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'esaz') == true)) then
+        call DisableTrigger(GetTriggeringTrigger())
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'esaz'))
+        call UnitAddItemByIdSwapped('gvsm', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetTriggerPlayer()) + "你的祈禳秘典已升至二级"))
+    else
+        call DoNothing()
+    endif
+    if ((udg_n == true)) then
+        call DisplayTimedTextToForce(GetPlayersAll(), 3.00, ("祈禳秘典" + (I2S(udg_SSSSSSS[4]) + "/10")))
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_QXD1 takes nothing returns nothing
+    set gg_trg_QXD1 = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_QXD1, EVENT_PLAYER_UNIT_USE_ITEM)
+    call TriggerAddCondition(gg_trg_QXD1, Condition(function Trig_QXD1Conditions))
+    call TriggerAddAction(gg_trg_QXD1, function Trig_QXD1Actions)
+endfunction
+

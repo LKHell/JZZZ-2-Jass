@@ -1,0 +1,17 @@
+
+// DeBugMajia
+//     事件
+//     条件
+//     动作
+//         游戏 - Display to (All players) the text: (String((Damage taken)))
+
+function Trig_DeBugMajia_Actions takes nothing returns nothing
+    call DisplayTextToForce( GetPlayersAll(), R2S(GetEventDamage()) )
+endfunction
+
+//===========================================================================
+function InitTrig_DeBugMajia takes nothing returns nothing
+    set gg_trg_DeBugMajia = CreateTrigger(  )
+    call TriggerAddAction( gg_trg_DeBugMajia, function Trig_DeBugMajia_Actions )
+endfunction
+

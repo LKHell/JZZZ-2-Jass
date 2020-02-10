@@ -1,0 +1,62 @@
+ 
+
+function Trig_MLActions takes nothing returns nothing
+    // 马良 星辰爆
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'Osam')) then 
+        call Trig_BaseActions ('A01K',0)
+    endif
+
+    // 伊籍 圣泉
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'H004')) then 
+        call Trig_BaseActions ('Ahwd',0)
+    endif
+
+    // 庞燕 乌云蔽日
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'Nbrn')) then 
+       call Trig_BaseActions ('A04W',0)
+    endif
+
+    // 关凤 圣灵护体 浮凤掠影
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'Ogrh')) then 
+        call Trig_BaseActions ('A010','A05F')
+    endif
+    // 向宠 火神降临
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'Hpb2')) then 
+        call Trig_BaseActions ('AUin',0)
+    endif
+
+     // lh 火焰刀 玉泉酒
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'Hmgd')) then 
+        call Trig_BaseActions ('A00Z','A07K')
+    endif
+
+
+     // ZB 力拔山兮气盖世
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'Hlgr')) then 
+        call Trig_BaseActions ('AHav','A07J')
+    endif
+     // 姜维/麒麟  毁天灭地
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'H00F')or (GetUnitTypeId(GetTriggerUnit()) == 'Hkal')) then 
+        call Trig_BaseActions ('ANst',0)
+    endif
+
+      // 黄月英 
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'Hjai') ) then 
+        call Trig_BaseActions ('AEsf',0)
+    endif
+
+    //傅彤 鬼神 睡眠
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'H00G') ) then 
+        call Trig_BaseActions ('A094','A092')
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_NomalHero takes nothing returns nothing
+    set gg_trg_NomalHero = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_NomalHero, EVENT_PLAYER_HERO_LEVEL)
+    
+    call TriggerAddAction(gg_trg_NomalHero, function Trig_MLActions)
+endfunction
+

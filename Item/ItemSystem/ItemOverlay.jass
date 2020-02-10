@@ -1,0 +1,28 @@
+function Trig_ItemOverlayConditions takes nothing returns boolean
+    // 可充的 使用次数大于0 操作者不等于物品栏马甲
+    return ((GetItemType(GetManipulatedItem()) == ITEM_TYPE_CHARGED) and (GetItemCharges(GetManipulatedItem()) > 0) and (GetUnitTypeId(GetTriggerUnit()) != 'Ntin'))
+endfunction
+
+function Trig_ItemOverlayActions takes nothing returns nothing
+    local integer i = 1
+    loop
+        exitwhen i > 6
+        if ((GetManipulatedItem() != UnitItemInSlotBJ(GetTriggerUnit(), i)) and (GetItemTypeId(GetManipulatedItem()) == GetItemTypeId(UnitItemInSlotBJ(GetTriggerUnit(), i)))) then
+        // 设置单位持有的物品 使用次数 为 二者相加和
+            call SetItemCharges(UnitItemInSlotBJ(GetTriggerUnit(), i), (GetItemCharges(UnitItemInSlotBJ(GetTriggerUnit(), i)) + GetItemCharges(GetManipulatedItem())))
+            call RemoveItem(GetManipulatedItem())
+        else
+        endif
+        set i = i + 1
+    endloop
+endfunction
+
+//===========================================================================
+function InitTrig_ItemOverlay takes nothing returns nothing
+    set gg_trg_ItemOverlay = CreateTrigger()
+
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ItemOverlay, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_ItemOverlay, Condition(function Trig_ItemOverlayConditions))
+    call TriggerAddAction(gg_trg_ItemOverlay, function Trig_ItemOverlayActions)
+endfunction
+

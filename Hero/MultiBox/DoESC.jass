@@ -1,0 +1,39 @@
+
+
+function Trig_DoESCConditions takes nothing returns boolean
+    return ((udg_DW[GetConvertedPlayerId(GetTriggerPlayer())] != null))
+endfunction
+
+function Trig_DoESCActions takes nothing returns nothing
+    // (DW[((触发玩家) 的玩家ID)] 的所有者) 等于 (触发玩家)
+    if ((GetOwningPlayer(udg_DW[GetConvertedPlayerId(GetTriggerPlayer())]) == GetTriggerPlayer())) then
+        //单位 - 对 DW[((触发玩家) 的玩家ID)] 发布 娜迦 - 潜水 命令
+        call IssueImmediateOrder(udg_DW[GetConvertedPlayerId(GetTriggerPlayer())], "submerge")
+    else
+        // ((DW[((触发玩家) 的玩家ID)] 的所有者) 对 (触发玩家) 开启 共享单位) 等于 TRUE
+        if ((GetPlayerAlliance(GetOwningPlayer(udg_DW[GetConvertedPlayerId(GetTriggerPlayer())]), GetTriggerPlayer(), ALLIANCE_SHARED_CONTROL) == true)) then
+          //单位 - 对 DW[((触发玩家) 的玩家ID)] 发布 娜迦 - 潜水 命令
+          call IssueImmediateOrder(udg_DW[GetConvertedPlayerId(GetTriggerPlayer())], "submerge")
+        else
+        endif
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_DoESC takes nothing returns nothing
+    set gg_trg_DoESC = CreateTrigger()
+
+    // 0是不按 1是shift、2是ctrl、4是alt
+    call BlzTriggerRegisterPlayerKeyEvent(gg_trg_DoESC, Player(0), OSKEY_Z, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(gg_trg_DoESC, Player(1), OSKEY_Z, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(gg_trg_DoESC, Player(2), OSKEY_Z, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(gg_trg_DoESC, Player(3), OSKEY_Z, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(gg_trg_DoESC, Player(4), OSKEY_Z, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(gg_trg_DoESC, Player(5), OSKEY_Z, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(gg_trg_DoESC, Player(6), OSKEY_Z, 0, true)
+    call BlzTriggerRegisterPlayerKeyEvent(gg_trg_DoESC, Player(7), OSKEY_Z, 0, true)	
+    
+    call TriggerAddCondition(gg_trg_DoESC, Condition(function Trig_DoESCConditions))
+    call TriggerAddAction(gg_trg_DoESC, function Trig_DoESCActions)
+endfunction
+

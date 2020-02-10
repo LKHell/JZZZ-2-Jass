@@ -1,0 +1,51 @@
+function Trig_GYLearnFinalSkillActions takes nothing returns nothing
+    if ((GetHeroLevel(GetTriggerUnit()) >= 50)) then
+        if ((udg_MissonShengshou  == 1)) then
+            // 完成 四圣兽任务 人口为 61
+            call SetPlayerStateBJ(Player(0), PLAYER_STATE_RESOURCE_FOOD_CAP, 61)
+            call SetPlayerStateBJ(Player(1), PLAYER_STATE_RESOURCE_FOOD_CAP, 61)
+            call SetPlayerStateBJ(Player(2), PLAYER_STATE_RESOURCE_FOOD_CAP, 61)
+            call SetPlayerStateBJ(Player(3), PLAYER_STATE_RESOURCE_FOOD_CAP, 61)
+            call SetPlayerStateBJ(Player(4), PLAYER_STATE_RESOURCE_FOOD_CAP, 61)
+            call SetPlayerStateBJ(Player(5), PLAYER_STATE_RESOURCE_FOOD_CAP, 61)
+            call SetPlayerStateBJ(Player(6), PLAYER_STATE_RESOURCE_FOOD_CAP, 61)
+            call SetPlayerStateBJ(Player(7), PLAYER_STATE_RESOURCE_FOOD_CAP, 61)
+            call SetPlayerStateBJ(Player(8), PLAYER_STATE_RESOURCE_FOOD_CAP, 61)
+        else
+            // 常规人口为 56
+            call SetPlayerStateBJ(Player(0), PLAYER_STATE_RESOURCE_FOOD_CAP, 56)
+            call SetPlayerStateBJ(Player(1), PLAYER_STATE_RESOURCE_FOOD_CAP, 56)
+            call SetPlayerStateBJ(Player(2), PLAYER_STATE_RESOURCE_FOOD_CAP, 56)
+            call SetPlayerStateBJ(Player(3), PLAYER_STATE_RESOURCE_FOOD_CAP, 56) 
+            call SetPlayerStateBJ(Player(4), PLAYER_STATE_RESOURCE_FOOD_CAP, 56)
+            call SetPlayerStateBJ(Player(5), PLAYER_STATE_RESOURCE_FOOD_CAP, 56)
+            call SetPlayerStateBJ(Player(6), PLAYER_STATE_RESOURCE_FOOD_CAP, 56)
+            call SetPlayerStateBJ(Player(7), PLAYER_STATE_RESOURCE_FOOD_CAP, 56)
+            call SetPlayerStateBJ(Player(8), PLAYER_STATE_RESOURCE_FOOD_CAP, 56)
+        endif
+        // 终极技能 磨灭
+        call UnitAddAbilityBJ('Aadm', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), "关羽领悟终极技能磨灭")
+        call DisableTrigger(GetTriggeringTrigger())
+        call DisableTrigger(gg_trg_GYLearnSkill)
+    else
+        // 可用人口 +1
+        call AdjustPlayerStateBJ(1, Player(8), PLAYER_STATE_RESOURCE_FOOD_CAP)
+        call AdjustPlayerStateBJ(1, Player(0), PLAYER_STATE_RESOURCE_FOOD_CAP)
+        call AdjustPlayerStateBJ(1, Player(1), PLAYER_STATE_RESOURCE_FOOD_CAP)
+        call AdjustPlayerStateBJ(1, Player(2), PLAYER_STATE_RESOURCE_FOOD_CAP)
+        call AdjustPlayerStateBJ(1, Player(3), PLAYER_STATE_RESOURCE_FOOD_CAP)
+        call AdjustPlayerStateBJ(1, Player(4), PLAYER_STATE_RESOURCE_FOOD_CAP)
+        call AdjustPlayerStateBJ(1, Player(5), PLAYER_STATE_RESOURCE_FOOD_CAP)
+        call AdjustPlayerStateBJ(1, Player(6), PLAYER_STATE_RESOURCE_FOOD_CAP)
+        call AdjustPlayerStateBJ(1, Player(7), PLAYER_STATE_RESOURCE_FOOD_CAP)
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_GYLearnFinalSkill takes nothing returns nothing
+    set gg_trg_GYLearnFinalSkill = CreateTrigger()
+ 
+    call TriggerRegisterUnitEvent(gg_trg_GYLearnFinalSkill, gg_unit_Hant_0005, EVENT_UNIT_HERO_LEVEL)
+    call TriggerAddAction(gg_trg_GYLearnFinalSkill, function Trig_GYLearnFinalSkillActions)
+endfunction

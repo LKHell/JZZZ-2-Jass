@@ -1,0 +1,36 @@
+function Trig_getoutFunc004002 takes nothing returns nothing
+    call SetPlayerHandicapXPBJ(GetEnumPlayer(), (120.00 + (18.00 * I2R(GetUnitAbilityLevelSwapped('ACev', gg_unit_Hpal_0031)))))
+endfunction
+
+function Trig_getoutFunc005001001 takes nothing returns boolean
+    return (((IsPlayerAlly(GetFilterPlayer(), Player(8)) == true) and ((GetPlayerController(GetFilterPlayer()) == MAP_CONTROL_USER) and (GetPlayerSlotState(GetFilterPlayer()) == PLAYER_SLOT_STATE_PLAYING))))
+endfunction
+
+function Trig_getoutFunc005A takes nothing returns nothing
+    call AdjustPlayerStateBJ((GetPlayerState(GetTriggerPlayer(), PLAYER_STATE_RESOURCE_GOLD) / 8), GetEnumPlayer(), PLAYER_STATE_RESOURCE_GOLD)
+    call AdjustPlayerStateBJ((GetPlayerState(GetTriggerPlayer(), PLAYER_STATE_RESOURCE_LUMBER) / 8), GetEnumPlayer(), PLAYER_STATE_RESOURCE_LUMBER)
+endfunction
+
+function Trig_getoutActions takes nothing returns nothing
+    call ShareEverythingWithTeam(GetTriggerPlayer())
+    call DecUnitAbilityLevel(gg_unit_Hpal_0031, 'ACev')
+    call DisplayTimedTextToForce(GetPlayersAll(), 10.00, (GetPlayerName(GetTriggerPlayer()) + "|c00FF0000离开游戏。钱财平分，向所有盟友共享单位。|r"))
+    call ForForce(GetPlayersAllies(Player(8)), function Trig_getoutFunc004002)
+    call ForForce(GetPlayersMatching(Condition(function Trig_getoutFunc005001001)), function Trig_getoutFunc005A)
+endfunction
+
+//===========================================================================
+function InitTrig_PlayerLeave takes nothing returns nothing
+    set gg_trg_PlayerLeave = CreateTrigger()
+ 
+    call TriggerRegisterPlayerEventLeave(gg_trg_PlayerLeave, Player(0))
+    call TriggerRegisterPlayerEventLeave(gg_trg_PlayerLeave, Player(1))
+    call TriggerRegisterPlayerEventLeave(gg_trg_PlayerLeave, Player(2))
+    call TriggerRegisterPlayerEventLeave(gg_trg_PlayerLeave, Player(3))
+    call TriggerRegisterPlayerEventLeave(gg_trg_PlayerLeave, Player(4))
+    call TriggerRegisterPlayerEventLeave(gg_trg_PlayerLeave, Player(5))
+    call TriggerRegisterPlayerEventLeave(gg_trg_PlayerLeave, Player(6))
+    call TriggerRegisterPlayerEventLeave(gg_trg_PlayerLeave, Player(7))
+    call TriggerAddAction(gg_trg_PlayerLeave, function Trig_getoutActions)
+endfunction
+

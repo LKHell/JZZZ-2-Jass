@@ -40,6 +40,7 @@ function Trig_InitUnitNpc_Actions takes nothing returns nothing
 
     // 杨嘉
     set udg_NpcYangJia =  CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'Hpb1', -8550, 12410, 6.00)
+    call TriggerRegisterEnterRectSimple(gg_trg_FCYangJia, gg_rct______________021)
 
     //=============================================================== 
     // 种诗

@@ -1,0 +1,20 @@
+ function Trig_deathConditions takes nothing returns boolean
+    return ((IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true) and (IsPlayerAlly(GetOwningPlayer(GetDyingUnit()), Player(8)) == true) and (GetOwningPlayer(GetDyingUnit()) != Player(8)))
+endfunction
+
+function Trig_deathActions takes nothing returns nothing
+    local integer i  =  GetConvertedPlayerId(GetOwningPlayer(GetDyingUnit())) 
+ //call DisplayTextToForce(GetPlayersAll(), "death"+I2S(i))
+    set udg_iDead[i] = (udg_iDead[i] + 1)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 5, (i+ 1), I2S(udg_iDead[i]))
+    set i = 0
+endfunction
+
+//===========================================================================
+function InitTrig_Death takes nothing returns nothing
+    set gg_trg_Death = CreateTrigger()
+    call DisableTrigger(gg_trg_Death )
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_Death, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_Death, Condition(function Trig_deathConditions))
+    call TriggerAddAction(gg_trg_Death, function Trig_deathActions)
+endfunction

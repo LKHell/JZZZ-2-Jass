@@ -1,0 +1,36 @@
+function Trig_DBtoUnitConditions takes nothing returns boolean
+    return (((GetItemTypeId(GetManipulatedItem()) == 'gopr') or (GetItemTypeId(GetManipulatedItem()) == 'k3m3') or (GetItemTypeId(GetManipulatedItem()) == 'k3m2') or (GetItemTypeId(GetManipulatedItem()) == 'glsk')))
+endfunction
+
+function Trig_DBtoUnitActions takes nothing returns nothing
+    local integer i =0
+    set udg_pointTempItem = GetUnitLoc(GetTriggerUnit())
+    //朱雀
+    if ((GetItemTypeId(GetManipulatedItem()) == 'k3m3')) then
+        set i ='hphx' 
+    elseif ((GetItemTypeId(GetManipulatedItem()) == 'gopr')) then
+    //玄武
+        set i ='ntrd' 
+    elseif ((GetItemTypeId(GetManipulatedItem()) == 'glsk')) then
+    //白虎
+        set i ='nwwd' 
+    elseif ((GetItemTypeId(GetManipulatedItem()) == 'k3m2')) then
+    //青龙
+        set i ='ngrd' 
+    endif
+
+    if(i != 0) then
+    //创建圣兽
+    call CreateUnit(GetOwningPlayer(GetTriggerUnit()) , i ,GetWidgetX(GetTriggerUnit()), GetWidgetY(GetTriggerUnit()) , GetUnitFacing(GetTriggerUnit()) )
+    endif
+     
+endfunction
+
+//===========================================================================
+function InitTrig_DBToUnit takes nothing returns nothing
+    set gg_trg_DBToUnit = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_DBToUnit, EVENT_PLAYER_UNIT_USE_ITEM)
+    call TriggerAddCondition(gg_trg_DBToUnit, Condition(function Trig_DBtoUnitConditions))
+    call TriggerAddAction(gg_trg_DBToUnit, function Trig_DBtoUnitActions)
+endfunction
+

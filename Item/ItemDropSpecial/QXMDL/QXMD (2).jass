@@ -1,0 +1,31 @@
+ function Trig_QXD2Conditions takes nothing returns boolean
+    return ((GetItemTypeId(GetManipulatedItem()) == 'gvsm'))
+endfunction
+
+function Trig_QXD2Actions takes nothing returns nothing
+    set udg_SSSSSSS[4] = (udg_SSSSSSS[4] + 1)
+    if ((udg_SSSSSSS[4] >= 25) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'gvsm') == true)) then
+        call DisableTrigger(GetTriggeringTrigger())
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'gvsm'))
+        call UnitAddItemByIdSwapped('srtl', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetTriggerPlayer()) + "恭喜！你的祈禳秘典已升至终级"))
+        call DestroyTrigger(gg_trg_QXD1)
+        call DestroyTrigger(GetTriggeringTrigger())
+    else
+        call DoNothing()
+    endif
+    if ((udg_n == true)) then
+        call DisplayTimedTextToForce(GetPlayersAll(), 3.00, ("祈禳秘典" + (I2S(udg_SSSSSSS[4]) + "/25")))
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_QXD2 takes nothing returns nothing
+    set gg_trg_QXD2 = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_QXD2, EVENT_PLAYER_UNIT_USE_ITEM)
+    call TriggerAddCondition(gg_trg_QXD2, Condition(function Trig_QXD2Conditions))
+    call TriggerAddAction(gg_trg_QXD2, function Trig_QXD2Actions)
+endfunction
+

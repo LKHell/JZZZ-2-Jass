@@ -1,0 +1,117 @@
+function Trig_initVariableActions takes nothing returns nothing
+
+    local location tempLocation
+	local location tempPoint =  GetRectCenter(gg_rct_ItemUnitArea)
+    	local integer index = 0
+    	local integer i = 0
+
+    
+
+    set udg_tishi = 0
+
+    set udg_llq1 = false
+
+    set udg_info = true
+
+    set udg_GuanYuLocation = GetRectCenter(gg_rct_startArea)
+
+    set udg_mudi[9] = gg_unit_uaod_0111
+
+    set udg_mudi[10] = gg_unit_obar_0132
+
+    set udg_mudi[11] = gg_unit_obar_0132
+
+    set udg_TS = true
+
+    set udg_hero[9] = gg_unit_Hant_0005
+
+    set udg_global_point1 = GetRectCenter(gg_rct_createLeftUnit)
+
+    set udg_global_point2 = GetRectCenter(gg_rct_createRightUnit)
+
+    set udg_global_PointYULIANG = GetRectCenter(gg_rct_YULIANG)
+
+    set udg_global_doorArea = GetRectCenter(gg_rct_doorArea)
+
+    set udg_global_East = GetRectCenter(gg_rct_createEast)
+
+    set udg_global_West = GetRectCenter(gg_rct_createWest)
+
+    set udg_global_South = GetRectCenter(gg_rct_createSouth)
+
+    set udg_RoomA_point = GetRectCenter(gg_rct_ARoom)
+
+    set udg_RoomA2_point = GetRectCenter(gg_rct_ARoom2)
+
+    set udg_RoomB_point = GetRectCenter(gg_rct_BRoom)
+//创建基础士兵 东吴 水兵 4钟
+
+    set bj_forLoopAIndex = 1
+
+    set bj_forLoopAIndexEnd = 5
+
+    loop
+
+        exitwhen bj_forLoopAIndex > bj_forLoopAIndexEnd
+
+        set tempLocation = GetRandomLocInRect(gg_rct_Wu079)
+
+        call CreateNUnitsAtLocFacingLocBJ(3, 'odkt', Player(11), tempLocation, tempLocation)
+
+        call RemoveLocation(tempLocation)
+
+        set tempLocation = GetRandomLocInRect(gg_rct_Wu078)
+
+        call CreateNUnitsAtLocFacingLocBJ(2, 'nbld', Player(11), tempLocation, tempLocation)
+
+        call CreateNUnitsAtLocFacingLocBJ(2, 'nbel', Player(11), tempLocation, tempLocation)
+
+        call CreateNUnitsAtLocFacingLocBJ(2, 'nhea', Player(11), tempLocation, tempLocation)
+
+        call RemoveLocation(tempLocation)
+
+        set tempLocation = GetRandomLocInRect(gg_rct_Wei80)
+
+        call CreateNUnitsAtLocFacingLocBJ(3, 'owar', Player(11), tempLocation, tempLocation)
+
+        call RemoveLocation(tempLocation)
+
+        set bj_forLoopAIndex = bj_forLoopAIndex + 1
+
+    endloop
+
+    // 初始化 物品栏
+	
+    loop
+        exitwhen index > 7
+        call CreateNUnitsAtLoc( 1, 'Ntin', Player(PLAYER_NEUTRAL_PASSIVE), tempPoint , bj_UNIT_FACING )
+        set udg_ItemUnit[index] = GetLastCreatedUnit()
+        call CreateNUnitsAtLoc( 1, 'Ntin', Player(PLAYER_NEUTRAL_PASSIVE), tempPoint , bj_UNIT_FACING )
+        set udg_ItemUnit[index+1] = GetLastCreatedUnit()
+        call CreateNUnitsAtLoc( 1, 'Ntin', Player(PLAYER_NEUTRAL_PASSIVE), tempPoint , bj_UNIT_FACING )
+        set udg_ItemUnit[index+2] = GetLastCreatedUnit()
+        set index = index + 1
+        set i  = 3 * index
+    endloop
+    call RemoveLocation(tempPoint)
+    set tempPoint =  null
+    call DestroyTrigger(GetTriggeringTrigger())
+
+endfunction
+
+
+
+//===========================================================================
+
+function InitTrig_InitVariable takes nothing returns nothing
+
+    set gg_trg_InitVariable = CreateTrigger()
+
+    call DisableTrigger(gg_trg_InitVariable)
+
+    call TriggerAddAction(gg_trg_InitVariable, function Trig_initVariableActions)
+
+endfunction
+
+
+

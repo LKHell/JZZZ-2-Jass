@@ -1,0 +1,13 @@
+function Trig_DebugNextAttackActions takes nothing returns nothing
+    call SetHeroLevelBJ(gg_unit_Hpal_0031, (GetHeroLevel(gg_unit_Hpal_0031) + 1), false)
+endfunction
+
+//===========================================================================
+function InitTrig_DebugNextAttack takes nothing returns nothing
+    set gg_trg_DebugNextAttack = CreateTrigger()
+ 
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugNextAttack, Player(0), "-next", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugNextAttack, Player(1), "-next", true)
+    call TriggerAddAction(gg_trg_DebugNextAttack, function Trig_DebugNextAttackActions)
+endfunction
+

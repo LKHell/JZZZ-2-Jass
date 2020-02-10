@@ -1,0 +1,20 @@
+function Trig_QingGangJianConditions takes nothing returns boolean
+    return ((GetRandomInt(1, 60) == 5) and (IsUnitAlly(GetTriggerUnit(), Player(9)) == true) and (IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_QingGangJianActions takes nothing returns nothing
+    local location tempLoc = GetUnitLoc(GetTriggerUnit())
+    call CreateItemLoc('frgd', tempLoc)
+    call RemoveLocation(tempLoc)
+    call DestroyTrigger(GetTriggeringTrigger())
+    set tempLoc=null
+endfunction
+
+//===========================================================================
+function InitTrig_QingGangJian takes nothing returns nothing
+    set gg_trg_QingGangJian = CreateTrigger()
+
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_QingGangJian, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_QingGangJian, Condition(function Trig_QingGangJianConditions))
+    call TriggerAddAction(gg_trg_QingGangJian, function Trig_QingGangJianActions)
+endfunction

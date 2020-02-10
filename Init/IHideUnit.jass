@@ -1,0 +1,12 @@
+// IHideUnit
+//     事件
+//     条件
+//     动作
+//         动画 - Change 左慈之影 0212<预设>'s vertex coloring to (100.00%, 100.00%, 100.00%) with 45.00% transparency
+//         动画 - Change 张辽 0143<预设>'s vertex coloring to (100.00%, 100.00%, 100.00%) with 45.00% transparency
+//         单位组 - Pick every unit in (Units in dby<预设>) and do (Actions)
+//             Loop - 动作
+//                 单位 - Hide (Picked unit)
+//         单位 - Hide |cffffdead陆逊 0044<预设>
+//         单位 - Hide |cffffdead吕玲绮 0202<预设>
+//         单位 - 暂停 |cffffdead吕玲绮 0202<预设>

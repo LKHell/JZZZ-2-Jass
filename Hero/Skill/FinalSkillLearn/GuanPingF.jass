@@ -1,0 +1,31 @@
+function Trig_GuanPingFConditions takes nothing returns boolean
+    return ((GetUnitTypeId(GetTriggerUnit()) == 'Opgh'))
+endfunction
+
+function Trig_GuanPingFActions takes nothing returns nothing
+    if ((GetUnitAbilityLevelSwapped('A01E', GetTriggerUnit()) == 1) and (GetHeroLevel(GetTriggerUnit()) >= (27 + (3 * udg_Difficulty)))) then
+        call SetPlayerAbilityAvailableBJ(true, 'ANcr', GetOwningPlayer(GetTriggerUnit()))
+        call IncUnitAbilityLevel(  GetTriggerUnit(),'A01E')
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "领悟了终级技能：|Cff00ff00武神！"))
+        call EnableTrigger(gg_trg_guanping)
+    elseif ((GetUnitAbilityLevelSwapped('ANcr', GetTriggerUnit()) == 1) and (GetHeroLevel(GetTriggerUnit()) >= (47 + (3 * udg_Difficulty)))) then
+        call IncUnitAbilityLevel(  GetTriggerUnit(),'ANcr')
+        call IncUnitAbilityLevel(  GetTriggerUnit(),'A01E')
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "|Cff00ff00武神的等级已经提升了！"))
+    elseif ((GetUnitAbilityLevelSwapped('ANcr', GetTriggerUnit()) == 2) and (GetHeroLevel(GetTriggerUnit()) >= (67 + (3 * udg_Difficulty)))) then
+        call IncUnitAbilityLevel(  GetTriggerUnit(),'ANcr')
+        call IncUnitAbilityLevel(  GetTriggerUnit(),'A01E')
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "|Cff00ff00武神的等级已经提升了！"))
+        call DestroyTrigger(GetTriggeringTrigger())             
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_GuanPingF takes nothing returns nothing
+    set gg_trg_GuanPingF = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_GuanPingF, EVENT_PLAYER_HERO_LEVEL)
+    call TriggerAddCondition(gg_trg_GuanPingF, Condition(function Trig_GuanPingFConditions))
+    call TriggerAddAction(gg_trg_GuanPingF, function Trig_GuanPingFActions)
+endfunction
+

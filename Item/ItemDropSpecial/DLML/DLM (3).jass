@@ -1,0 +1,30 @@
+function Trig_DLM3Conditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(GetAttackedUnitBJ(), 'iwbr') == true))
+endfunction
+
+function Trig_DLM3Actions takes nothing returns nothing
+    set udg_SSSSSSS[7] = (udg_SSSSSSS[7] + 1)
+    if ((udg_SSSSSSS[7] >= 900) and (IsUnitIllusionBJ(GetAttackedUnitBJ()) == false)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'iwbr'))
+        call UnitAddItemByIdSwapped('anfg', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetTriggerPlayer()) + "你的的卢马已升至四级"))
+        call EnableTrigger(gg_trg_DLM4)
+    else
+        call DoNothing()
+    endif
+    if ((udg_n == true)) then
+        call DisplayTimedTextToForce(GetPlayersAll(), 0.50, ("的卢马" + (I2S(udg_SSSSSSS[7]) + "/900")))
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_DLM3 takes nothing returns nothing
+    set gg_trg_DLM3 = CreateTrigger()
+    call DisableTrigger(gg_trg_DLM3)
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_DLM3, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerAddCondition(gg_trg_DLM3, Condition(function Trig_DLM3Conditions))
+    call TriggerAddAction(gg_trg_DLM3, function Trig_DLM3Actions)
+endfunction
+

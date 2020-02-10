@@ -1,0 +1,27 @@
+function Trig_modleActions takes nothing returns nothing
+    local string str
+    set str = "|Cff00ff00请选择游戏模式: |r|n"
+    call DialogSetMessage(udg_modle, str)
+   
+    set str = "|cffffdead常规模式" 
+    call DialogAddButtonBJ(udg_modle, str)
+    set udg_DHAN = GetLastCreatedButtonBJ()
+ 
+    set str = "|Cff00ff00关羽无限死亡模式"
+    call DialogAddButtonBJ(udg_modle, str)
+    set udg_DHAN2 = GetLastCreatedButtonBJ()
+   
+    // set str = "|cff80FFFF无CD模式"
+    //call DialogAddButtonBJ(udg_modle, str)
+    //set udg_DHAN3 = GetLastCreatedButtonBJ()
+    
+    call DialogDisplayBJ(true, udg_modle, Player(0))
+    set str = null
+endfunction
+
+//===========================================================================
+function InitTrig_DCModeB takes nothing returns nothing
+    set gg_trg_DCModeB = CreateTrigger()
+    call TriggerAddAction(gg_trg_DCModeB, function Trig_modleActions)
+endfunction
+

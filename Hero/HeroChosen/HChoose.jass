@@ -1,0 +1,103 @@
+// HChoose
+//     事件
+//         玩家 - 玩家 1 (红色) 选择 a unit
+//         玩家 - 玩家 2 (蓝色) 选择 a unit
+//         玩家 - 玩家 3 (青色) 选择 a unit
+//         玩家 - 玩家 4 (紫色) 选择 a unit
+//         玩家 - 玩家 5 (黄色) 选择 a unit
+//         玩家 - 玩家 6 (橙色) 选择 a unit
+//         玩家 - 玩家 7 (绿色) 选择 a unit
+//         玩家 - 玩家 8 (粉红色) 选择 a unit
+//     条件
+//         hero[(Player number of (Triggering player))] 等于 没有单位
+//         (Level of 选择英雄1 111 for (Triggering unit)) 等于 1
+//     动作
+//         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//             If - 条件
+//                 ((Triggering unit) has an item of type 疗伤药) 等于 TRUE
+//             Then - 动作
+//                 Custom script:   call SetCameraBoundsToRectForPlayerBJ(GetTriggerPlayer(), GetEntireMapRect())
+//                 物品 - Remove (Item carried by (Triggering unit) of type 疗伤药)
+//                 单位 - Change ownership of (Triggering unit) to (Triggering player) and 改变颜色
+//                 单位 - Make (Triggering unit) 可攻击的
+//                 单位 - Remove 选择英雄1 111 from (Triggering unit)
+//                 英雄 - Modify unspent skill points of (Triggering unit): 设为 4 points
+//                 单位 - Move (Triggering unit) instantly to GuanYuLocation
+//                 玩家 - Set (Triggering player).可用人口数 to 6
+//                 玩家 - 禁用 选择英雄1 111 for (Triggering player)
+//                 玩家组 - Pick every player in (All allies of 玩家 9 (灰色).) and do (Actions)
+//                     Loop - 动作
+//                         Custom script:   call SetPlayerHandicapXPBJ(GetEnumPlayer(), (120.00 + (18.00 * I2R(GetUnitAbilityLevelSwapped('ACev', gg_unit_Hpal_0031)))))
+//                 单位 - Increase level of 闪避 (难度) for 训练场长官 0031<预设>
+//                 单位 - Create 1 墓 for (Triggering player) at (Random point in 矩形区域 072<预设>) facing 默认建筑朝向 degrees
+//                 Custom script:   call UnitAddAbility(udg_mudi[GetConvertedPlayerId(GetTriggerPlayer())], 'Aloc')
+//                 Set VariableSet mudi[(Player number of (Triggering player))] = (Last created unit)
+//                 Set VariableSet hero[(Player number of (Triggering player))] = (Triggering unit)
+//                 镜头 - Pan camera for (Triggering player) to GuanYuLocation over 0.00 seconds
+//             Else - 动作
+//         英雄 - Create 疗伤药 and give it to (Triggering unit)
+//         Wait 0.30 seconds
+//         物品 - Remove (Item carried by (Triggering unit) of type 疗伤药)
+
+
+function Trig_HChoose_Conditions takes nothing returns boolean
+    if ( not ( udg_hero[GetConvertedPlayerId(GetTriggerPlayer())] == null ) ) then
+        return false
+    endif
+    if ( not ( GetUnitAbilityLevelSwapped('A0B2', GetTriggerUnit()) == 1 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_HChoose_Func001Func010A takes nothing returns nothing
+    call SetPlayerHandicapXPBJ(GetEnumPlayer(), (120.00 + (18.00 * I2R(GetUnitAbilityLevelSwapped('ACev', gg_unit_Hpal_0031)))))
+endfunction
+
+function Trig_HChoose_Func001C takes nothing returns boolean
+    if ( not ( UnitHasItemOfTypeBJ(GetTriggerUnit(), 'pdiv') == true ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_HChoose_Actions takes nothing returns nothing
+    if ( Trig_HChoose_Func001C() ) then
+        call SetCameraBoundsToRectForPlayerBJ(GetTriggerPlayer(), GetEntireMapRect())
+        call RemoveItem( GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'pdiv') )
+        call SetUnitOwner( GetTriggerUnit(), GetTriggerPlayer(), true )
+        call SetUnitInvulnerable( GetTriggerUnit(), false )
+        call UnitRemoveAbilityBJ( 'A0B2', GetTriggerUnit() )
+        call ModifyHeroSkillPoints( GetTriggerUnit(), bj_MODIFYMETHOD_SET, 4 )
+        call SetUnitPositionLoc( GetTriggerUnit(), udg_GuanYuLocation )
+        call SetPlayerStateBJ( GetTriggerPlayer(), PLAYER_STATE_RESOURCE_FOOD_CAP, 6 )
+        call SetPlayerAbilityAvailableBJ( false, 'A0B2', GetTriggerPlayer() )
+        call ForForce( GetPlayersAllies(Player(8)), function Trig_HChoose_Func001Func010A )
+        call IncUnitAbilityLevelSwapped( 'ACev', gg_unit_Hpal_0031 )
+        call CreateNUnitsAtLoc( 1, 'h007', GetTriggerPlayer(), GetRandomLocInRect(gg_rct______________072), bj_UNIT_FACING )
+        call UnitAddAbility(udg_mudi[GetConvertedPlayerId(GetTriggerPlayer())], 'Aloc')
+        set udg_mudi[GetConvertedPlayerId(GetTriggerPlayer())] = GetLastCreatedUnit()
+        set udg_hero[GetConvertedPlayerId(GetTriggerPlayer())] = GetTriggerUnit()
+        call PanCameraToTimedLocForPlayer( GetTriggerPlayer(), udg_GuanYuLocation, 0 )
+    else
+    endif
+    call UnitAddItemByIdSwapped( 'pdiv', GetTriggerUnit() )
+    call TriggerSleepAction( 0.30 )
+    call RemoveItem( GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'pdiv') )
+endfunction
+
+//===========================================================================
+function InitTrig_HChoose takes nothing returns nothing
+    set gg_trg_HChoose = CreateTrigger(  )
+    call TriggerRegisterPlayerSelectionEventBJ( gg_trg_HChoose, Player(0), true )
+    call TriggerRegisterPlayerSelectionEventBJ( gg_trg_HChoose, Player(1), true )
+    call TriggerRegisterPlayerSelectionEventBJ( gg_trg_HChoose, Player(2), true )
+    call TriggerRegisterPlayerSelectionEventBJ( gg_trg_HChoose, Player(3), true )
+    call TriggerRegisterPlayerSelectionEventBJ( gg_trg_HChoose, Player(4), true )
+    call TriggerRegisterPlayerSelectionEventBJ( gg_trg_HChoose, Player(5), true )
+    call TriggerRegisterPlayerSelectionEventBJ( gg_trg_HChoose, Player(6), true )
+    call TriggerRegisterPlayerSelectionEventBJ( gg_trg_HChoose, Player(7), true )
+    call TriggerAddCondition( gg_trg_HChoose, Condition( function Trig_HChoose_Conditions ) )
+    call TriggerAddAction( gg_trg_HChoose, function Trig_HChoose_Actions )
+endfunction
+

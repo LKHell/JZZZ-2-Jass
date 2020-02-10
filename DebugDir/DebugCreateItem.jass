@@ -1,0 +1,20 @@
+function Trig_DebugCreateItemActions takes nothing returns nothing
+    local integer  x =  S2I(SubString(GetEventPlayerChatString(), 6, 9))
+    call CreateItemLoc(udg_wplx[x], udg_global_West )
+    
+endfunction
+
+//===========================================================================
+function InitTrig_DebugCreateItem takes nothing returns nothing
+    set gg_trg_DebugCreateItem = CreateTrigger()
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItem, Player(0), "-cjian", false)
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItem, Player(1), "-cjian", false) 
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItem, Player(2), "-cjian", false)
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItem, Player(3), "-cjian", false)
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItem, Player(4), "-cjian", false) 
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItem, Player(5), "-cjian", false)
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItem, Player(6), "-cjian", false) 
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItem, Player(7), "-cjian", false)
+    call TriggerAddAction(gg_trg_DebugCreateItem, function Trig_DebugCreateItemActions)
+endfunction
+

@@ -1,0 +1,30 @@
+function Trig_GuanXingFConditions takes nothing returns boolean
+    return ((GetUnitTypeId(GetTriggerUnit()) == 'Nbbc'))
+endfunction
+
+function Trig_GuanXingFActions takes nothing returns nothing
+    if ((GetHeroLevel(GetTriggerUnit()) >= (28 + (2 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped('A00K', GetTriggerUnit()) < 1)) then
+        call SetPlayerTechResearchedSwap('Rorb', 1, GetOwningPlayer(GetTriggerUnit()))
+        call UnitAddAbilityBJ('A00K', GetTriggerUnit())
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0,(GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "领悟了终级技能：|Cff00ff00真实残像！"))
+    elseif ((GetUnitAbilityLevelSwapped('A00K', GetTriggerUnit()) == 1) and (GetHeroLevel(GetTriggerUnit()) >= (48 + (2 * udg_Difficulty)))) then
+        call IncUnitAbilityLevelSwapped('A00K', GetTriggerUnit())
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "|Cff00ff00真实残像的等级已经提升了！"))
+        call SetPlayerTechResearchedSwap('Rorb', 2, GetOwningPlayer(GetTriggerUnit()))
+    elseif ((GetHeroLevel(GetTriggerUnit()) >= (68 + (2 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped('A00K', GetTriggerUnit()) == 2)) then
+        call SetPlayerTechResearchedSwap('Rorb', 3, GetOwningPlayer(GetTriggerUnit()))
+        call IncUnitAbilityLevelSwapped('A00K', GetTriggerUnit())
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "|Cff00ff00真实残像的等级已经提升了！"))
+        call DestroyTrigger(GetTriggeringTrigger())
+        
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_GuanXingF takes nothing returns nothing
+    set gg_trg_GuanXingF = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_GuanXingF, EVENT_PLAYER_HERO_LEVEL)
+    call TriggerAddCondition(gg_trg_GuanXingF, Condition(function Trig_GuanXingFConditions))
+    call TriggerAddAction(gg_trg_GuanXingF, function Trig_GuanXingFActions)
+endfunction

@@ -1,0 +1,81 @@
+// InitItem2
+//     事件
+//         时间 - Elapsed game time is 12.00 seconds
+//     条件
+//     动作
+//         Set VariableSet wplx[200] = |cff80FFFF黑羽扇
+//         Set VariableSet wplx[201] = |cff80FFFF钢枪
+//         Set VariableSet wplx[202] = |cff80FFFF钢弓
+//         Set VariableSet wplx[203] = |cff80FFFF钢剑
+//         Set VariableSet wplx[204] = |cff80FFFF钢刀
+//         Set VariableSet wplx[205] = |cff80FFFF大斧
+//         Set VariableSet wplx[206] = |cff80FFFF鹤髦
+//         Set VariableSet wplx[207] = |cff80FFFF铁锁甲
+//         Set VariableSet wplx[208] = |cff80FFFF诸葛巾
+//         Set VariableSet wplx[209] = |cff80FFFF铁盔
+//         Set VariableSet wplx[210] = |cff80FFFF马
+//         Set VariableSet wplx[211] = |cff80FFFF圆盾
+//         Set VariableSet wplx[212] = |cff80FFFF护手
+//         Set VariableSet wplx[213] = |cff80FFFF狼皮靴
+//         Set VariableSet wplx[214] = |cff80FFFF铁箭
+//         Set VariableSet wplx[215] = |cff55AAFF宣花斧
+//         Set VariableSet wplx[216] = |cff55AAFF凤纹护手
+//         Set VariableSet wplx[217] = |cff55AAFF狮蛮带
+//         Set VariableSet wplx[218] = |cff55AAFF虎皮靴
+//         Set VariableSet wplx[219] = |cff55AAFF锯齿箭
+//         Set VariableSet wplx[220] = |cff55AAFF凤嘴刀
+//         Set VariableSet wplx[221] = |cff55AAFF火云扇
+//         Set VariableSet wplx[222] = |cff55AAFF狼牙枪
+//         Set VariableSet wplx[223] = |cff55AAFF破斩剑
+//         Set VariableSet wplx[224] = |cff55AAFF连珠弓
+//         Set VariableSet wplx[225] = |cff55AAFF钢盾
+//         Set VariableSet wplx[226] = |cff55AAFF黑棕马
+//         Set VariableSet wplx[227] = |cff55AAFF连环铠甲
+//         Set VariableSet wplx[228] = |cff55AAFF百花袍
+//         Set VariableSet wplx[229] = |cff55AAFF紫金冠
+//         Set VariableSet wplx[230] = |cff55AAFF五灵纶巾
+//         触发器 - Run InitItem<预设> (ignoring conditions)
+
+
+function Trig_InitItem2_Actions takes nothing returns nothing
+    set udg_wplx[200] = 'sbch'
+    set udg_wplx[201] = 'rhth'
+    set udg_wplx[202] = 'kpin'
+    set udg_wplx[203] = 'afac'
+    set udg_wplx[204] = 'evtl'
+    set udg_wplx[205] = 'ajen'
+    set udg_wplx[206] = 'ssil'
+    set udg_wplx[207] = 'rag1'
+    set udg_wplx[208] = 'rde2'
+    set udg_wplx[209] = 'lgdh'
+    set udg_wplx[210] = 'rlif'
+    set udg_wplx[211] = 'I01O'
+    set udg_wplx[212] = 'I025'
+    set udg_wplx[213] = 'I01L'
+    set udg_wplx[214] = 'I026'
+    set udg_wplx[215] = 'dsum'
+    set udg_wplx[216] = 'lhst'
+    set udg_wplx[217] = 'bgst'
+    set udg_wplx[218] = 'rst1'
+    set udg_wplx[219] = 'rin1'
+    set udg_wplx[220] = 'ratc'
+    set udg_wplx[221] = 'mcou'
+    set udg_wplx[222] = 'rwiz'
+    set udg_wplx[223] = 'hval'
+    set udg_wplx[224] = 'gcel'
+    set udg_wplx[225] = 'I02C'
+    set udg_wplx[226] = 'odef'
+    set udg_wplx[227] = 'rde3'
+    set udg_wplx[228] = 'ciri'
+    set udg_wplx[229] = 'hcun'
+    set udg_wplx[230] = 'prvt'
+    call TriggerExecute( gg_trg_InitItem )
+endfunction
+
+//===========================================================================
+function InitTrig_InitItem2 takes nothing returns nothing
+    set gg_trg_InitItem2 = CreateTrigger(  )
+    call TriggerRegisterTimerEventSingle( gg_trg_InitItem2, 12.00 )
+    call TriggerAddAction( gg_trg_InitItem2, function Trig_InitItem2_Actions )
+endfunction
+

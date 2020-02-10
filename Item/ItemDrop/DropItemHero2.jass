@@ -1,0 +1,34 @@
+function Trig_DropItemHero2Conditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+function Trig_DropItemHero2Actions takes nothing returns nothing
+    local location temp = GetUnitLoc(GetTriggerUnit())
+    // 中立Boss
+    if ((GetUnitPointValue(GetTriggerUnit()) == 99)) then
+    // 大于 70 级 或 25% 顺序掉落物品
+        if (((GetHeroLevel(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]) > 70) or (GetRandomInt(1, 4) == 2))) then
+            call CreateItemLoc(udg_wplx[udg_wplx_Int], temp)
+            if ((udg_wplx_Int >= 87)) then
+                set udg_wplx_Int = 28
+            else
+                set udg_wplx_Int =  (udg_wplx_Int + 1)
+            endif
+        else
+        endif
+    else
+    endif
+    // ---
+    call RemoveLocation(temp)
+    set temp = null
+endfunction
+
+//===========================================================================
+function InitTrig_DropItemHero2 takes nothing returns nothing
+    set gg_trg_DropItemHero2 = CreateTrigger()
+ 
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_DropItemHero2, Player(PLAYER_NEUTRAL_AGGRESSIVE), EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_DropItemHero2, Condition(function Trig_DropItemHero2Conditions))
+    call TriggerAddAction(gg_trg_DropItemHero2, function Trig_DropItemHero2Actions)
+endfunction
+

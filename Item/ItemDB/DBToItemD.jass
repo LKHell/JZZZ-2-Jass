@@ -1,0 +1,24 @@
+// 死亡 创建 物品
+function Trig_ZQSHConditionsD takes nothing returns boolean
+   return ((IsUnitIllusionBJ(GetTriggerUnit()) == false) and ((GetUnitTypeId(GetTriggerUnit()) == 'hphx') or (GetUnitTypeId(GetTriggerUnit()) == 'nwwd') or (GetUnitTypeId(GetTriggerUnit()) == 'ngrd') or (GetUnitTypeId(GetTriggerUnit()) == 'ntrd')))
+endfunction
+
+
+
+//===========================================================================
+
+function InitTrig_DBtoItemD takes nothing returns nothing
+
+    set gg_trg_DBtoItemD = CreateTrigger()
+
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_DBtoItemD, EVENT_PLAYER_UNIT_DEATH)
+
+    call TriggerAddCondition(gg_trg_DBtoItemD, Condition(function Trig_ZQSHConditionsD))
+
+    call TriggerAddAction(gg_trg_DBtoItemD, function Trig_ZQSHActions)
+
+endfunction
+
+
+
+ 

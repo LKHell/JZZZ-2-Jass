@@ -1,0 +1,32 @@
+// 由 NextAttack  调用
+// 动作
+//     物品 - 选取 (可用地图区域) 内所有物品做动作
+//         Loop - 动作
+//             If - Then - Else
+//                 If - 条件
+//                     (转换 ((选取物品) 的当前生命值) 为整数) 等于 0
+//                 Then - 动作
+//                     物品 - 删除 (选取物品)
+//                 Else - 动作
+//                     不做任何动作
+
+
+function Trig_ItemCleanFunc001A takes nothing returns nothing
+    if ((R2I(GetItemLifeBJ(GetEnumItem())) == 0)) then
+        call RemoveItem(GetEnumItem())
+    else
+    endif
+endfunction
+
+function Trig_ItemCleanActions takes nothing returns nothing
+    call EnumItemsInRectBJ(GetPlayableMapRect(), function Trig_ItemCleanFunc001A)
+endfunction
+
+//===========================================================================
+function InitTrig_ItemClean takes nothing returns nothing
+    set gg_trg_ItemClean = CreateTrigger()
+    call DisableTrigger(gg_trg_ItemClean)
+
+    call TriggerAddAction(gg_trg_ItemClean, function Trig_ItemCleanActions)
+endfunction
+

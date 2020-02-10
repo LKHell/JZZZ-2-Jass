@@ -1,0 +1,29 @@
+function Trig_DLM1Conditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(GetAttackedUnitBJ(), 'horl') == true))
+endfunction
+
+function Trig_DLM1Actions takes nothing returns nothing
+    set udg_SSSSSSS[7] = (udg_SSSSSSS[7] + 1)
+    if ((udg_SSSSSSS[7] >= 200) and (IsUnitIllusionBJ(GetAttackedUnitBJ()) == false)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'horl'))
+        call UnitAddItemByIdSwapped('asbl', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetTriggerPlayer()) + "你的的卢马已升至二级"))
+        call EnableTrigger(gg_trg_DLM2)
+    else
+        call DoNothing()
+    endif
+    if ((udg_n == true)) then
+        call DisplayTimedTextToForce(GetPlayersAll(), 0.50, ("的卢马" + (I2S(udg_SSSSSSS[7]) + "/200")))
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_DLM1 takes nothing returns nothing
+    set gg_trg_DLM1 = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_DLM1, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerAddCondition(gg_trg_DLM1, Condition(function Trig_DLM1Conditions))
+    call TriggerAddAction(gg_trg_DLM1, function Trig_DLM1Actions)
+endfunction
+

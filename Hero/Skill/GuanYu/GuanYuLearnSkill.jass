@@ -1,0 +1,39 @@
+function Trig_GYLearnSkillActions takes nothing returns nothing
+    // 冲击波
+    if ((GetUnitAbilityLevel(GetTriggerUnit(), 'A06D') < 9) and (ModuloInteger(GetUnitLevel(GetTriggerUnit()), 5) == 2)) then
+        call IncUnitAbilityLevel(GetTriggerUnit(), 'A06D')
+
+    elseif ((udg_system6 == false) and (GetUnitAbilityLevel(GetTriggerUnit(), 'Assk') < 9) and (ModuloInteger(GetUnitLevel(GetTriggerUnit()), 5) == 3)) then
+    // 力压群雄
+        call IncUnitAbilityLevel(GetTriggerUnit(), 'Assk')
+
+    elseif ((GetUnitAbilityLevel(GetTriggerUnit(), 'AHhb') < 9) and (ModuloInteger(GetUnitLevel(GetTriggerUnit()), 5) == 4)) then
+     // 回生术
+        if (((udg_system6 == false) or (GetUnitAbilityLevel(GetTriggerUnit(), 'AHhb') < 5))) then
+            call IncUnitAbilityLevel(GetTriggerUnit(), 'AHhb')
+        endif
+
+    elseif ((GetUnitAbilityLevel(GetTriggerUnit(), 'AOww') < 9) and (ModuloInteger(GetUnitLevel(GetTriggerUnit()), 5) == 0)) then
+    // 横扫
+        if (((udg_system6 == false) or (GetUnitAbilityLevel(GetTriggerUnit(), 'AOww') < 5))) then
+            call IncUnitAbilityLevel(GetTriggerUnit(), 'AOww')
+        endif  
+
+    elseif ((GetUnitAbilityLevel(GetTriggerUnit(), 'AEev') < 9) and (ModuloInteger(GetUnitLevel(GetTriggerUnit()), 5) == 1)) then
+        // 闪避
+        if (((udg_system6 == false) or (GetUnitAbilityLevel(GetTriggerUnit(), 'AEev') < 4))) then
+            call IncUnitAbilityLevel(GetTriggerUnit(), 'AEev')
+         
+        endif
+     
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_GYLearnSkill takes nothing returns nothing
+    set gg_trg_GYLearnSkill = CreateTrigger()
+ 
+    call TriggerRegisterUnitEvent(gg_trg_GYLearnSkill, gg_unit_Hant_0005, EVENT_UNIT_HERO_LEVEL)
+    call TriggerAddAction(gg_trg_GYLearnSkill, function Trig_GYLearnSkillActions)
+endfunction
+

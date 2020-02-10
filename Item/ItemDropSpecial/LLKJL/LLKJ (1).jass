@@ -1,0 +1,29 @@
+function Trig_LLKJ1Conditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(GetAttackedUnitBJ(), 'sor1') == true))
+endfunction
+
+function Trig_LLKJ1Actions takes nothing returns nothing
+    set udg_SSSSSSS[5] = (udg_SSSSSSS[5] + 1)
+    if ((udg_SSSSSSS[5] >= 500) and (IsUnitIllusionBJ(GetAttackedUnitBJ()) == false)) then
+        call EnableTrigger(gg_trg_LLKJ2)
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'sor1'))
+        call UnitAddItemByIdSwapped('olig', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetTriggerPlayer()) + "你的龙鳞铠甲已升至二级"))
+    else
+        call DoNothing()
+    endif
+    if ((udg_n == true)) then
+        call DisplayTimedTextToForce(GetPlayersAll(), 0.50, ("龙鳞铠甲" + (I2S(udg_SSSSSSS[5]) + "/500")))
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_LLKJ1 takes nothing returns nothing
+    set gg_trg_LLKJ1 = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_LLKJ1, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerAddCondition(gg_trg_LLKJ1, Condition(function Trig_LLKJ1Conditions))
+    call TriggerAddAction(gg_trg_LLKJ1, function Trig_LLKJ1Actions)
+endfunction
+

@@ -1,0 +1,72 @@
+function Trig_UpdateTreasureConditions takes nothing returns boolean
+    return ((GetItemTypeId(GetManipulatedItem()) == 'I027'))
+endfunction
+
+function Trig_UpdateTreasureActions takes nothing returns nothing
+//护手
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I025') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I025'))
+        call UnitAddItemByIdSwapped('lhst', GetTriggerUnit())
+    else
+    // 凤纹护手
+        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'lhst') == true)) then
+            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'lhst'))
+            call UnitAddItemByIdSwapped('I028', GetTriggerUnit())
+        else
+        //虎皮靴
+            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rst1') == true)) then
+                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rst1'))
+                call UnitAddItemByIdSwapped('I029', GetTriggerUnit())
+            else
+            // 狼皮靴
+                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01L') == true)) then
+                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I01L'))
+                    call UnitAddItemByIdSwapped('rst1', GetTriggerUnit())
+                else
+                //铁箭
+                    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I026') == true)) then
+                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I026'))
+                        call UnitAddItemByIdSwapped('rin1', GetTriggerUnit())
+                    else
+                    //锯齿箭
+                        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rin1') == true)) then
+                            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rin1'))
+                            call UnitAddItemByIdSwapped('I02A', GetTriggerUnit())
+                        else
+                        // 钢盾
+                            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I02C') == true)) then
+                                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I02C'))
+                                call UnitAddItemByIdSwapped('I02B', GetTriggerUnit())
+                            else
+                            // 狮蛮带
+                                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bgst') == true)) then
+                                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'bgst'))
+                                    call UnitAddItemByIdSwapped('I02D', GetTriggerUnit())
+                                else
+                                // 圆盾
+                                    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01O') == true)) then
+                                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I01O'))
+                                        call UnitAddItemByIdSwapped('I02C', GetTriggerUnit())
+                                    else
+                                        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cffffff00材料不足！")
+                                        call AdjustPlayerStateBJ(3000, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
+                                    endif
+                                endif
+                            endif
+                        endif
+                    endif
+                endif
+            endif
+        endif
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_UpdateTreasure takes nothing returns nothing
+    set gg_trg_UpdateTreasure = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_UpdateTreasure, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_UpdateTreasure, Condition(function Trig_UpdateTreasureConditions))
+    call TriggerAddAction(gg_trg_UpdateTreasure, function Trig_UpdateTreasureActions)
+endfunction
+

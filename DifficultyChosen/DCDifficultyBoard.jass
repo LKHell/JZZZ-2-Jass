@@ -1,0 +1,36 @@
+function Trig_DCBoardBodyActions takes nothing returns nothing
+    local string str
+    // 玩家1是用户 且 正在游戏 暂停 开始选难度
+    if (((GetPlayerController(Player(0)) == MAP_CONTROL_USER) and (GetPlayerSlotState(Player(0)) == PLAYER_SLOT_STATE_PLAYING))) then
+        call PauseAllUnitsBJ(true)
+    else
+	set udg_Difficulty = 3
+        call TriggerExecute(gg_trg_DCDifficulty)
+        return
+    endif
+    set str = "|Cff00ff00正在选择游戏模式，请稍等。|r"
+    call DisplayTimedTextToForce(GetPlayersAll(), 5.00, str)
+    set str = "请选择游戏难度:|n"
+    call DialogSetMessage(udg_dhk, str)
+    set str = "|cff80FFFF无名小卒（Easy）"
+    call DialogAddButtonBJ(udg_dhk, str)
+    set udg_DHAN = GetLastCreatedButtonBJ()
+    
+    set str = "|cffffdead鼎足三分（Normal）"
+    call DialogAddButtonBJ(udg_dhk, str)
+    set udg_DHAN2 = GetLastCreatedButtonBJ()
+    
+    set str = "|Cffff0000无力回天（Hard）（无HG指令）"
+    call DialogAddButtonBJ(udg_dhk, str)
+    set udg_DHAN3 = GetLastCreatedButtonBJ()
+    call DialogDisplayBJ(true, udg_dhk, Player(0))
+
+    set str = null
+endfunction
+
+//===========================================================================
+function InitTrig_DCDifficultyBoard takes nothing returns nothing
+    set gg_trg_DCDifficultyBoard = CreateTrigger()
+    call TriggerAddAction(gg_trg_DCDifficultyBoard, function Trig_DCBoardBodyActions)
+endfunction
+

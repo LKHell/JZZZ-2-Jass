@@ -1,0 +1,20 @@
+function Trig_LiGuangGongConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true) and (GetRandomInt(1, 70) == 15) and (IsUnitAlly(GetTriggerUnit(), Player(9)) == true))
+endfunction
+
+function Trig_LiGuangGongActions takes nothing returns nothing
+    local location  tempLoc = GetUnitLoc(GetTriggerUnit())
+    call CreateItemLoc('ram1', tempLoc)
+    call RemoveLocation(tempLoc)
+    call DestroyTrigger(GetTriggeringTrigger())
+    set tempLoc = null
+endfunction
+
+//===========================================================================
+function InitTrig_LiGuangGong takes nothing returns nothing
+    set gg_trg_LiGuangGong = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_LiGuangGong, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_LiGuangGong, Condition(function Trig_LiGuangGongConditions))
+    call TriggerAddAction(gg_trg_LiGuangGong, function Trig_LiGuangGongActions)
+endfunction
+

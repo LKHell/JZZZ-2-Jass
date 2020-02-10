@@ -1,0 +1,29 @@
+function Trig_SelectUnitActions takes nothing returns nothing
+    // 英雄点击事件
+    if ((IsUnitIllusionBJ(GetTriggerUnit()) == false) and (IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true) and (GetUnitAbilityLevel(GetTriggerUnit(), 'A04G') == 1)) then
+        set udg_DW[GetConvertedPlayerId(GetTriggerPlayer())] = GetTriggerUnit()
+    else
+        set udg_DW[GetConvertedPlayerId(GetTriggerPlayer())] = null
+    endif
+    //商店 点击事件
+    if ((GetOwningPlayer(GetTriggerUnit()) == Player(PLAYER_NEUTRAL_PASSIVE)) and (GetUnitAbilityLevel(GetTriggerUnit(), 'Aneu') > 0)) then
+        call SetUnitAnimation(GetTriggerUnit(), "slam")
+        call ResetUnitAnimation(GetTriggerUnit())
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_SelectUnit takes nothing returns nothing
+    set gg_trg_SelectUnit = CreateTrigger()
+    call TriggerRegisterPlayerSelectionEventBJ(gg_trg_SelectUnit, Player(0), true)
+    call TriggerRegisterPlayerSelectionEventBJ(gg_trg_SelectUnit, Player(1), true)
+    call TriggerRegisterPlayerSelectionEventBJ(gg_trg_SelectUnit, Player(2), true)
+    call TriggerRegisterPlayerSelectionEventBJ(gg_trg_SelectUnit, Player(3), true)
+    call TriggerRegisterPlayerSelectionEventBJ(gg_trg_SelectUnit, Player(4), true)
+    call TriggerRegisterPlayerSelectionEventBJ(gg_trg_SelectUnit, Player(5), true)
+    call TriggerRegisterPlayerSelectionEventBJ(gg_trg_SelectUnit, Player(6), true)
+    call TriggerRegisterPlayerSelectionEventBJ(gg_trg_SelectUnit, Player(7), true)
+    call TriggerAddAction(gg_trg_SelectUnit, function Trig_SelectUnitActions)
+endfunction
+

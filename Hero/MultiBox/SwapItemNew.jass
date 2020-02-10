@@ -1,0 +1,47 @@
+globals
+    unit array udg_ItemUnit
+endglobals
+
+
+function Trig_SwapItemNewConditions takes nothing returns boolean
+// 切换背包
+    return ((GetSpellAbilityId() == 'A04G'))
+endfunction
+
+function Trig_SwapItemNewActions takes nothing returns nothing
+    // index     3 *(1-1 ) = 0    获取触发单位所有者的玩家的id
+    local integer index = 3 * (GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit())) -1)
+    local integer i = 1
+    
+    loop
+        exitwhen i > 6
+        // 2->3 1->2 0->1 
+        call UnitAddItemSwapped( UnitItemInSlotBJ(udg_ItemUnit[index+1], i), udg_ItemUnit[index+2])
+        call UnitAddItemSwapped( UnitItemInSlotBJ(udg_ItemUnit[index], i), udg_ItemUnit[index+1])
+        call UnitAddItemSwapped( UnitItemInSlotBJ(GetTriggerUnit(), i) , udg_ItemUnit[index])
+        set i = i + 1
+    endloop
+    set i = 1
+    loop
+        exitwhen i > 6
+        // 3 -> 0 
+        call UnitAddItemSwapped(UnitItemInSlotBJ(udg_ItemUnit[index + 2], i) , GetTriggerUnit())
+        set i = i + 1
+    endloop
+endfunction
+
+//===========================================================================
+function InitTrig_SwapItemNew takes nothing returns nothing
+    set gg_trg_SwapItemNew = CreateTrigger()
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_SwapItemNew, Player(0), EVENT_PLAYER_UNIT_SPELL_CAST)
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_SwapItemNew, Player(1), EVENT_PLAYER_UNIT_SPELL_CAST)
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_SwapItemNew, Player(2), EVENT_PLAYER_UNIT_SPELL_CAST)
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_SwapItemNew, Player(3), EVENT_PLAYER_UNIT_SPELL_CAST)
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_SwapItemNew, Player(4), EVENT_PLAYER_UNIT_SPELL_CAST)
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_SwapItemNew, Player(5), EVENT_PLAYER_UNIT_SPELL_CAST)
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_SwapItemNew, Player(6), EVENT_PLAYER_UNIT_SPELL_CAST)
+    call TriggerRegisterPlayerUnitEventSimple(gg_trg_SwapItemNew, Player(7), EVENT_PLAYER_UNIT_SPELL_CAST)
+    call TriggerAddCondition(gg_trg_SwapItemNew, Condition(function Trig_SwapItemNewConditions))
+    call TriggerAddAction(gg_trg_SwapItemNew, function Trig_SwapItemNewActions)
+endfunction
+

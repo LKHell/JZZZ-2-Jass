@@ -1,0 +1,118 @@
+// DCDifficulty
+//     事件
+//         对话框 - A dialog button is clicked for dhk
+//     条件
+//     动作
+//         Custom script:   local string str
+//         Custom script:   local real health
+//         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//             If - 条件
+//                 (Clicked dialog button) 等于 DHAN
+//             Then - 动作
+//                 Set VariableSet Difficulty = 1
+//                 Custom script:   set str =GetPlayerName(Player(0)) + "|cff80FFFF选择了游戏模式：无名小卒（这是最简单的难度，适合刚入门的新手玩。）"
+//                 Custom script:   set health = 50
+//                 可见度 - Create an initially 允许 visibility modifier for 玩家 9 (灰色) emitting 可见 across (Playable map area)
+//             Else - 动作
+//                 If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                     If - 条件
+//                         (Clicked dialog button) 等于 DHAN2
+//                     Then - 动作
+//                         Set VariableSet Difficulty = 2
+//                         Custom script:   set health = 100
+//                         Custom script:   set str = GetPlayerName(Player(0)) + "|cffffdead选择了游戏难度：鼎足三分（在这个难度下，一切都是公平的，没有任何有利或不利的条件。）"
+//                         可见度 - Create an initially 允许 visibility modifier for 玩家 9 (灰色) emitting 可见 across (Playable map area)
+//                     Else - 动作
+//                         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                             If - 条件
+//                                 Or - Any (Conditions) are true
+//                                     条件
+//                                         Difficulty 等于 3
+//                                         (Clicked dialog button) 等于 DHAN3
+//                             Then - 动作
+//                                 Set VariableSet Difficulty = 3
+//                                 Custom script:   set health = 250
+//                                 可见度 - Create an initially 允许 visibility modifier for 玩家 9 (灰色) emitting 可见 from GuanYuLocation to a radius of 2048.00.
+//                                 Custom script:   set str = GetPlayerName(Player(0)) + "|Cffff0000游戏自动选择难度：天下无双（在这个难度下，你将接受不可能的考验！）"
+//                             Else - 动作
+//         Custom script:   call SetPlayerHandicapBJ(Player(9), health)
+//         Custom script:   call SetPlayerHandicapBJ(Player(10), health)
+//         Custom script:   call SetPlayerHandicapBJ(Player(11), health)
+//         Custom script:   call SetPlayerHandicapBJ(Player(PLAYER_NEUTRAL_AGGRESSIVE), health)
+//         触发器 - Turn off (This trigger)
+//         Custom script:   call DisplayTimedTextToForce(GetPlayersAll(), 5.00, str)
+//         Custom script:   set str = null
+//         单位 - 恢复 all units
+//         对话框 - Clear dhk
+//         触发器 - Run DCModeB<预设> (ignoring conditions)
+
+
+function Trig_DCDifficulty_Func004Func006Func005Func001C takes nothing returns boolean
+    if ( ( udg_Difficulty == 3 ) ) then
+        return true
+    endif
+    if ( ( GetClickedButtonBJ() == udg_DHAN3 ) ) then
+        return true
+    endif
+    return false
+endfunction
+
+function Trig_DCDifficulty_Func004Func006Func005C takes nothing returns boolean
+    if ( not Trig_DCDifficulty_Func004Func006Func005Func001C() ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_DCDifficulty_Func004Func006C takes nothing returns boolean
+    if ( not ( GetClickedButtonBJ() == udg_DHAN2 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_DCDifficulty_Func004C takes nothing returns boolean
+    if ( not ( GetClickedButtonBJ() == udg_DHAN ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_DCDifficulty_Actions takes nothing returns nothing
+    local string str
+    local real health
+    if ( Trig_DCDifficulty_Func004C() ) then
+        set udg_Difficulty = 1
+        set str =GetPlayerName(Player(0)) + "|cff80FFFF选择了游戏模式：无名小卒（这是最简单的难度，适合刚入门的新手玩。）"
+        set health = 50
+        call CreateFogModifierRectBJ( true, Player(8), FOG_OF_WAR_VISIBLE, GetPlayableMapRect() )
+    elseif ( Trig_DCDifficulty_Func004Func006C() ) then
+            set udg_Difficulty = 2
+            set health = 100
+            set str = GetPlayerName(Player(0)) + "|cffffdead选择了游戏难度：鼎足三分（在这个难度下，一切都是公平的，没有任何有利或不利的条件。）"
+            call CreateFogModifierRectBJ( true, Player(8), FOG_OF_WAR_VISIBLE, GetPlayableMapRect() )
+    elseif ( Trig_DCDifficulty_Func004Func006Func005C() ) then
+            set udg_Difficulty = 3
+            set health = 250
+            call CreateFogModifierRadiusLocBJ( true, Player(8), FOG_OF_WAR_VISIBLE, udg_GuanYuLocation, 2048.00 )
+            
+    endif
+    call SetPlayerHandicapBJ(Player(9), health)
+    call SetPlayerHandicapBJ(Player(10), health)
+    call SetPlayerHandicapBJ(Player(11), health)
+    call SetPlayerHandicapBJ(Player(PLAYER_NEUTRAL_AGGRESSIVE), health)
+    call DisableTrigger( GetTriggeringTrigger() )
+    call DisplayTimedTextToForce(GetPlayersAll(), 5.00, str)
+    set str = null
+    call PauseAllUnitsBJ( false )
+    call DialogClearBJ( udg_dhk )
+    call TriggerExecute( gg_trg_DCModeB )
+endfunction
+
+//===========================================================================
+function InitTrig_DCDifficulty takes nothing returns nothing
+    set gg_trg_DCDifficulty = CreateTrigger(  )
+    call TriggerRegisterDialogEventBJ( gg_trg_DCDifficulty, udg_dhk )
+    call TriggerAddAction( gg_trg_DCDifficulty, function Trig_DCDifficulty_Actions )
+endfunction
+

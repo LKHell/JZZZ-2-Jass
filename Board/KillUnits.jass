@@ -1,0 +1,22 @@
+function Trig_killUnitsConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == false) and ((GetOwningPlayer(GetKillingUnitBJ()) == Player(0)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(1)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(2)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(3)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(4)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(5))or (GetOwningPlayer(GetKillingUnitBJ()) == Player(6)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(7))))
+endfunction
+
+function Trig_killUnitsActions takes nothing returns nothing
+    local integer i  = GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))  
+	  
+    set udg_iKillUnits[i] = (udg_iKillUnits[i] + 1)
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 2, i+1, I2S(udg_iKillUnits[i]))
+    set i = 0
+endfunction
+
+//===========================================================================
+function InitTrig_KillUnits takes nothing returns nothing
+    set gg_trg_KillUnits = CreateTrigger()
+    call DisableTrigger(gg_trg_KillUnits)
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_KillUnits,  EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_KillUnits, Condition(function Trig_killUnitsConditions))
+    call TriggerAddAction(gg_trg_KillUnits, function Trig_killUnitsActions)
+endfunction
+

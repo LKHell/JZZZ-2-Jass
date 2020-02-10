@@ -1,0 +1,27 @@
+
+
+
+function Trig_DebugCreateItemMulActions takes nothing returns nothing
+    local integer  x = 20 * (S2I(SubString(GetEventPlayerChatString(), 4, 5)))
+    
+    local integer i = 0
+    loop
+        exitwhen i>20
+        call CreateItemLoc(udg_wplx[i+x], udg_global_West )
+        set i = i + 1
+    endloop
+endfunction
+//===========================================================================
+function InitTrig_DebugCreateItemMul takes nothing returns nothing
+    set gg_trg_DebugCreateItemMul = CreateTrigger()
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItemMul, Player(0), "-cja", false)
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItemMul, Player(1), "-cja", false) 
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItemMul, Player(2), "-cja", false)
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItemMul, Player(3), "-cja", false)
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItemMul, Player(4), "-cja", false) 
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItemMul, Player(5), "-cja", false)
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItemMul, Player(6), "-cja", false) 
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugCreateItemMul, Player(7), "-cja", false)
+    call TriggerAddAction(gg_trg_DebugCreateItemMul, function Trig_DebugCreateItemMulActions)
+endfunction
+

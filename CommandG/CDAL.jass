@@ -1,0 +1,21 @@
+function Trig_CDALFunc001A takes nothing returns nothing
+    if ((GetItemLifeBJ(GetEnumItem()) != 20000.00)) then
+        call RemoveItem(GetEnumItem())
+    else
+    endif
+endfunction
+
+function Trig_CDALActions takes nothing returns nothing
+    call EnumItemsInRectBJ(GetEntireMapRect(), function Trig_CDALFunc001A)
+    call DisplayTimedTextToForce(GetPlayersAll(), 2.00, (GetPlayerName(GetTriggerPlayer()) + "清除了全地图区域的物品"))
+endfunction
+
+//===========================================================================
+function InitTrig_CDAL takes nothing returns nothing
+    set gg_trg_CDAL = CreateTrigger()
+
+    call TriggerRegisterPlayerChatEvent(gg_trg_CDAL, Player(0), "-dal", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_CDAL, Player(1), "-dal", true)
+    call TriggerAddAction(gg_trg_CDAL, function Trig_CDALActions)
+endfunction
+

@@ -1,0 +1,18 @@
+function Trig_DebugHeroUpLevelActions takes nothing returns nothing
+    local integer i = 0
+    loop
+        exitwhen i>7
+          call AddHeroXPSwapped(200000, udg_hero[i], false)
+          set i = i + 1
+    endloop
+  
+endfunction
+
+//===========================================================================
+function InitTrig_DebugHeroUpLevel takes nothing returns nothing
+    set gg_trg_DebugHeroUpLevel = CreateTrigger()
+ 
+    call TriggerRegisterPlayerChatEvent(gg_trg_DebugHeroUpLevel, Player(0), "-up", true)
+    call TriggerAddAction(gg_trg_DebugHeroUpLevel, function Trig_DebugHeroUpLevelActions)
+endfunction
+

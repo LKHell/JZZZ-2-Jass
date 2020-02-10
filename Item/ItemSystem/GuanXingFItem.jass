@@ -1,0 +1,58 @@
+function Trig_GuanXingFItemConditions takes nothing returns boolean
+// 关兴幻象
+    return ((GetUnitTypeId(GetSummonedUnit()) == 'Nbbc'))
+endfunction
+
+function Trig_GuanXingFItemActions takes nothing returns nothing
+    //玄铁
+    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00D') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00E') == true)) then
+        call UnitAddAbilityBJ('A03G', GetTriggerUnit())
+    // 双剑
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01I') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01H') == true)) then
+        call UnitAddAbilityBJ('A065', GetTriggerUnit())
+        call UnitAddAbilityBJ('A029', GetTriggerUnit())
+    // 真武
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'shen') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'tlum') == true)) then
+        call UnitAddAbilityBJ('A05P', GetTriggerUnit())
+        call UnitAddAbilityBJ('A05O', GetTriggerUnit())
+    //魔神
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00A') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I006') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I003') == true)) then
+        call UnitAddAbilityBJ('ACm2', GetTriggerUnit())
+        call UnitAddAbilityBJ('A02Y', GetTriggerUnit())
+    //青龙
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'sor7') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'sor8') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'sfog') == true)) then
+        call UnitAddAbilityBJ('A02S', GetTriggerUnit())
+        call UnitAddAbilityBJ('A00S', GetTriggerUnit())
+    //武圣
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'sor7') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'oslo') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01A') == true)) then
+        call UnitAddAbilityBJ('A02S', GetTriggerUnit())
+        call UnitAddAbilityBJ('Arll', GetTriggerUnit())
+        call UnitAddAbilityBJ('A05S', GetTriggerUnit())
+    //项羽
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hbth') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ram2') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde0') == true)) then
+        call UnitAddAbilityBJ('A00R', GetTriggerUnit())
+        call UnitAddAbilityBJ('AIt6', GetTriggerUnit())
+    //真项羽
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'stre') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ram2') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde0') == true)) then
+        call UnitAddAbilityBJ('A01C', GetTriggerUnit())
+    //魔龙
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'pgin') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'gemt') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rej5') == true)) then
+        call UnitAddAbilityBJ('A00R', GetTriggerUnit())
+    //白虎
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01C') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01B') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01D') == true)) then
+        call UnitAddAbilityBJ('A05R', GetTriggerUnit())
+    //刑天
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'cosl') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'gsou') == true)) then
+        call UnitAddAbilityBJ('A00Q', GetTriggerUnit())
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_GuanXingFItem takes nothing returns nothing
+    set gg_trg_GuanXingFItem = CreateTrigger()
+ 
+        call TriggerRegisterAnyUnitEventBJ(gg_trg_GuanXingFItem, EVENT_PLAYER_UNIT_SUMMON)
+        call TriggerAddCondition(gg_trg_GuanXingFItem, Condition(function Trig_GuanXingFItemConditions))
+        call TriggerAddAction(gg_trg_GuanXingFItem, function Trig_GuanXingFItemActions)
+endfunction
+

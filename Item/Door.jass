@@ -1,0 +1,23 @@
+function Trig_DoorConditions takes nothing returns boolean
+    return (((GetItemTypeId(GetManipulatedItem()) == 'gomn') or (GetItemTypeId(GetManipulatedItem()) == 'guvi')))
+endfunction
+
+function Trig_DoorActions takes nothing returns nothing
+	// 大门
+    if ((GetItemTypeId(GetManipulatedItem()) == 'gomn')) then
+        call CreateNUnitsAtLoc(1, 'hhou', GetOwningPlayer(GetTriggerUnit()), udg_global_doorArea, bj_UNIT_FACING)
+    elseif ((GetItemTypeId(GetManipulatedItem()) == 'guvi')) then
+    // 钢铁大门
+        call CreateNUnitsAtLoc(1, 'halt', GetOwningPlayer(GetTriggerUnit()), udg_global_doorArea, bj_UNIT_FACING)
+    
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_Door takes nothing returns nothing
+    set gg_trg_Door = CreateTrigger() 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_Door, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_Door, Condition(function Trig_DoorConditions))
+    call TriggerAddAction(gg_trg_Door, function Trig_DoorActions)
+endfunction
+

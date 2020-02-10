@@ -1,0 +1,58 @@
+// DCM
+//     事件
+//         对话框 - A dialog button is clicked for modle
+//     条件
+//     动作
+//         触发器 - Turn off (This trigger)
+//         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//             If - 条件
+//                 (Clicked dialog button) 等于 DHAN
+//             Then - 动作
+//                 Set VariableSet ModeType = 0
+//                 触发器 - Turn off FailedSpecialGYDead<预设>
+//                 触发器 - Turn off FailedSpecialRes<预设>
+//             Else - 动作
+//                 If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                     If - 条件
+//                         (Clicked dialog button) 等于 DHAN2
+//                     Then - 动作
+//                         Set VariableSet ModeType = 1
+//                         触发器 - Turn off FailedNormal<预设>
+//                     Else - 动作
+
+function Trig_DCM_Func002Func005C takes nothing returns boolean
+    if ( not ( GetClickedButtonBJ() == udg_DHAN2 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_DCM_Func002C takes nothing returns boolean
+    if ( not ( GetClickedButtonBJ() == udg_DHAN ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_DCM_Actions takes nothing returns nothing
+    call DisableTrigger( GetTriggeringTrigger() )
+    if ( Trig_DCM_Func002C() ) then
+        set udg_ModeType = 0
+        call DisableTrigger( gg_trg_FailedSpecialGYDead )
+        call DisableTrigger( gg_trg_FailedSpecialRes )
+    else
+        if ( Trig_DCM_Func002Func005C() ) then
+            set udg_ModeType = 1
+            call DisableTrigger( gg_trg_FailedNormal )
+        else
+        endif
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_DCM takes nothing returns nothing
+    set gg_trg_DCM = CreateTrigger(  )
+    call TriggerRegisterDialogEventBJ( gg_trg_DCM, udg_modle )
+    call TriggerAddAction( gg_trg_DCM, function Trig_DCM_Actions )
+endfunction
+

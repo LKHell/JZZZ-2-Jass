@@ -1,0 +1,30 @@
+// 升级天赋
+function Trig_BaseTalentSkillUpdate takes integer talentS returns nothing
+    if (talentS != 0) then
+          call IncUnitAbilityLevel(GetTriggerUnit(), talentS)
+    endif
+endfunction
+
+//升级终极技能
+function Trig_BaseActions takes integer finaS,integer talentS returns nothing
+    if ((GetHeroLevel(GetTriggerUnit()) >= (27 + (3 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped(finaS, GetTriggerUnit()) < 1)) then
+        call UnitAddAbilityBJ(finaS, GetTriggerUnit())
+        call Trig_BaseTalentSkillUpdate (   talentS)
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, udg_tsxuhun[100])
+    else
+        if ((GetHeroLevel(GetTriggerUnit()) >= (47 + (3 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped(finaS, GetTriggerUnit()) == 1)) then
+            call IncUnitAbilityLevelSwapped(finaS, GetTriggerUnit())
+            call Trig_BaseTalentSkillUpdate (   talentS)
+            call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, udg_tsxuhun[101])
+        else
+            if ((GetHeroLevel(GetTriggerUnit()) >= (67 + (3 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped(finaS, GetTriggerUnit()) == 2)) then
+                call IncUnitAbilityLevelSwapped(finaS, GetTriggerUnit())
+                call Trig_BaseTalentSkillUpdate (talentS)
+                call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, udg_tsxuhun[101])
+            else
+            endif
+        endif
+    endif
+endfunction
+
+

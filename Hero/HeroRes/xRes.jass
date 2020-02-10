@@ -1,0 +1,47 @@
+ 
+/// 中立boss 复活
+function Trig_XingTianResActions takes nothing returns nothing
+    local integer i 
+    local real x
+    local real y
+   
+    if (GetExpiredTimer() == udg_time[9]) then
+        set x = -8900
+        set y = 9980
+        set i = 9
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cff00ff00刑天：我的斧头已经饥渴了")
+    elseif (GetExpiredTimer() == udg_time[10]) then
+        set x = 7500
+        set y = 13900
+        set i = 10
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cff00ff00黑水玄蛇：不自量力的凡人，快来受死！")
+    elseif (GetExpiredTimer() == udg_time[11]) then
+        set x = 7978
+        set y = 8642
+        set i = 11
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cff00ff00项羽：哈哈！我又回来了！谁敢一战？")
+    elseif (GetExpiredTimer() == udg_time[12]) then
+        set x = - 5293
+        set y = 1555
+        set i = 12
+    endif
+
+    call PauseTimerBJ(true, udg_time[i])
+     
+    call ReviveHero(udg_heroDead[i], x , y, true)
+    
+    call UnitRemoveAbility(udg_heroDead[i], 'A03H')
+    
+endfunction
+
+//===========================================================================
+function InitTrig_xRes takes nothing returns nothing
+    set gg_trg_xRes = CreateTrigger()
+    call DisableTrigger(gg_trg_xRes)
+    call TriggerRegisterTimerExpireEvent(gg_trg_xRes, udg_time[9])
+    call TriggerRegisterTimerExpireEvent(gg_trg_xRes, udg_time[10])
+    call TriggerRegisterTimerExpireEvent(gg_trg_xRes, udg_time[11])
+    call TriggerRegisterTimerExpireEvent(gg_trg_xRes, udg_time[12])
+    call TriggerAddAction(gg_trg_xRes, function Trig_XingTianResActions)
+endfunction
+ 

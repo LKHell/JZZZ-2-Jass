@@ -1,0 +1,36 @@
+function Trig_ChenDaoConditions takes nothing returns boolean
+    return ((GetUnitTypeId(GetTriggerUnit()) == 'Huth'))
+endfunction
+
+function Trig_ChenDaoActions takes nothing returns nothing
+    if ((GetUnitAbilityLevelSwapped('ANsq', GetTriggerUnit()) < 1) and (GetHeroLevel(GetTriggerUnit()) >= (27 + (3 * udg_Difficulty)))) then
+         
+        call UnitAddAbilityBJ('ANsq', GetTriggerUnit())
+        call IncUnitAbilityLevel(GetTriggerUnit(), 'A02G')
+       
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "领悟了终级技能：|Cff00ff00援军令！")
+    elseif ((GetUnitAbilityLevelSwapped('ANsq', GetTriggerUnit()) == 1) and (GetHeroLevel(GetTriggerUnit()) >= (47 + (3 * udg_Difficulty)))) then
+            
+        call IncUnitAbilityLevel(GetTriggerUnit(), 'A02G')
+        call IncUnitAbilityLevel(GetTriggerUnit(), 'ANsq')
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "|Cff00ff00援军令的等级已经提升了！")
+    elseif ((GetHeroLevel(GetTriggerUnit()) >= (67 + (3 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped('ANsq', GetTriggerUnit()) == 2)) then
+        call IncUnitAbilityLevel(GetTriggerUnit(), 'A02G')
+        call IncUnitAbilityLevel(GetTriggerUnit(), 'ANsq')
+        // 1级驯化
+        call SetPlayerTechResearchedSwap('Rhan', 1, GetOwningPlayer(GetTriggerUnit()))
+        
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "|Cff00ff00援军令的等级已经提升了！")
+        call DestroyTrigger(GetTriggeringTrigger())
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_ChenDaoF takes nothing returns nothing
+    set gg_trg_ChenDaoF = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ChenDaoF, EVENT_PLAYER_HERO_LEVEL)
+    call TriggerAddCondition(gg_trg_ChenDaoF, Condition(function Trig_ChenDaoConditions))
+    call TriggerAddAction(gg_trg_ChenDaoF, function Trig_ChenDaoActions)
+endfunction
+

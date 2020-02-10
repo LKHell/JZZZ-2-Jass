@@ -1,0 +1,22 @@
+function Trig_KillBossConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true) and (IsUnitAlly(GetTriggerUnit(), Player(10)) == true) and ((GetOwningPlayer(GetKillingUnitBJ()) == Player(0)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(1)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(2)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(3)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(4)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(5)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(6)) or (GetOwningPlayer(GetKillingUnitBJ()) == Player(7))))
+endfunction
+
+function Trig_KillBossActions takes nothing returns nothing
+    local integer i  =  GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))
+    set udg_iKillBoss[i] = (udg_iKillBoss[i] + 1)
+     
+	// 第三列 i+1 行
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 3, i+1, I2S(udg_iKillBoss[i]))
+    set i = 0
+endfunction
+
+//===========================================================================
+function InitTrig_KillBoss takes nothing returns nothing
+    set gg_trg_KillBoss = CreateTrigger()
+    call DisableTrigger(gg_trg_KillBoss)
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_KillBoss, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_KillBoss, Condition(function Trig_KillBossConditions))
+    call TriggerAddAction(gg_trg_KillBoss, function Trig_KillBossActions)
+endfunction

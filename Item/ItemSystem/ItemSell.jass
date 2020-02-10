@@ -1,0 +1,35 @@
+
+//store
+//  事件
+//      单位 - 任意单位 出售单位
+//      单位 - 任意单位 出售物品
+//  条件
+//      ((触发单位) 的所有者) 等于 中立被动
+//  动作
+//      单位 - 为 (触发单位) 添加 商店技能 
+//      单位 - 对 (触发单位) 发布 暗夜精灵族守望者 - 刀阵旋风 命令
+//      单位 - 为 (触发单位) 删除 商店技能 
+//
+
+function Trig_storeConditions takes nothing returns boolean
+    return ((GetOwningPlayer(GetTriggerUnit()) == Player(PLAYER_NEUTRAL_PASSIVE)))
+endfunction
+
+function Trig_storeActions takes nothing returns nothing
+    call UnitAddAbility(GetTriggerUnit(), 'A09M')
+    call IssueImmediateOrder(GetTriggerUnit(), "fanofknives")
+    call UnitRemoveAbility(GetTriggerUnit(), 'A09M')
+endfunction
+
+//===========================================================================
+function InitTrig_ItemSell takes nothing returns nothing
+    set gg_trg_ItemSell = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ItemSell, EVENT_PLAYER_UNIT_SELL)
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ItemSell, EVENT_PLAYER_UNIT_SELL_ITEM)
+    call TriggerAddCondition(gg_trg_ItemSell, Condition(function Trig_storeConditions))
+    call TriggerAddAction(gg_trg_ItemSell, function Trig_storeActions)
+endfunction
+
+
+

@@ -1,0 +1,39 @@
+ 
+//中立boss死亡事件
+ 
+
+function Trig_xDeadActions takes nothing returns nothing
+    local integer i 
+    //XT 刑天
+    if (GetTriggerUnit() == gg_unit_Naka_0069) then
+        set i = 9
+    //XS 玄蛇
+    elseif  (GetTriggerUnit() == gg_unit_N00J_0075 ) then
+        set i = 10
+        //创建蛇胆
+        if ((GetRandomInt(1, 4) == 4)) then
+            call CreateItem('I00T', GetWidgetX(GetTriggerUnit()), GetWidgetY(GetTriggerUnit()) )
+        endif
+    //XY 项羽
+    elseif  (GetTriggerUnit() == gg_unit_Nklj_0004) then
+        set i = 11
+    //WH, 亡魂
+    elseif  (GetTriggerUnit() == gg_unit_N00R_0147 ) then
+        call CreateItem(udg_wplx[GetRandomInt(1, 28)], GetWidgetX(GetTriggerUnit()), GetWidgetY(GetTriggerUnit()) )
+        set i = 12
+    endif
+    set udg_heroDead[i] = GetDyingUnit()
+    call StartTimerBJ(udg_time[i], false, 90.00)
+endfunction
+
+//===========================================================================
+function InitTrig_xDead takes nothing returns nothing
+    set gg_trg_xDead = CreateTrigger()
+    call DisableTrigger(gg_trg_xDead)
+    call TriggerRegisterUnitEvent(gg_trg_xDead, gg_unit_N00J_0075, EVENT_UNIT_DEATH)
+    call TriggerRegisterUnitEvent(gg_trg_xDead, gg_unit_Naka_0069, EVENT_UNIT_DEATH)
+    call TriggerRegisterUnitEvent(gg_trg_xDead, gg_unit_Nklj_0004, EVENT_UNIT_DEATH)
+    call TriggerRegisterUnitEvent(gg_trg_xDead, gg_unit_N00R_0147, EVENT_UNIT_DEATH)
+    call TriggerAddAction(gg_trg_xDead, function Trig_xDeadActions)
+endfunction
+

@@ -1,0 +1,10 @@
+// InitMap
+//     事件
+//         Map initialization
+//     条件
+//     动作
+//         触发器 - Run InitTips<预设> (ignoring conditions)
+//         触发器 - Run IHideUnit<预设> (ignoring conditions)
+//         触发器 - Run InitVariable<预设> (ignoring conditions)
+//         触发器 - Run InitUnit<预设> (ignoring conditions)
+//         触发器 - Run InitPlayer<预设> (ignoring conditions)

@@ -1,0 +1,21 @@
+function Trig_CommandN takes nothing returns nothing
+    local string str 
+    if ((udg_n == true)) then
+        set udg_n = false
+        set str = "关闭装备升级提示"
+    else
+        set udg_n = true
+        set str = "开启装备升级提示"
+    endif
+        call QuestMessageBJ( GetPlayersAll(), bj_QUESTMESSAGE_ALWAYSHINT, str )
+    set str=null
+endfunction
+
+//===========================================================================
+function InitTrig_CN takes nothing returns nothing
+    set gg_trg_CN = CreateTrigger()
+ 
+    call TriggerRegisterPlayerChatEvent( gg_trg_CN, Player(0), "-n", true )
+    call TriggerAddAction(gg_trg_CN, function Trig_CommandN)
+endfunction
+

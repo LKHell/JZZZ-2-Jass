@@ -1,0 +1,35 @@
+function Trig_FT2Conditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))], 'sora') == true) and ((UnitHasItemOfTypeBJ(GetKillingUnitBJ(), 'sora') == true) or (GetUnitPointValue(GetKillingUnitBJ()) == 55)))
+endfunction
+
+function Trig_FT2Actions takes nothing returns nothing
+    set udg_SSSSSSS[1] = (udg_SSSSSSS[1] + 1)
+    if ((IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true)) then
+        set udg_SSSSSSS[1] = (udg_SSSSSSS[1] + 4)
+    else
+    endif
+    if ((udg_n == true)) then
+        call DisplayTimedTextToForce(GetPlayersAll(), 1.00, ("方天画戟" + (I2S(udg_SSSSSSS[1]) + "/150")))
+    else
+    endif
+    if ((udg_SSSSSSS[1] >= 150)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))], 'sora'))
+        call UnitAddItemByIdSwapped('mnsf', udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ())) + "|Cffffff00恭喜！你的方天画戟已升至终级！"))
+        call DestroyTrigger(gg_trg_FT1)
+        call DestroyTrigger(GetTriggeringTrigger())
+    else
+        call DoNothing()
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_FT2 takes nothing returns nothing
+    set gg_trg_FT2 = CreateTrigger()
+    call DisableTrigger(gg_trg_FT2)
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_FT2, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_FT2, Condition(function Trig_FT2Conditions))
+    call TriggerAddAction(gg_trg_FT2, function Trig_FT2Actions)
+endfunction
+

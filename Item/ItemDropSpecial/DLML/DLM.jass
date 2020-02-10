@@ -1,0 +1,21 @@
+function Trig_DLMConditions takes nothing returns boolean
+    return ((IsUnitAlly(GetTriggerUnit(), Player(9)) == true) and (IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true) and (GetRandomInt(1, 60) == 57))
+endfunction
+
+function Trig_DLMActions takes nothing returns nothing
+    local location tempLoc = GetUnitLoc(GetTriggerUnit())
+    call CreateItemLoc('horl', tempLoc)
+    call RemoveLocation(tempLoc)
+    call DestroyTrigger(GetTriggeringTrigger())
+    set tempLoc = null
+endfunction
+
+//===========================================================================
+function InitTrig_DLM takes nothing returns nothing
+    set gg_trg_DLM = CreateTrigger()
+
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_DLM, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_DLM, Condition(function Trig_DLMConditions))
+    call TriggerAddAction(gg_trg_DLM, function Trig_DLMActions)
+endfunction
+

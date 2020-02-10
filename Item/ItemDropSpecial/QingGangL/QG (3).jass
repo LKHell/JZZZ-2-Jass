@@ -1,0 +1,31 @@
+function Trig_QG3Conditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))], 'sor9') == true) and ((UnitHasItemOfTypeBJ(GetKillingUnitBJ(), 'sor9') == true) or (GetUnitPointValue(GetKillingUnitBJ()) == 55)))
+endfunction
+
+function Trig_QG3Actions takes nothing returns nothing
+    set udg_SSSSSSS[0] = (udg_SSSSSSS[0] + 1)
+    if ((IsUnitType(GetDyingUnit(), UNIT_TYPE_HERO) == true)) then
+        set udg_SSSSSSS[0] = (udg_SSSSSSS[0] + 4)
+    else
+    endif
+    if ((udg_n == true)) then
+        call DisplayTimedTextToPlayer(GetOwningPlayer(GetKillingUnitBJ()), 0, 0, 1, ("青缸剑" + (I2S(udg_SSSSSSS[0]) + "/95")))
+    else
+    endif
+    if ((udg_SSSSSSS[0] >= 95)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))], 'sor9'))
+        call UnitAddItemByIdSwapped('frhg', udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))])
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetKillingUnitBJ())) + "你的青缸剑已升至四级"))
+        call EnableTrigger(gg_trg_QG4)
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_QG3 takes nothing returns nothing
+    set gg_trg_QG3 = CreateTrigger()
+    call DisableTrigger(gg_trg_QG3) 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_QG3, EVENT_PLAYER_UNIT_DEATH)
+    call TriggerAddCondition(gg_trg_QG3, Condition(function Trig_QG3Conditions))
+    call TriggerAddAction(gg_trg_QG3, function Trig_QG3Actions)
+endfunction

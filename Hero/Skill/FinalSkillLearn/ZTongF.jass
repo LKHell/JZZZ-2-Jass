@@ -1,0 +1,35 @@
+function Trig_ZtongFConditions takes nothing returns boolean
+    return ((GetUnitTypeId(GetTriggerUnit()) == 'Harf'))
+endfunction
+
+function Trig_ZtongFActions takes nothing returns nothing
+// 科技等级
+    if ((GetHeroLevel(GetTriggerUnit()) >= (27 + (3 * udg_Difficulty))) and (GetPlayerTechCountSimple('Rorb', GetOwningPlayer(GetTriggerUnit())) == 0)) then
+        call SetPlayerTechResearchedSwap('Rorb', 1, GetOwningPlayer(GetTriggerUnit()))
+        call SetPlayerAbilityAvailableBJ(true, 'A048', GetOwningPlayer(GetTriggerUnit()))
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "领悟了终级技能：|Cff00ff00孤军奋战！"))
+        call EnableTrigger(gg_trg_fanpu)
+    else
+        if ((GetUnitAbilityLevelSwapped('A048', GetTriggerUnit()) == 1) and (GetHeroLevel(GetTriggerUnit()) >= (47 + (3 * udg_Difficulty)))) then
+            call SetPlayerTechResearchedSwap('Rorb', 2, GetOwningPlayer(GetTriggerUnit()))
+             
+            call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "|Cff00ff00孤军奋战的等级已经提升了！"))
+        else
+            if ((GetUnitAbilityLevelSwapped('A048', GetTriggerUnit()) == 2) and (GetHeroLevel(GetTriggerUnit()) >= (67 + (3 * udg_Difficulty)))) then
+                call SetPlayerTechResearchedSwap('Rorb', 3, GetOwningPlayer(GetTriggerUnit()))
+                
+                call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "|Cff00ff00孤军奋战的等级已经提升了！"))
+                call DestroyTrigger(GetTriggeringTrigger())
+            else
+            endif
+        endif
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_ZtongF takes nothing returns nothing
+    set gg_trg_ZtongF = CreateTrigger() 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ZtongF, EVENT_PLAYER_HERO_LEVEL)
+    call TriggerAddCondition(gg_trg_ZtongF, Condition(function Trig_ZtongFConditions))
+    call TriggerAddAction(gg_trg_ZtongF, function Trig_ZtongFActions)
+endfunction

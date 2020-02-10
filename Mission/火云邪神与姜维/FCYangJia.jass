@@ -3,7 +3,7 @@ globals
 endglobals
 
 function Trig_FCYangJiaConditions takes nothing returns boolean
-    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true)) 
 endfunction
 
 function Trig_FCYangJiaActions takes nothing returns nothing
@@ -19,7 +19,7 @@ endfunction
 function InitTrig_FCYangJia takes nothing returns nothing
     set gg_trg_FCYangJia = CreateTrigger()
 
-    call TriggerRegisterEnterRectSimple(gg_trg_FCYangJia, gg_rct______________021)
+   
     call TriggerAddCondition(gg_trg_FCYangJia, Condition(function Trig_FCYangJiaConditions))
     call TriggerAddAction(gg_trg_FCYangJia, function Trig_FCYangJiaActions)
 endfunction

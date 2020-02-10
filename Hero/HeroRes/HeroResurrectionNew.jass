@@ -1,0 +1,38 @@
+function Trig_HeroResurrectionNewActions takes nothing returns nothing
+    local integer id = 0
+    local integer index = 1 
+    //X -9664 -9024
+    //Y -12800 ,-12160
+     
+    loop
+        exitwhen index > 8
+        if ((GetExpiredTimer() == udg_time[index])) then
+            set id = index
+            call PauseTimerBJ(true, udg_time[id])
+            
+            call ReviveHero(udg_heroDead[id], GetRandomInt( -9664 ,-9024),GetRandomInt(-12800 ,-12160), true)
+           
+            
+            set index = 9
+            return
+         
+        endif
+        set index = index + 1
+    endloop
+   
+endfunction
+
+//===========================================================================
+function InitTrig_HeroResurrectionNew takes nothing returns nothing
+    set gg_trg_HeroResurrectionNew = CreateTrigger()
+    call TriggerRegisterTimerExpireEvent(gg_trg_HeroResurrectionNew, udg_time[1])
+    call TriggerRegisterTimerExpireEvent(gg_trg_HeroResurrectionNew, udg_time[2])
+    call TriggerRegisterTimerExpireEvent(gg_trg_HeroResurrectionNew, udg_time[3])
+    call TriggerRegisterTimerExpireEvent(gg_trg_HeroResurrectionNew, udg_time[4])
+    call TriggerRegisterTimerExpireEvent(gg_trg_HeroResurrectionNew, udg_time[5])
+    call TriggerRegisterTimerExpireEvent(gg_trg_HeroResurrectionNew, udg_time[6])
+    call TriggerRegisterTimerExpireEvent(gg_trg_HeroResurrectionNew, udg_time[7])
+    call TriggerRegisterTimerExpireEvent(gg_trg_HeroResurrectionNew, udg_time[8])
+    call TriggerAddAction(gg_trg_HeroResurrectionNew, function Trig_HeroResurrectionNewActions)
+endfunction
+

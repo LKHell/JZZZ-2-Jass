@@ -1,0 +1,18 @@
+function Trig_CTSActions takes nothing returns nothing
+    call QuestMessageBJ(GetPlayersAll(), bj_QUESTMESSAGE_ALWAYSHINT, "开启关闭提示")
+    if ((udg_TS == true)) then
+        set udg_TS = false
+    else
+        set udg_TS = true
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_CTS takes nothing returns nothing
+    set gg_trg_CTS = CreateTrigger()
+ 
+    call TriggerRegisterPlayerChatEvent(gg_trg_CTS, Player(0), "-ts", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_CTS, Player(1), "-ts", true)
+    call TriggerAddAction(gg_trg_CTS, function Trig_CTSActions)
+endfunction
+

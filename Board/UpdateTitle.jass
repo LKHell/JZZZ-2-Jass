@@ -1,0 +1,20 @@
+function Trig_UpdateTitle_Actions takes nothing returns nothing
+	local string str
+	set udg_TimeOfGame = udg_TimeOfGame + 1
+    set str = "难度:|Cff00ff00" + I2S(udg_Difficulty)+"|r  玩家信息  |Cff00ff00游戏时间：" + I2S(udg_TimeOfGame) + "分钟|r "
+    if (  udg_ModeType == 1  ) then
+        set str = str +   "  关羽死亡次数：" + I2S(GetUnitUserData(gg_unit_Hant_0005))  
+    else
+    endif
+
+    call MultiboardSetTitleText(udg_MB, str )
+    set str = null
+endfunction
+
+//===========================================================================
+function InitTrig_UpdateTitle takes nothing returns nothing
+    set gg_trg_UpdateTitle = CreateTrigger(  )
+    call TriggerRegisterTimerEventPeriodic( gg_trg_UpdateTitle, 60.00 )
+    call TriggerAddAction( gg_trg_UpdateTitle, function Trig_UpdateTitle_Actions )
+endfunction
+

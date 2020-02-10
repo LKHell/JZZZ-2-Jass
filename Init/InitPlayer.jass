@@ -1,0 +1,76 @@
+function Trig_InitPlayerFunc004001002 takes nothing returns boolean
+    return ((GetUnitTypeId(GetFilterUnit()) == 'uzg2'))
+endfunction
+
+function Trig_InitPlayerFunc004A takes nothing returns nothing
+    call ShowUnitHide(GetEnumUnit())
+    call PauseUnit(GetEnumUnit(), true)
+endfunction
+
+function Trig_InitPlayerFunc005A takes nothing returns nothing
+    call SetUnitInvulnerable(GetEnumUnit(), true)
+    call UnitAddAbility(GetEnumUnit(), 'A0B2')
+    call ModifyHeroSkillPoints(GetEnumUnit(), bj_MODIFYMETHOD_SET, 0)
+endfunction
+
+function Trig_InitPlayerFunc006A takes nothing returns nothing
+    call CreateFogModifierRadiusLocBJ(true, GetEnumPlayer(), FOG_OF_WAR_VISIBLE, GetRectCenter(gg_rct_heroChosen), 1200.00)
+    call SetPlayerMaxHeroesAllowed(1, GetEnumPlayer())
+    call SetCameraBoundsToRectForPlayerBJ(GetEnumPlayer(), gg_rct_heroChosen)
+endfunction
+
+function Trig_InitPlayerFunc007A takes nothing returns nothing
+    call SetPlayerAbilityAvailableBJ(false, 'A09B', GetEnumPlayer())
+    call SetPlayerAbilityAvailableBJ(false, 'A09A', GetEnumPlayer())
+    call SetPlayerAbilityAvailableBJ(false, 'ANcr', GetEnumPlayer())
+    call SetPlayerAbilityAvailableBJ(false, 'A07C', GetEnumPlayer())
+    call SetPlayerAbilityAvailableBJ(false, 'A095', GetEnumPlayer())
+    call SetPlayerAbilityAvailableBJ(false, 'A05T', GetEnumPlayer())
+    call SetPlayerAbilityAvailableBJ(false, 'A08D', GetEnumPlayer())
+    call SetPlayerAbilityAvailableBJ(false, 'A048', GetEnumPlayer())
+endfunction
+
+function Trig_InitPlayerActions takes nothing returns nothing
+    local group ydl_group
+    local unit ydl_unit
+    call RemoveAllGuardPositions(Player(9))
+    call RemoveAllGuardPositions(Player(10))
+    call ForceCinematicSubtitles(true)
+    call ForGroupBJ(GetUnitsInRectMatching(gg_rct_______u, Condition(function Trig_InitPlayerFunc004001002)), function Trig_InitPlayerFunc004A)
+    call ForGroupBJ(GetUnitsInRectOfPlayer(gg_rct_heroChosen, Player(PLAYER_NEUTRAL_PASSIVE)), function Trig_InitPlayerFunc005A)
+    call ForForce(GetPlayersAllies(Player(8)), function Trig_InitPlayerFunc006A)
+    call ForForce(GetPlayersAllies(Player(PLAYER_NEUTRAL_PASSIVE)), function Trig_InitPlayerFunc007A)
+    call ForForce(GetPlayersAllies(Player(8)), function Trig_InitPlayerFunc007A)
+    call SetDoodadAnimationRect(gg_rct______________052, 'IZrw', "alternate", false)
+// 开启 刑天 玄蛇 项羽 亡魂 复活触发
+    call EnableTrigger(gg_trg_xRes)
+  
+    call EnableTrigger(gg_trg_xDead)
+ 
+    call CinematicFadeBJ(bj_CINEFADETYPE_FADEIN, 6.00, "ReplaceableTextures\\CameraMasks\\DiagonalSlash_mask.blp", 100.00, 100.00, 100.00, 0.00)
+    call FogModifierStop(GetLastCreatedFogModifier())
+    call FogEnableOn()
+
+    // 设置杀敌获取金钱
+    call SetPlayerFlagBJ(PLAYER_STATE_GIVES_BOUNTY, true, Player(9))
+    call SetPlayerFlagBJ(PLAYER_STATE_GIVES_BOUNTY, true, Player(10))
+    call SetPlayerFlagBJ(PLAYER_STATE_GIVES_BOUNTY, true, Player(11))
+    //call CinematicModeBJ(true, GetPlayersAll())
+    call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Hant_0005, "武圣-关云长", null, "城在人在，城亡人亡！", bj_TIMETYPE_ADD, 0, true)
+   // call CinematicModeBJ(false, GetPlayersAll())
+    call CreateTextTagLocBJ("荆州", GetUnitLoc(gg_unit_ncp2_0073), 1.00, 20.00, 50.00, 100, 100, 20.00)
+    call CreateTextTagLocBJ("？？？", GetUnitLoc(gg_unit_ncp2_0074), 1.00, 20.00, 50.00, 100, 100, 20.00)
+    call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cff00ff00赶快选择自己的英雄吧！魏国的军队马上就要到了！（单击查看人物属性，双击选择英雄）\n")
+    call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cff00ff00按F9可以查看游戏相关内容。\n 查询更详细的攻略秘籍请登陆：http://jzzz.uuu9.com")
+    set ydl_group = null
+    set ydl_unit = null
+ 	call TriggerExecute( gg_trg_DCDifficultyBoard )
+endfunction
+
+//===========================================================================
+function InitTrig_InitPlayer takes nothing returns nothing
+    set gg_trg_InitPlayer = CreateTrigger()
+    call DisableTrigger(gg_trg_InitPlayer)
+    call TriggerAddAction(gg_trg_InitPlayer, function Trig_InitPlayerActions)
+endfunction
+

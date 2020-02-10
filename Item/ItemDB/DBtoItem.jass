@@ -1,0 +1,30 @@
+// 释放技能 ， 创建 物品
+function Trig_ZQSHConditions takes nothing returns boolean
+
+return ((GetSpellAbilityId() == 'A01Y') and ((GetUnitTypeId(GetTriggerUnit()) == 'hphx') or (GetUnitTypeId(GetTriggerUnit()) == 'nwwd') or (GetUnitTypeId(GetTriggerUnit()) == 'ngrd') or (GetUnitTypeId(GetTriggerUnit()) == 'ntrd')))
+
+endfunction
+
+
+
+
+
+
+
+//===========================================================================
+
+function InitTrig_DBtoItem takes nothing returns nothing
+
+    set gg_trg_DBtoItem = CreateTrigger()
+
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_DBtoItem, EVENT_PLAYER_UNIT_SPELL_EFFECT)
+
+    call TriggerAddCondition(gg_trg_DBtoItem, Condition(function Trig_ZQSHConditions))
+
+    call TriggerAddAction(gg_trg_DBtoItem, function Trig_ZQSHActions)
+
+endfunction
+
+
+
+ 

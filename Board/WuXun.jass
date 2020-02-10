@@ -1,0 +1,49 @@
+ 
+//Or - 任意条件成立
+// 条件
+//     ((被操作物品) 的类型) 等于 敏捷提升
+//     ((被操作物品) 的类型) 等于 力量提升（大的）
+//     ((被操作物品) 的类型) 等于 敏捷提升（大的）
+//     ((被操作物品) 的类型) 等于 智力提升（大的）
+//     ((被操作物品) 的类型) 等于 智力提升
+//     ((被操作物品) 的类型) 等于 力量提升
+
+  function Trig_WuXunConditions takes nothing returns boolean
+    return (((GetItemTypeId(GetManipulatedItem()) == 'rhe1') or (GetItemTypeId(GetManipulatedItem()) == 'I01E') or (GetItemTypeId(GetManipulatedItem()) == 'I01F') or (GetItemTypeId(GetManipulatedItem()) == 'I01N') or (GetItemTypeId(GetManipulatedItem()) == 'rsps') or (GetItemTypeId(GetManipulatedItem()) == 'rma2')))
+endfunction
+
+function Trig_WuXunActions takes nothing returns nothing
+local integer i = GetConvertedPlayerId(GetOwningPlayer(GetTriggerUnit()))
+    if ((GetItemTypeId(GetManipulatedItem()) == 'rma2') and (udg_SHUXING[i] > 0)) then
+        call ModifyHeroStat(bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 1)
+        set udg_SHUXING[i] = (udg_SHUXING[i] - 1)
+    elseif ((GetItemTypeId(GetManipulatedItem()) == 'rsps') and (udg_SHUXING[i] > 0)) then
+        call ModifyHeroStat(bj_HEROSTAT_INT, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 1)
+        set udg_SHUXING[i] = (udg_SHUXING[i] - 1)
+    elseif ((GetItemTypeId(GetManipulatedItem()) == 'rhe1') and (udg_SHUXING[i] > 0)) then
+        call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 1)
+        set udg_SHUXING[i] = (udg_SHUXING[i] - 1)
+    elseif ((GetItemTypeId(GetManipulatedItem()) == 'I01E') and (udg_SHUXING[i] > 9)) then
+        call ModifyHeroStat(bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 10)
+        set udg_SHUXING[i] = (udg_SHUXING[i] - 10)
+    elseif ((udg_SHUXING[i] > 9) and (GetItemTypeId(GetManipulatedItem()) == 'I01F')) then
+        call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 10)
+        set udg_SHUXING[i] = (udg_SHUXING[i] - 10)
+    elseif ((udg_SHUXING[i] > 9) and (GetItemTypeId(GetManipulatedItem()) == 'I01N')) then
+        call ModifyHeroStat(bj_HEROSTAT_INT, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 10)
+        set udg_SHUXING[i] = (udg_SHUXING[i] - 10)
+    else
+    call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "|cff0080FF你的武勋不足，无法提升属性|r钱财不会退还")
+              
+    endif
+    call MultiboardSetItemValueBJ(GetLastCreatedMultiboard(), 4, (i + 1), I2S(udg_SHUXING[i]))
+endfunction
+
+//===========================================================================
+function InitTrig_WuXun takes nothing returns nothing
+    set gg_trg_WuXun = CreateTrigger() 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_WuXun, EVENT_PLAYER_UNIT_PICKUP_ITEM)
+    call TriggerAddCondition(gg_trg_WuXun, Condition(function Trig_WuXunConditions))
+    call TriggerAddAction(gg_trg_WuXun, function Trig_WuXunActions)
+endfunction
+

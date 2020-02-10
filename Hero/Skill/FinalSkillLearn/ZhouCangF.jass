@@ -1,0 +1,38 @@
+function Trig_ZCConditions takes nothing returns boolean
+    return ((GetUnitTypeId(GetTriggerUnit()) == 'Orex'))
+endfunction
+
+function Trig_ZCActions takes nothing returns nothing
+  
+
+
+    if ((GetUnitAbilityLevelSwapped('A011', GetTriggerUnit()) < 1) and (GetHeroLevel(GetTriggerUnit()) >= (27 + (3 * udg_Difficulty)))) then
+         call Trig_BaseActions ('A011','A02C')
+        call ModifyHeroStat(bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 30)
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "获得额外的30点力量！")
+    else
+        if ((GetHeroLevel(GetTriggerUnit()) >= (47 + (3 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped('A011', GetTriggerUnit()) == 1)) then
+             call Trig_BaseActions ('A011','A02C')
+            call ModifyHeroStat(bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 50)
+            call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "获得额外的50点力量！")
+        else
+            if ((GetHeroLevel(GetTriggerUnit()) >= (67 + (3 *udg_Difficulty ))) and (GetUnitAbilityLevelSwapped('A011', GetTriggerUnit()) == 2)) then
+                 call Trig_BaseActions ('A011','A02C')
+                call ModifyHeroStat(bj_HEROSTAT_STR,GetTriggerUnit(), bj_MODIFYMETHOD_ADD, 75)
+                call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "获得额外的75点力量！")
+                call DestroyTrigger(GetTriggeringTrigger())
+            
+            endif
+        endif
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_ZhouCangF takes nothing returns nothing
+    set gg_trg_ZhouCangF = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_ZhouCangF, EVENT_PLAYER_HERO_LEVEL)
+    call TriggerAddCondition(gg_trg_ZhouCangF, Condition(function Trig_ZCConditions))
+    call TriggerAddAction(gg_trg_ZhouCangF, function Trig_ZCActions)
+endfunction
+

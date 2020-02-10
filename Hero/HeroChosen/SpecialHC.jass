@@ -1,0 +1,8 @@
+// SpecialHC
+//     事件
+//         单位 - 关兴 0030<预设> 变化拥有者
+//     条件
+//     动作
+//         Custom script:   call DestroyTrigger(GetTriggeringTrigger())
+//         玩家 - 禁用 闪避 (40%)项羽 for (Owner of (Triggering unit))
+//         玩家 - 禁用 闪避 (50%) for (Owner of (Triggering unit))

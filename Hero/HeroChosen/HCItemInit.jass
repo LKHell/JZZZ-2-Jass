@@ -1,0 +1,122 @@
+// HCItemInit
+//     事件
+//         单位 - A unit 改变所有者
+//     条件
+//         (Level of 选择英雄1 111 for (Triggering unit)) 等于 1
+//     动作
+//         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//             If - 条件
+//                 (Point-value of (Triggering unit)) 等于 3
+//             Then - 动作
+//                 英雄 - Create |cff80FFFF铁锁甲 and give it to (Triggering unit)
+//                 英雄 - Create |cff80FFFF钢弓 and give it to (Triggering unit)
+//             Else - 动作
+//                 If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                     If - 条件
+//                         (Point-value of (Triggering unit)) 等于 4
+//                     Then - 动作
+//                         英雄 - Create |cff80FFFF铁锁甲 and give it to (Triggering unit)
+//                         英雄 - Create |cff80FFFF大斧 and give it to (Triggering unit)
+//                     Else - 动作
+//                         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                             If - 条件
+//                                 (Point-value of (Triggering unit)) 等于 5
+//                             Then - 动作
+//                                 英雄 - Create |cff80FFFF鹤髦 and give it to (Triggering unit)
+//                                 英雄 - Create |cff80FFFF黑羽扇 and give it to (Triggering unit)
+//                             Else - 动作
+//                                 If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                                     If - 条件
+//                                         (Point-value of (Triggering unit)) 等于 1
+//                                     Then - 动作
+//                                         英雄 - Create |cff80FFFF鹤髦 and give it to (Triggering unit)
+//                                         英雄 - Create |cff80FFFF钢剑 and give it to (Triggering unit)
+//                                     Else - 动作
+//                                         If (All Conditions are True) then do (Then Actions) else do (Else Actions)
+//                                             If - 条件
+//                                                 (Point-value of (Triggering unit)) 等于 2
+//                                             Then - 动作
+//                                                 英雄 - Create |cff80FFFF钢剑 and give it to (Triggering unit)
+//                                                 英雄 - Create |cff80FFFF铁锁甲 and give it to (Triggering unit)
+//                                             Else - 动作
+//         英雄 - Create 开局之道 and give it to (Triggering unit)
+
+function Trig_HCItemInit_Conditions takes nothing returns boolean
+    if ( not ( GetUnitAbilityLevelSwapped('A0B2', GetTriggerUnit()) == 1 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_HCItemInit_Func001Func003Func003Func003Func003C takes nothing returns boolean
+    if ( not ( GetUnitPointValue(GetTriggerUnit()) == 2 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_HCItemInit_Func001Func003Func003Func003C takes nothing returns boolean
+    if ( not ( GetUnitPointValue(GetTriggerUnit()) == 1 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_HCItemInit_Func001Func003Func003C takes nothing returns boolean
+    if ( not ( GetUnitPointValue(GetTriggerUnit()) == 5 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_HCItemInit_Func001Func003C takes nothing returns boolean
+    if ( not ( GetUnitPointValue(GetTriggerUnit()) == 4 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_HCItemInit_Func001C takes nothing returns boolean
+    if ( not ( GetUnitPointValue(GetTriggerUnit()) == 3 ) ) then
+        return false
+    endif
+    return true
+endfunction
+
+function Trig_HCItemInit_Actions takes nothing returns nothing
+    if ( Trig_HCItemInit_Func001C() ) then
+        call UnitAddItemByIdSwapped( 'rag1', GetTriggerUnit() )
+        call UnitAddItemByIdSwapped( 'kpin', GetTriggerUnit() )
+    else
+        if ( Trig_HCItemInit_Func001Func003C() ) then
+            call UnitAddItemByIdSwapped( 'rag1', GetTriggerUnit() )
+            call UnitAddItemByIdSwapped( 'ajen', GetTriggerUnit() )
+        else
+            if ( Trig_HCItemInit_Func001Func003Func003C() ) then
+                call UnitAddItemByIdSwapped( 'ssil', GetTriggerUnit() )
+                call UnitAddItemByIdSwapped( 'sbch', GetTriggerUnit() )
+            else
+                if ( Trig_HCItemInit_Func001Func003Func003Func003C() ) then
+                    call UnitAddItemByIdSwapped( 'ssil', GetTriggerUnit() )
+                    call UnitAddItemByIdSwapped( 'afac', GetTriggerUnit() )
+                else
+                    if ( Trig_HCItemInit_Func001Func003Func003Func003Func003C() ) then
+                        call UnitAddItemByIdSwapped( 'afac', GetTriggerUnit() )
+                        call UnitAddItemByIdSwapped( 'rag1', GetTriggerUnit() )
+                    else
+                    endif
+                endif
+            endif
+        endif
+    endif
+    call UnitAddItemByIdSwapped( 'I02R', GetTriggerUnit() )
+endfunction
+
+//===========================================================================
+function InitTrig_HCItemInit takes nothing returns nothing
+    set gg_trg_HCItemInit = CreateTrigger(  )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_HCItemInit, EVENT_PLAYER_UNIT_CHANGE_OWNER )
+    call TriggerAddCondition( gg_trg_HCItemInit, Condition( function Trig_HCItemInit_Conditions ) )
+    call TriggerAddAction( gg_trg_HCItemInit, function Trig_HCItemInit_Actions )
+endfunction
+

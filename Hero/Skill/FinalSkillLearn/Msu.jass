@@ -1,0 +1,31 @@
+
+
+function Trig_MsuConditions takes nothing returns boolean
+    return ((GetUnitTypeId(GetTriggerUnit()) == 'Odrt'))
+endfunction
+
+function Trig_MsuActions takes nothing returns nothing
+    if ((GetUnitAbilityLevelSwapped('AUls', GetTriggerUnit()) < 1) and (GetHeroLevel(GetTriggerUnit()) >= (28 + (2 * udg_Difficulty)))) then
+        call EnableTrigger(gg_trg_mas)
+        set udg_Unit_MaSu = GetTriggerUnit()
+        call UnitAddAbilityBJ('AUls', GetTriggerUnit())
+       call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0,(GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "领悟了终级技能：|Cff00ff00雷动九天！"))
+    elseif ((GetHeroLevel(GetTriggerUnit()) >= (48 + (2 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped('AUls', GetTriggerUnit()) == 1)) then
+        call IncUnitAbilityLevelSwapped('AUls', GetTriggerUnit())
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0,(GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "|Cff00ff00雷动九天的等级已经提升了！"))
+    elseif ((GetHeroLevel(GetTriggerUnit()) >= (68 + (2 * udg_Difficulty))) and (GetUnitAbilityLevelSwapped('AUls', GetTriggerUnit()) == 2)) then
+        call IncUnitAbilityLevelSwapped('AUls', GetTriggerUnit())
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0,(GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "|Cff00ff00雷动九天的等级已经提升了！"))
+        call DestroyTrigger(GetTriggeringTrigger())
+            
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_MsuF takes nothing returns nothing
+    set gg_trg_MsuF = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_MsuF, EVENT_PLAYER_HERO_LEVEL)
+    call TriggerAddCondition(gg_trg_MsuF, Condition(function Trig_MsuConditions))
+    call TriggerAddAction(gg_trg_MsuF, function Trig_MsuActions)
+endfunction

@@ -1,0 +1,277 @@
+function Trig_InitItemActions takes nothing returns nothing
+// 物品 - 为 |cffB366FF雌雄一对剑（终级） 添加 增加攻击力的物品 雌雄
+// 物品 - 为 |cffB366FF龙鳞铠甲（终级） 添加 D护甲 (+35系统注册)
+// 物品 - 为 |cffffdead削甲战甲 添加 D护甲 (+35系统注册)
+// 物品 - 为 |Cff00ff00真·青龙偃月刀 添加 D30 (+4)
+// 物品 - 为 |Cffffff00日月乾坤轮 添加 特武 (+80 敏捷度)
+// 物品 - 为 |cffffdead雷霆魔翼 添加 特坐骑 (+30所有属性)
+// 物品 - 为 |Cffffff00倚天剑 添加 特宝 (+30所有属性)
+// 物品 - 为 |cffffdead黄龙盾 添加 特宝 (+30所有属性)
+// 物品 - 为 |Cff00ff00白虎护手 添加 特宝 (+30所有属性)
+// 物品 - 为 |Cff00ff00项羽护手 添加 特宝 (+30所有属性)
+// 物品 - 为 |Cffffff00钨钢护手 添加 特宝 (+30所有属性)
+// 物品 - 为 |Cffffff00真龙护手 添加 特宝 (+30所有属性)
+// 物品 - 为 |Cffffff00神灵腰带 添加 特宝 (+30所有属性)
+// 物品 - 为 |cffffdead混天绫 添加 特宝 (+30所有属性)
+// 物品 - 为 |Cff00ff00干将 添加 增加攻击力的物品 (+干将)
+// 物品 - 为 |Cff00ff00莫邪 添加 增加攻击力的物品 (+莫邪)
+// 物品 - 为 |cffffdead追日靴 添加 能提高英雄属性的物品 (+90力量)追日
+
+ // 设置 wplx_Int = GetRandomInt(27, 88) ，设置初始掉落指针 27 -88 随机数 影响 DropItemHero2 函数
+  set udg_wplx_Int = GetRandomInt(27, 88)
+ // 设置 wplx[1] = |Cff00ff00朱雀头冠 
+  set udg_wplx[1] = 'crdt'
+ // 设置 wplx[2] = |Cff00ff00朱雀羽衣 
+  set udg_wplx[2] = 'brag'
+ // 设置 wplx[3] = |Cff00ff00朱雀羽扇 
+  set udg_wplx[3] = 'ofir'
+
+ // 设置 wplx[4] = |Cff00ff00青龙偃月刀 
+  set udg_wplx[4] = 'sfog'
+ // 设置 wplx[5] = |Cff00ff00青龙战靴 
+  set udg_wplx[5] = 'sor8'
+ // 设置 wplx[6] = |Cff00ff00青龙铠甲 
+  set udg_wplx[6] = 'sor7'
+
+ // 设置 wplx[7] = |Cff00ff00项羽头盔 
+  set udg_wplx[7] = 'hbth'
+ // 设置 wplx[8] = |Cff00ff00项羽护手 
+  set udg_wplx[8] = 'ram2'
+ // 设置 wplx[9] = |Cff00ff00项羽铠甲 
+  set udg_wplx[9] = 'rde0'
+
+ // 设置 wplx[10] = |Cff00ff00白虎护手 
+  set udg_wplx[10] = 'I01B'
+ // 设置 wplx[11] = |Cffffff00龙泉剑 
+  set udg_wplx[11] = 'srbd'
+ // 设置 wplx[12] = |Cffffff00古锭刀 
+  set udg_wplx[12] = 'fwss'
+ // 设置 wplx[13] = |Cffffff00圣者之衣 
+  set udg_wplx[13] = 'rat3'
+ // 设置 wplx[14] = |Cffffff00天空盔 
+  set udg_wplx[14] = 'sprn'
+ // 设置 wplx[15] = |Cffffff00大宛马 
+  set udg_wplx[15] = 'blba'
+ // 设置 wplx[16] = |Cffffff00玄铁枪 
+  set udg_wplx[16] = 'gldo'
+ // 设置 wplx[17] = |Cffffff00神羽盔 
+  set udg_wplx[17] = 'rugt'
+ // 设置 wplx[18] = |Cffffff00黄金锁子甲 
+  set udg_wplx[18] = 'shhn'
+ // 设置 wplx[19] = |Cffffff00鹊画弓 
+  set udg_wplx[19] = 'arsh'
+ // 设置 wplx[20] = |Cffffff00开山斧 
+  set udg_wplx[20] = 'axas'
+ // 设置 wplx[21] = |Cffffff00钨钢护手 
+  set udg_wplx[21] = 'I028'
+ // 设置 wplx[22] = |Cffffff00玄盾 
+  set udg_wplx[22] = 'I02B'
+ // 设置 wplx[23] = |Cffffff00落日凌云扇 
+  set udg_wplx[23] = 'drph'
+ // 设置 wplx[24] = |Cffffff00熊皮靴 
+  set udg_wplx[24] = 'I029'
+ // 设置 wplx[25] = |Cffffff00毒箭 
+  set udg_wplx[25] = 'I02A'
+ // 设置 wplx[26] = |Cffffff00神灵腰带 
+  set udg_wplx[26] = 'I02D'
+
+
+// 设置 wplx[27] = |Cff00ff00玄铁手戟 
+  set udg_wplx[27] = 'I00D'
+ // 设置 wplx[28] = |Cff00ff00玄铁腰带 
+  set udg_wplx[28] = 'I00E'
+
+
+ // 设置 wplx[29] = |Cff00ff00白虎战袍 
+  set udg_wplx[29] = 'I01C'
+ // 设置 wplx[30] = |Cff00ff00白虎盔 
+  set udg_wplx[30] = 'I01D'
+ // 设置 wplx[31] = |Cff00ff00白虎头巾 
+  set udg_wplx[31] = 'I01K'
+ // -------- - -------- 
+ 
+ // 设置 wplx[32] = |Cffffff00孙子兵法 
+  set udg_wplx[32] = 'sor3'
+ // 设置 wplx[33] = |Cffffff00青囊书 
+  set udg_wplx[33] = 'schl'
+ // 设置 wplx[34] = |Cffffff00爪黄飞电 
+  set udg_wplx[34] = 'sor2'
+ // 设置 wplx[35] = |Cffffff00巨象 
+  set udg_wplx[35] = 'I007'
+ 
+  // -
+ // 设置 wplx[36] = |Cffffff00如意空空手 
+  set udg_wplx[36] = 'spre'
+
+
+ // 设置 wplx[37] = |cffffdead水神戟|r 
+  set udg_wplx[37] = 'stpg'
+
+
+ // 设置 wplx[38] = |Cff00ff00刑天斧 
+  set udg_wplx[38] = 'gsou'
+ // 设置 wplx[39] = |Cff00ff00刑天盾 
+  set udg_wplx[39] = 'cosl'
+ // 设置 wplx[40] = |Cff00ff00震天弓 
+  set udg_wplx[40] = 'ram4'
+ // 设置 wplx[41] = |Cff00ff00穿云箭 
+  set udg_wplx[41] = 'oven'
+ // 设置 wplx[42] = |Cff00ff00魔神之翼 
+  set udg_wplx[42] = 'I006'
+ // 设置 wplx[43] = |cffffdead遁甲天书 
+  set udg_wplx[43] = 'dtsb'
+ // 设置 wplx[44] = |Cff00ff00真武凤翔甲 
+  set udg_wplx[44] = 'shen'
+ // 设置 wplx[45] = |cffffdead太平要术 
+  set udg_wplx[45] = 'I005'
+ // 设置 wplx[46] = |cffffdead玄光之翼 
+  set udg_wplx[46] = 'bfhr'
+ // 设置 wplx[47] = |cffffdead神农鼎 
+  set udg_wplx[47] = 'shtm'
+ // -------- - -------- 
+  // -
+ // 设置 wplx[48] = |cffffdead轩辕剑 
+  set udg_wplx[48] = 'I01M'
+ // 设置 wplx[49] = |cffffdead女娲石 
+  set udg_wplx[49] = 'thdm'
+ // 设置 wplx[50] = |Cff00ff00魔魂盔 
+  set udg_wplx[50] = 'I003'
+ // 设置 wplx[51] = |cffffdead追日靴 
+  set udg_wplx[51] = 'I000'
+ // 设置 wplx[52] = |cffffdead问天枪 
+  set udg_wplx[52] = 'I004'
+ // 设置 wplx[53] = |Cff00ff00镇魂甲 
+  set udg_wplx[53] = 'I002'
+ // 设置 wplx[54] = |cffffdead火神盾 
+  set udg_wplx[54] = 'rots'
+ // 设置 wplx[55] = |Cff00ff00项羽战刃 
+  set udg_wplx[55] = 'stre'
+ // 设置 wplx[56] = |Cff00ff00镇魂杖 
+  set udg_wplx[56] = 'I001'
+ // 设置 wplx[57] = |cffffdead盘古斧 
+  set udg_wplx[57] = 'I008'
+ // 设置 wplx[58] = |cffffdead九天算尺 
+  set udg_wplx[58] = 'I00C'
+ // 设置 wplx[59] = |Cff00ff00九转修罗斩 
+  set udg_wplx[59] = 'I00A'
+ // 设置 wplx[60] = |cffffdead星瀚 
+  set udg_wplx[60] = 'I024'
+ // 设置 wplx[61] = |cffffdead削甲战甲 
+  set udg_wplx[61] = 'rej6'
+ // 设置 wplx[62] = |cffffdead承影剑 
+  set udg_wplx[62] = 'ofro'
+ // 设置 wplx[63] = |cffffdead霸王破天枪 
+  set udg_wplx[63] = 'oflg'
+ // 设置 wplx[64] = |cffffdead太平清岭道 
+  set udg_wplx[64] = 'I00W'
+ // 设置 wplx[65] = |Cff00ff00赤兔 
+  set udg_wplx[65] = 'oslo'
+ // 设置 wplx[66] = |cffffdead太虚幻镜 
+  set udg_wplx[66] = 'I02G'
+ // 设置 wplx[67] = |cffffdead霹雳雷鸣 
+  set udg_wplx[67] = 'I02H'
+ // -------- - -------- 
+  // -
+ // 设置 wplx[68] = |cffffdead龙骑尖 
+  set udg_wplx[68] = 'azhr'
+ // 设置 wplx[69] = |cffffdead沙里飞 
+  set udg_wplx[69] = 'wtlg'
+ // 设置 wplx[70] = |cffffdead震山锤 
+  set udg_wplx[70] = 'fgun'
+ // 设置 wplx[71] = |Cffffff00落月弓 
+  set udg_wplx[71] = 'I00U'
+ // 设置 wplx[72] = |Cffffff00丈八蛇矛 
+  set udg_wplx[72] = 'rnsp'
+ // 设置 wplx[73] = |cffffdead雷霆魔翼 
+  set udg_wplx[73] = 'amrc'
+ // 设置 wplx[74] = |Cffffff00日月乾坤轮 
+  set udg_wplx[74] = 'vddl'
+ // 设置 wplx[76] = |cffffdead亮银梨花枪 
+  set udg_wplx[76] = 'nflg'
+ // 设置 wplx[77] = |cffffdead混天绫 
+  set udg_wplx[77] = 'rej2'
+ // 设置 wplx[78] = |Cffffff00绝影 
+  set udg_wplx[78] = 'I009'
+ // 设置 wplx[79] = |Cff00ff00真武盘龙盾 
+  set udg_wplx[79] = 'tlum'
+
+// 设置 wplx[80] = |Cffffff00真龙护手 
+  set udg_wplx[80] = 'tels'
+ // 设置 wplx[81] = |Cffffff00孟德新书 
+  set udg_wplx[81] = 'sor4'
+ // 设置 wplx[82] = |Cffffff00倚天剑 
+  set udg_wplx[82] = 'shcw'
+
+ // 设置 wplx[83] = |Cffffff00七星宝刀 
+  set udg_wplx[83] = 'nspi'
+ // 设置 wplx[84] = |cffffdead风神衣 
+  set udg_wplx[84] = 'btst'
+ // 设置 wplx[83] = |Cffffff00养由基之弓 
+  set udg_wplx[83] = 'ram3'
+ // 设置 wplx[85] = |cffffdead玄武斧 
+  set udg_wplx[85] = 'ocor'
+ // 设置 wplx[86] = |cffffdead湛卢 
+  set udg_wplx[86] = 'mlst'
+ // 设置 wplx[87] = |Cffffff00龙筋虎弦弓 
+  set udg_wplx[87] = 'I02Q'
+
+
+ // -------- ==== -------- 
+  // ====
+ // 设置 wplx[121] = 蜂王蜜 
+  set udg_wplx[121] = 'pnvu'
+ // 设置 wplx[122] = 疗伤药 
+  set udg_wplx[122] = 'pdiv'
+ // 设置 wplx[123] = 还魂丹 
+  set udg_wplx[123] = 'ankh'
+ // 设置 wplx[124] = 金仙丹 
+  set udg_wplx[124] = 'pghe'
+ // 设置 wplx[125] = 天仙玉露 
+  set udg_wplx[125] = 'pgma'
+ // 设置 wplx[126] = |Cffff0000凤羽 
+  set udg_wplx[126] = 'bspd'
+ // 设置 wplx[127] = |Cffff0000玄铁 
+  set udg_wplx[127] = 'rat9'
+ // 设置 wplx[128] = |Cffff0000赤铜 
+  set udg_wplx[128] = 'ward'
+ // 设置 wplx[129] = |Cffff0000龙鳞 
+  set udg_wplx[129] = 'cnob'
+ // 设置 wplx[162] = 五行药水 
+  set udg_wplx[162] = 'pams'
+ // 设置 wplx[163] = 飓风权杖 
+  set udg_wplx[163] = 'wcyc'
+ // 设置 wplx[164] = 冲锋陷阵 
+  set udg_wplx[164] = 'I02L'
+ // 设置 wplx[165] = 叉状闪电 
+  set udg_wplx[165] = 'I02N'
+ // 设置 wplx[166] = 板砖 
+  set udg_wplx[166] = 'I01V'
+ // 设置 wplx[167] = 绑缚 
+  set udg_wplx[167] = 'I02P'
+ // 设置 wplx[168] = 雷霆重击 
+  set udg_wplx[168] = 'I02M'
+ // 设置 wplx[169] = 风暴战锤 
+  set udg_wplx[169] = 'I02O'
+ // 设置 wplx[170] = 恢复加护 
+  set udg_wplx[170] = 'I022'
+ // 设置 wplx[171] = 护盾加护 
+  set udg_wplx[171] = 'I020'
+ // 设置 wplx[172] = 镜像加护 
+  set udg_wplx[172] = 'I021'
+ // 设置 wplx[173] = 镜像加护 
+  set udg_wplx[173] = 'I021'
+ // 设置 wplx[174] = 速度加护 
+  set udg_wplx[174] = 'I023'
+
+
+ // 触发器 - 删除 (当前触发) 
+  call DestroyTrigger(GetTriggeringTrigger())
+  
+endfunction
+
+//===========================================================================
+function InitTrig_InitItem takes nothing returns nothing
+    set gg_trg_InitItem = CreateTrigger()
+    call TriggerAddAction(gg_trg_InitItem, function Trig_InitItemActions)
+endfunction
+

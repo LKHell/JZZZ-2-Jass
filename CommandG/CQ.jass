@@ -1,0 +1,30 @@
+function Trig_CQFunc001A takes nothing returns nothing
+    if ((GetItemType(GetEnumItem()) != ITEM_TYPE_POWERUP) and (GetItemLevel(GetEnumItem()) == 1) and (GetItemCharges(GetEnumItem()) < 2)) then
+        call RemoveItem(GetEnumItem())
+    else
+        if ((GetItemType(GetEnumItem()) != ITEM_TYPE_POWERUP) and (GetItemLifeBJ(GetEnumItem()) == 80.00) and (GetItemCharges(GetEnumItem()) < 2)) then
+            call RemoveItem(GetEnumItem())
+        else
+            if ((R2I(GetItemLifeBJ(GetEnumItem())) == 0)) then
+                call RemoveItem(GetEnumItem())
+            else
+                call DoNothing()
+            endif
+        endif
+    endif
+endfunction
+
+function Trig_CQActions takes nothing returns nothing
+    call EnumItemsInRectBJ(GetEntireMapRect(), function Trig_CQFunc001A)
+    call DisplayTimedTextToForce(GetPlayersAll(), 2.00, (GetPlayerName(GetTriggerPlayer()) + "清除了全地图区域的物品，使用次数大于1的药品不会清除"))
+endfunction
+
+//===========================================================================
+function InitTrig_CQ takes nothing returns nothing
+    set gg_trg_CQ = CreateTrigger()
+ 
+    call TriggerRegisterPlayerChatEvent(gg_trg_CQ, Player(0), "-q", true)
+    call TriggerRegisterPlayerChatEvent(gg_trg_CQ, Player(1), "-q", true)
+    call TriggerAddAction(gg_trg_CQ, function Trig_CQActions)
+endfunction
+

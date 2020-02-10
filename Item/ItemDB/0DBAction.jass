@@ -1,0 +1,22 @@
+// 创建物品 Trig_ZQSHActions
+function Trig_ZQSHActions takes nothing returns nothing
+    set udg_pointTemp = GetUnitLoc(GetTriggerUnit())
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'hphx')) then
+        call CreateItemLoc('k3m3', udg_pointTemp)
+    else
+    endif
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'ngrd')) then
+        call CreateItemLoc('k3m2', udg_pointTemp)
+    else
+    endif
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'nwwd')) then
+        call CreateItemLoc('glsk', udg_pointTemp)
+    else
+    endif
+    if ((GetUnitTypeId(GetTriggerUnit()) == 'ntrd')) then
+        call CreateItemLoc('gopr', udg_pointTemp)
+    else
+    endif
+    call RemoveUnit(GetTriggerUnit())
+    call RemoveLocation(udg_pointTemp)
+endfunction

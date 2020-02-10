@@ -1,0 +1,31 @@
+function Trig_MoShenTaoConditions takes nothing returns boolean
+    return ((IsUnitIllusionBJ(GetTriggerUnit()) == true) and (GetUnitTypeId(GetTriggerUnit()) != 'E001') and (GetUnitTypeId(GetTriggerUnit()) != 'Nbbc') and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I00A') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I006') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I003') == true))
+endfunction
+
+function Trig_MoShenTaoActions takes nothing returns nothing
+    call UnitAddAbilityBJ('ACm3', GetTriggerUnit())
+endfunction
+
+//===========================================================================
+function InitTrig_MoShenTao takes nothing returns nothing
+    set gg_trg_MoShenTao = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_MoShenTao, EVENT_PLAYER_UNIT_SUMMON)
+    call TriggerAddCondition(gg_trg_MoShenTao, Condition(function Trig_MoShenTaoConditions))
+    call TriggerAddAction(gg_trg_MoShenTao, function Trig_MoShenTaoActions)
+endfunction
+
+// MoShenTao
+// 给魔神套装的幻象追加魔免
+
+//     事件
+//         单位 - 任意单位 被召唤(召唤单位)
+//     条件
+//         ((触发单位) 是镜像单位) 等于 TRUE
+//         ((触发单位) 的类型) 不等于 |cffffdead吕蒙
+//         ((触发单位) 的类型) 不等于 关兴
+//         ((触发单位) 拥有 |Cff00ff00九转修罗斩) 等于 TRUE
+//         ((触发单位) 拥有 |Cff00ff00魔神之翼) 等于 TRUE
+//         ((触发单位) 拥有 |Cff00ff00魔魂盔) 等于 TRUE
+//     动作
+//         单位 - 添加 魔法免疫 (龙) 给 (触发单位)

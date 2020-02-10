@@ -1,4 +1,6 @@
-
+globals
+    unit udg_Unit_MaSu
+endglobals
 
 function Trig_masConditions takes nothing returns boolean
     //  And - 所有条件成立
@@ -7,18 +9,18 @@ function Trig_masConditions takes nothing returns boolean
     //             (Uint_MaSu 处于隐藏状态) 等于 FALSE
     //             (Uint_MaSu 是镜像单位) 等于 FALSE
     
-    return (((IsUnitAliveBJ(udg_Uint_MaSu) == true) and (IsUnitHiddenBJ(udg_Uint_MaSu) == false) and (IsUnitIllusionBJ(udg_Uint_MaSu) == false)))
+    return (((IsUnitAliveBJ(udg_Unit_MaSu) == true) and (IsUnitHiddenBJ(udg_Unit_MaSu) == false) and (IsUnitIllusionBJ(udg_Unit_MaSu) == false)))
 endfunction
 
  
 function Trig_masActions takes nothing returns nothing
  
 
-    local real x = GetWidgetX(udg_Uint_MaSu)
+    local real x = GetWidgetX(udg_Unit_MaSu)
     
-    local real y = GetWidgetY(udg_Uint_MaSu)
+    local real y = GetWidgetY(udg_Unit_MaSu)
     // 智力 * 雷动九天
-    set udg_Hero_Damage = GetHeroInt(udg_Uint_MaSu, true) * GetUnitAbilityLevelSwapped('AUls', udg_Uint_MaSu)
+    set udg_Hero_Damage = GetHeroInt(udg_Unit_MaSu, true) * GetUnitAbilityLevelSwapped('AUls', udg_Unit_MaSu)
     call GroupEnumUnitsInRange(udg_GroupFormHero , x, y , 300 , Condition (function GroupDamgeFilterUnitNormalUNIVERSAL))
 
    

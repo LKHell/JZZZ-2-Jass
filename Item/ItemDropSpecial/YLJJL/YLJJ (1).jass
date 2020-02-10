@@ -1,0 +1,29 @@
+function Trig_YLJJ1Conditions takes nothing returns boolean
+    return ((UnitHasItemOfTypeBJ(GetAttackedUnitBJ(), 'tmmt') == true))
+endfunction
+
+function Trig_YLJJ1Actions takes nothing returns nothing
+    set udg_SSSSSSS[6] = (udg_SSSSSSS[6] + 1)
+    if ((udg_SSSSSSS[6] >= 500) and (IsUnitIllusionBJ(GetAttackedUnitBJ()) == false)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'tmmt'))
+        call UnitAddItemByIdSwapped('shdt', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetTriggerPlayer()) + "你的燕岭金甲已升至二级"))
+        call EnableTrigger(gg_trg_YLJJ2)
+    else
+        call DoNothing()
+    endif
+    if ((udg_n == true)) then
+        call DisplayTimedTextToForce(GetPlayersAll(), 0.50, ("燕翎金甲" + (I2S(udg_SSSSSSS[6]) + "/500")))
+    else
+    endif
+endfunction
+
+//===========================================================================
+function InitTrig_YLJJ1 takes nothing returns nothing
+    set gg_trg_YLJJ1 = CreateTrigger()
+ 
+    call TriggerRegisterAnyUnitEventBJ(gg_trg_YLJJ1, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerAddCondition(gg_trg_YLJJ1, Condition(function Trig_YLJJ1Conditions))
+    call TriggerAddAction(gg_trg_YLJJ1, function Trig_YLJJ1Actions)
+endfunction
+
