@@ -1,0 +1,13 @@
+function Trig_TSDoorFSRActions takes nothing returns nothing
+    local integer x =-8283
+    local integer y =-7068
+    call BaseTransUnitWithCamera(x, y )
+endfunction
+
+//===========================================================================
+function InitTrig_TSDoorFSR takes nothing returns nothing
+    set gg_trg_TSDoorFSR = CreateTrigger()
+    call TriggerRegisterEnterRectSimple(gg_trg_TSDoorFSR, gg_rct_doorFSR)
+    call TriggerAddCondition(gg_trg_TSDoorFSR, Condition(function Trig_TsBaseConditions ))
+    call TriggerAddAction(gg_trg_TSDoorFSR, function Trig_fuhActions)
+endfunction

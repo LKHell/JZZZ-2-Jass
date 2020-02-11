@@ -3,85 +3,80 @@ function Trig_dropItemConditions takes nothing returns boolean
 endfunction
 
 function Trig_dropItemActions takes nothing returns nothing
-    local location tempItemLoc = GetUnitLoc(GetTriggerUnit())
+    
+    local real x = GetWidgetX(GetTriggerUnit())
+    local real y = GetWidgetY(GetTriggerUnit())
     if ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true) and (GetRandomInt(1, 5) == 3)) then
         // 蓝色基础装
-         call CreateItemLoc(udg_wplx[GetRandomInt(215, 230)], tempItemLoc)
+         call CreateItem(udg_wplx[GetRandomInt(215, 230)], x , y )
     else
     endif
     
     // 低于 6级 掉落 基础装备
     if ((GetUnitLevel(GetTriggerUnit()) < 6) and (GetRandomInt(1, (45 + (udg_Difficulty * 15))) == 45)) then
-        call CreateItemLoc(udg_wplx[GetRandomInt(200, 214)], tempItemLoc)
-    else
-    endif
-    if ((GetUnitLevel(GetTriggerUnit()) >= 6) and (GetRandomInt(1, (50 + (5 * udg_Difficulty))) == 16)) then
+        call CreateItem(udg_wplx[GetRandomInt(200, 214)], x , y )
+    elseif ((GetUnitLevel(GetTriggerUnit()) >= 6) and (GetRandomInt(1, (50 + (5 * udg_Difficulty))) == 16)) then
     // 材料
-       call CreateItemLoc(udg_wplx[GetRandomInt(126, 129)], tempItemLoc)
-    else
+       call CreateItem(udg_wplx[GetRandomInt(126, 129)], x , y )
+    
     endif
 
     if ((GetUnitLevel(GetTriggerUnit()) >= 6) and (GetRandomInt(1, (50 + (5 * udg_Difficulty))) == 17)) then
     // 蓝色装备
-       call CreateItemLoc(udg_wplx[GetRandomInt(215, 230)], tempItemLoc)
-    else
+       call CreateItem(udg_wplx[GetRandomInt(215, 230)], x , y )
+    
     endif
 
     // 低于 10 级
     if ((GetUnitLevel(GetTriggerUnit()) < 10) and (GetRandomInt(1, (40 + (udg_Difficulty * 10))) == 10)) then
         // 掉落低级药物 121 123
-         call CreateItemLoc(udg_wplx[GetRandomInt(121, 123)], tempItemLoc)
-    else
-    endif
-    //高于10级
-    if ((GetUnitLevel(GetTriggerUnit()) >= 10) and (GetRandomInt(1, (40 + (udg_Difficulty * 10))) == 10)) then
+         call CreateItem(udg_wplx[GetRandomInt(121, 123)], x , y )
+    elseif ((GetUnitLevel(GetTriggerUnit()) >= 10) and (GetRandomInt(1, (40 + (udg_Difficulty * 10))) == 10)) then
+        //高于10级
         // 掉高级 药水
-        call CreateItemLoc(udg_wplx[GetRandomInt(123, 125)], tempItemLoc)
-    else
+        call CreateItem(udg_wplx[GetRandomInt(123, 125)], x , y )
+    
     endif
 
     if ((GetHeroLevel(GetTriggerUnit()) >= 25) and (GetRandomInt(1, (6 + (udg_Difficulty / 2))) == 3)) then
     //  基础套装  基础满级装备
-        call CreateItemLoc(udg_wplx[GetRandomInt(1, 31)], tempItemLoc)
-    else
+        call CreateItem(udg_wplx[GetRandomInt(1, 31)], x , y )
+    
     endif
 
     // 42 级 以上 且 不是 小boss
     if ((GetHeroLevel(GetTriggerUnit()) >= 42) and (GetUnitPointValue(GetTriggerUnit()) != 9) and (GetRandomInt(1, (15 + udg_Difficulty)) <= 5)) then
     
-        call CreateItemLoc(udg_wplx[GetRandomInt(64, 87)], tempItemLoc)
-    else
+        call CreateItem(udg_wplx[GetRandomInt(64, 87)], x , y )
+     
     endif
 
     // 42 级 以上 不是 小 boss
     if ((GetHeroLevel(GetTriggerUnit()) >= 42) and (GetUnitPointValue(GetTriggerUnit()) != 9)) then
     
-        call CreateItemLoc(udg_wplx[GetRandomInt(25, 65)], tempItemLoc)
-    else
+        call CreateItem(udg_wplx[GetRandomInt(25, 65)], x , y )
+     
     endif
 
 
     // 42 级 以上 
     if ((GetHeroLevel(GetTriggerUnit()) >= 42) and (GetRandomInt(1, (50 + (udg_Difficulty * 6))) == 4)) then
        
-        call CreateItemLoc(udg_wplx[GetRandomInt(64, 87)], tempItemLoc)
-    else
+        call CreateItem(udg_wplx[GetRandomInt(64, 87)], x , y )
+     
     endif
     
    
     
     // 兽皮
     if ((GetUnitPointValue(GetTriggerUnit()) == 10) and (GetRandomInt(1, (7 + (udg_Difficulty / 2))) == 3)) then
-        call CreateItemLoc('pomn', tempItemLoc)
-    else
-    endif
+        call CreateItem('pomn', x , y )
+    elseif ((GetUnitPointValue(GetTriggerUnit()) == 10) and (GetRandomInt(1, (40 + (udg_Difficulty * 2))) == 30)) then
     // 优质兽皮
-    if ((GetUnitPointValue(GetTriggerUnit()) == 10) and (GetRandomInt(1, (45 + (udg_Difficulty * 2))) == 30)) then
-        call CreateItemLoc('srrc', tempItemLoc)
-    else
+        call CreateItem('srrc', x , y )
+     
     endif
-    call RemoveLocation(tempItemLoc)
-    set tempItemLoc = null
+     
 endfunction
 
 //===========================================================================

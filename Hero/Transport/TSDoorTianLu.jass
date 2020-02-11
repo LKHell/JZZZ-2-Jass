@@ -1,0 +1,13 @@
+function Trig_TSDoorTianLuActions takes nothing returns nothing
+    local integer x =-3382
+    local integer y =-7640
+    call BaseTransUnitWithCamera(x, y )
+endfunction
+
+//===========================================================================
+function InitTrig_TSDoorTianLu takes nothing returns nothing
+    set gg_trg_TSDoorTianLu = CreateTrigger()
+    call TriggerRegisterEnterRectSimple(gg_trg_TSDoorTianLu, gg_rct_doorTianLu)
+    call TriggerAddCondition(gg_trg_TSDoorTianLu, Condition(function Trig_TsBaseConditions ))
+    call TriggerAddAction(gg_trg_TSDoorTianLu, function Trig_fuhActions)
+endfunction

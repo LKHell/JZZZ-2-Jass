@@ -1,10 +1,9 @@
  
 function Trig_TSRandomActions takes nothing returns nothing
-    local location  tempPoint = GetRandomLocInRect(gg_rct_fogArea)
-    call PanCameraToTimedLocForPlayer(GetOwningPlayer(GetTriggerUnit()), tempPoint, 0)
-    call SetUnitPositionLoc(GetTriggerUnit(), tempPoint)
-    call RemoveLocation(tempPoint)
-    set tempPoint = null
+    
+    local integer x = -2000 + GetRandomInt(0,30) *100
+    local integer y = 2800 + GetRandomInt(0,30) *100
+    call BaseTransUnitWithCamera(x, y )
 endfunction
 
 //===========================================================================

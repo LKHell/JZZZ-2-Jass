@@ -1,44 +1,49 @@
 function Trig_IntWeaponConditions takes nothing returns boolean
-    // 攻击者是英雄
-    return   (IsUnitType(GetAttacker(), UNIT_TYPE_HERO) == true)
+    // 伤害来源是英雄
+    return   (IsUnitType(GetEventDamageSource(), UNIT_TYPE_HERO) == true)
 endfunction
 
 function Trig_IntWeaponActions takes nothing returns nothing
-        local integer heroInt = GetHeroInt(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetAttacker()))], true)
-        
+    local integer heroInt  
+    local real  damage  = 0.00
+    // 判断 是攻击
+    if (BlzGetEventIsAttack()) then 
+
+        set heroInt = GetHeroInt(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))], true)
         // 统一造成 通用攻击  法术伤害
-        
+
         //水神戟 镇魂帐
-        if (((UnitHasItemOfTypeBJ(GetAttacker(), 'stpg') == true) or (UnitHasItemOfTypeBJ(GetAttacker(), 'I001') == true))) then
-            call UnitDamageTarget(GetAttacker(), GetTriggerUnit(), (heroInt * 1), true, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
+        if (((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'stpg') == true) or (UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I001') == true))) then
+            set damage = heroInt
         //鼎文帐
-        elseif ((UnitHasItemOfTypeBJ(GetAttacker(), 'I00F') == true)) then
-            call UnitDamageTarget(GetAttacker(), GetTriggerUnit(), (heroInt * 0.90), true, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
+        elseif ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I00F') == true)) then
+            set damage = heroInt * 0.9
         //朱雀羽扇
-        elseif ((UnitHasItemOfTypeBJ(GetAttacker(), 'ofir') == true)) then
-            call UnitDamageTarget(GetAttacker(), GetTriggerUnit(), (heroInt * 0.80), true, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
+        elseif ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'ofir') == true)) then
+            set damage = heroInt * 0.8
         //落日 霹雳雷鸣
-        elseif (((UnitHasItemOfTypeBJ(GetAttacker(), 'drph') == true) or (UnitHasItemOfTypeBJ(GetAttacker(), 'I02H') == true))) then
-            call UnitDamageTarget(GetAttacker(), GetTriggerUnit(), (heroInt * 0.70), true, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
+        elseif (((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'drph') == true) or (UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I02H') == true))) then
+            set damage = heroInt * 0.7
         //星瀚
-        elseif ((UnitHasItemOfTypeBJ(GetAttacker(), 'I024') == true)) then
-            call UnitDamageTarget(GetAttacker(), GetTriggerUnit(), (heroInt * 1.10), true, true, ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
+        elseif ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I024') == true)) then
+            set damage = heroInt * 1.1
         //太虚
-        elseif ((UnitHasItemOfTypeBJ(GetAttacker(), 'I02G') == true) and (UnitHasBuffBJ(GetTriggerUnit(), 'Bcrs') == true)) then
-            call UnitDamageTargetBJ(GetAttacker(), GetTriggerUnit(), (heroInt * 1.80), ATTACK_TYPE_NORMAL, DAMAGE_TYPE_UNIVERSAL)
-            
+        elseif ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I02G') == true) and (UnitHasBuffBJ(GetTriggerUnit(), 'Bcrs') == true)) then
+            set damage = heroInt * 1.8
         endif
-       
-         
-     
+
+        if( damage != 0) then
+            call UnitDamageTarget(GetEventDamageSource(), GetTriggerUnit(), damage, true, true, ATTACK_TYPE_NORMAL,   DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
+        endif
+    endif
    
 endfunction
 
 //===========================================================================
 function InitTrig_IntWeapon takes nothing returns nothing
     set gg_trg_IntWeapon = CreateTrigger()
-    
-    call TriggerRegisterAnyUnitEventBJ(gg_trg_IntWeapon, EVENT_PLAYER_UNIT_ATTACKED)
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_IntWeapon,  EVENT_PLAYER_UNIT_DAMAGED)
+     
     call TriggerAddCondition(gg_trg_IntWeapon, Condition(function Trig_IntWeaponConditions))
     call TriggerAddAction(gg_trg_IntWeapon, function Trig_IntWeaponActions)
 endfunction

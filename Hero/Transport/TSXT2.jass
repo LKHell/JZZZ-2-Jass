@@ -1,0 +1,14 @@
+function Trig_TSXT2Actions takes nothing returns nothing
+    local integer x =-5085
+    local integer y =4858
+    call BaseTransUnitWithCamera(x, y )
+    
+endfunction
+
+//===========================================================================
+function InitTrig_TSXT2 takes nothing returns nothing
+    set gg_trg_TSXT2 = CreateTrigger()
+    call TriggerRegisterEnterRectSimple(gg_trg_TSXT2, gg_rct_xt2)
+    call TriggerAddCondition(gg_trg_TSXT2, Condition(function Trig_TsBaseConditions ))
+    call TriggerAddAction(gg_trg_TSXT2, function Trig_TSXT2Actions)
+endfunction

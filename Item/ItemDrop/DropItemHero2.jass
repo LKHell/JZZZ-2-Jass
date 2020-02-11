@@ -1,26 +1,28 @@
 function Trig_DropItemHero2Conditions takes nothing returns boolean
-    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+// 中立Boss
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true)) abd ((GetUnitPointValue(GetTriggerUnit()) == 99))
 endfunction
 
 function Trig_DropItemHero2Actions takes nothing returns nothing
-    local location temp = GetUnitLoc(GetTriggerUnit())
-    // 中立Boss
-    if ((GetUnitPointValue(GetTriggerUnit()) == 99)) then
+   
+    local real x = GetWidgetX(GetTriggerUnit())
+    local real y = GetWidgetY(GetTriggerUnit())
+
+    
+   
     // 大于 70 级 或 25% 顺序掉落物品
-        if (((GetHeroLevel(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]) > 70) or (GetRandomInt(1, 4) == 2))) then
-            call CreateItemLoc(udg_wplx[udg_wplx_Int], temp)
-            if ((udg_wplx_Int >= 87)) then
-                set udg_wplx_Int = 28
-            else
-                set udg_wplx_Int =  (udg_wplx_Int + 1)
-            endif
+    if (((GetHeroLevel(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]) > 70) or (GetRandomInt(1, 4) == 2))) then
+        call CreateItem(udg_wplx[udg_wplx_Int], x , y)
+
+        if ((udg_wplx_Int >= 87)) then
+            set udg_wplx_Int = 28
         else
+            set udg_wplx_Int =  (udg_wplx_Int + 1)
         endif
-    else
+        
     endif
-    // ---
-    call RemoveLocation(temp)
-    set temp = null
+    
+    
 endfunction
 
 //===========================================================================
