@@ -1,0 +1,22 @@
+function Trig_DebugDamageEventActions takes nothing returns nothing   
+    if (BlzGetEventIsAttack()) then 
+        call DisplayTextToForce (GetPlayersAll() , "Is attack")
+        call UnitDamageTarget(GetEventDamageSource(), GetTriggerUnit(), 22, true, true, ATTACK_TYPE_HERO, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+    else
+        call DisplayTextToForce (GetPlayersAll() , "Isn't attack")
+    endif
+
+    // call DisplayTextToForce (GetPlayersAll() , "BlzGetEventDamageTarget :" + GetUnitName(BlzGetEventDamageTarget()) ) 
+    // call DisplayTextToForce (GetPlayersAll() , "GetEventTargetUnit : " + GetUnitName(GetEventTargetUnit()) ) 
+    // call DisplayTextToForce (GetPlayersAll() , "GetTriggerUnit : " + GetUnitName(GetTriggerUnit()) ) 
+    // call DisplayTextToForce (GetPlayersAll() , "GetEventDamageSource : " + GetUnitName(GetEventDamageSource()) )    
+    call DisplayTextToForce( GetPlayersAll(), "source" + GetUnitName(GetEventDamageSource()) + "damage "+ R2S(GetEventDamage()) )
+endfunction
+
+//===========================================================================
+function InitTrig_X takes nothing returns nothing
+    set gg_trg_X = CreateTrigger() 
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_X,  EVENT_PLAYER_UNIT_DAMAGED)
+    call TriggerAddAction(gg_trg_X, function Trig_DebugDamageEventActions)
+endfunction
+

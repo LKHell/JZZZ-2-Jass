@@ -1,0 +1,39 @@
+function Trig_c_Actions takes nothing returns nothing
+	local integer i = S2I( SubStringBJ(GetEventPlayerChatString(), 2, 3))
+	  
+    call  DisplayTextToForce( GetPlayersAll(), "From "+  I2S(BlzGetUnitWeaponIntegerField(gg_unit_hfoo_0003, UNIT_WEAPON_IF_ATTACK_ATTACK_TYPE, 0)))
+    call DisplayTextToForce( GetPlayersAll(),  "To "+I2S(i) )  
+    //设置武器类型
+    // 0 法术
+    // 1 无  普通
+    // 2 穿刺
+    // 3 攻城
+    // 4 魔法
+    // 5 混乱
+    // 6 英雄
+ 
+    call BlzSetUnitWeaponIntegerFieldBJ( gg_unit_hfoo_0003, UNIT_WEAPON_IF_ATTACK_ATTACK_TYPE, 0, i)
+    call BlzSetUnitWeaponIntegerFieldBJ( gg_unit_hfoo_0003, UNIT_WEAPON_IF_ATTACK_DAMAGE_BASE, 0, i)
+    call BlzSetUnitWeaponIntegerFieldBJ( gg_unit_Hmkg_0001, UNIT_WEAPON_IF_ATTACK_ATTACK_TYPE, 0, i)
+    //设置装甲类型
+    // 0 轻型
+    // 1 中型
+    // 2 重型
+    // 3 城甲
+    // 4 普通
+    // 5 英雄
+    // 6 神圣
+    // 7 未装备 
+    // call BlzSetUnitWeaponIntegerFieldBJ( gg_unit_hfoo_0003, UNIT_WEAPON_IF_ATTACK_ATTACK_TYPE, 0,  )
+
+    call BlzSetUnitIntegerFieldBJ( gg_unit_Hmkg_0001, UNIT_IF_DEFENSE_TYPE, i )
+    call BlzSetUnitIntegerFieldBJ( gg_unit_hfoo_0003, UNIT_IF_DEFENSE_TYPE, i )
+endfunction
+
+//===========================================================================
+function InitTrig_c takes nothing returns nothing
+    set gg_trg_c = CreateTrigger(  )
+    call TriggerRegisterPlayerChatEvent( gg_trg_c, Player(0), "c", false )
+    call TriggerAddAction( gg_trg_c, function Trig_c_Actions )
+endfunction
+
