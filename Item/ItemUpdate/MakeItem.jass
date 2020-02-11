@@ -10,116 +10,88 @@ function Trig_MakeSpeciaItemActions takes nothing returns nothing
         call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I01J'))
         call UnitAddItemByIdSwapped('I01B', GetTriggerUnit())
         call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了白虎护手！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01J') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'prvt') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'prvt'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I01J'))
+        call UnitAddItemByIdSwapped('I01K', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了白虎头巾！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01J') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hcun') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'hcun'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I01J'))
+        call UnitAddItemByIdSwapped('I01D', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了白虎盔！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'jpnt') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'prvt') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'prvt'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'jpnt'))
+        call UnitAddItemByIdSwapped('rej5', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了魔龙战盔！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'jpnt') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde3') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rde3'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'jpnt'))
+        call UnitAddItemByIdSwapped('gemt', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了魔龙战凯！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rat9') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bgst') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rat9'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'bgst'))
+        call UnitAddItemByIdSwapped('I00E', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了玄铁腰带！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rat9') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hval') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rat9'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'hval'))
+        call UnitAddItemByIdSwapped('I00D', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了玄铁手戟！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'cnob') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde3') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rde3'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'cnob'))
+        call UnitAddItemByIdSwapped('sor7', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了青龙铠甲！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'cnob') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rst1') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rst1'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'cnob'))
+        call UnitAddItemByIdSwapped('sor8', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了青龙战靴！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'cnob') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ratc') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ratc'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'cnob'))
+        call UnitAddItemByIdSwapped('sfog', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了青龙偃月刀！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ward') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde3') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ward'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rde3'))
+        call UnitAddItemByIdSwapped('rde0', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了项羽铠甲！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ward') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'lhst') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ward'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'lhst'))
+        call UnitAddItemByIdSwapped('ram2', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了项羽护手！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ward') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hcun') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ward'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'hcun'))
+        call UnitAddItemByIdSwapped('hbth', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了项羽头盔！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bspd') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ciri') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'bspd'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ciri'))
+        call UnitAddItemByIdSwapped('brag', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了朱雀羽衣！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bspd') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'mcou') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'bspd'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'mcou'))
+        call UnitAddItemByIdSwapped('ofir', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了朱雀羽扇！"))
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bspd') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'prvt') == true)) then
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'bspd'))
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'prvt'))
+        call UnitAddItemByIdSwapped('crdt', GetTriggerUnit())
+        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了朱雀头冠！"))
     else
-        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01J') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'prvt') == true)) then
-            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'prvt'))
-            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I01J'))
-            call UnitAddItemByIdSwapped('I01K', GetTriggerUnit())
-            call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了白虎头巾！"))
-        else
-            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01J') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hcun') == true)) then
-                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'hcun'))
-                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I01J'))
-                call UnitAddItemByIdSwapped('I01D', GetTriggerUnit())
-                call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了白虎盔！"))
-            else
-                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'jpnt') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'prvt') == true)) then
-                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'prvt'))
-                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'jpnt'))
-                    call UnitAddItemByIdSwapped('rej5', GetTriggerUnit())
-                    call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了魔龙战盔！"))
-                else
-                    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'jpnt') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde3') == true)) then
-                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rde3'))
-                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'jpnt'))
-                        call UnitAddItemByIdSwapped('gemt', GetTriggerUnit())
-                        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了魔龙战凯！"))
-                    else
-                        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rat9') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bgst') == true)) then
-                            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rat9'))
-                            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'bgst'))
-                            call UnitAddItemByIdSwapped('I00E', GetTriggerUnit())
-                            call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了玄铁腰带！"))
-                        else
-                            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rat9') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hval') == true)) then
-                                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rat9'))
-                                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'hval'))
-                                call UnitAddItemByIdSwapped('I00D', GetTriggerUnit())
-                                call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了玄铁手戟！"))
-                            else
-                                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'cnob') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde3') == true)) then
-                                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rde3'))
-                                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'cnob'))
-                                    call UnitAddItemByIdSwapped('sor7', GetTriggerUnit())
-                                    call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了青龙铠甲！"))
-                                else
-                                    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'cnob') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rst1') == true)) then
-                                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rst1'))
-                                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'cnob'))
-                                        call UnitAddItemByIdSwapped('sor8', GetTriggerUnit())
-                                        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了青龙战靴！"))
-                                    else
-                                        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'cnob') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ratc') == true)) then
-                                            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ratc'))
-                                            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'cnob'))
-                                            call UnitAddItemByIdSwapped('sfog', GetTriggerUnit())
-                                            call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了青龙偃月刀！"))
-                                        else
-                                            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ward') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rde3') == true)) then
-                                                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ward'))
-                                                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rde3'))
-                                                call UnitAddItemByIdSwapped('rde0', GetTriggerUnit())
-                                                call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了项羽铠甲！"))
-                                            else
-                                                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ward') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'lhst') == true)) then
-                                                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ward'))
-                                                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'lhst'))
-                                                    call UnitAddItemByIdSwapped('ram2', GetTriggerUnit())
-                                                    call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了项羽护手！"))
-                                                else
-                                                    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ward') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hcun') == true)) then
-                                                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ward'))
-                                                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'hcun'))
-                                                        call UnitAddItemByIdSwapped('hbth', GetTriggerUnit())
-                                                        call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了项羽头盔！"))
-                                                    else
-                                                        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bspd') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ciri') == true)) then
-                                                            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'bspd'))
-                                                            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ciri'))
-                                                            call UnitAddItemByIdSwapped('brag', GetTriggerUnit())
-                                                            call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了朱雀羽衣！"))
-                                                        else
-                                                            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bspd') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'mcou') == true)) then
-                                                                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'bspd'))
-                                                                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'mcou'))
-                                                                call UnitAddItemByIdSwapped('ofir', GetTriggerUnit())
-                                                                call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了朱雀羽扇！"))
-                                                            else
-                                                                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bspd') == true) and (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'prvt') == true)) then
-                                                                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'bspd'))
-                                                                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'prvt'))
-                                                                    call UnitAddItemByIdSwapped('crdt', GetTriggerUnit())
-                                                                    call DisplayTextToForce(GetPlayersAll(), (GetPlayerName(GetOwningPlayer(GetTriggerUnit())) + "打造了朱雀头冠！"))
-                                                                else
-                                                                    call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "|Cffffff00材料不足！")
-                                                                    call AdjustPlayerStateBJ(5000, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
-                                                                    call AdjustPlayerStateBJ(5, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_LUMBER)
-                                                                endif
-                                                            endif
-                                                        endif
-                                                    endif
-                                                endif
-                                            endif
-                                        endif
-                                    endif
-                                endif
-                            endif
-                        endif
-                    endif
-                endif
-            endif
-        endif
+        call DisplayTextToPlayer(GetOwningPlayer(GetTriggerUnit()), 0, 0, "|Cffffff00材料不足！")
+        call AdjustPlayerStateBJ(5000, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
+        call AdjustPlayerStateBJ(5, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_LUMBER)
     endif
+    
+   
 endfunction
 
 //===========================================================================

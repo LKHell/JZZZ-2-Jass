@@ -11,7 +11,7 @@ function Trig_ItemOverlayActions takes nothing returns nothing
         // 设置单位持有的物品 使用次数 为 二者相加和
             call SetItemCharges(UnitItemInSlotBJ(GetTriggerUnit(), i), (GetItemCharges(UnitItemInSlotBJ(GetTriggerUnit(), i)) + GetItemCharges(GetManipulatedItem())))
             call RemoveItem(GetManipulatedItem())
-        else
+        
         endif
         set i = i + 1
     endloop

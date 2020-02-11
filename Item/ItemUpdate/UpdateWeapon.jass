@@ -1,82 +1,68 @@
 function Trig_UpdateWeaponConditions takes nothing returns boolean
-    return ((GetItemTypeId(GetManipulatedItem()) == 'I00N'))
+    return ((GetItemTypeId(GetManipulatedItem()) == 'I00N' ))
 endfunction
 
 function Trig_UpdateWeaponActions takes nothing returns nothing
+local integer a = 0
+local integer b = 0  
     // 钢剑
     if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'afac') == true)) then
-        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'afac'))
-        call UnitAddItemByIdSwapped('hval', GetTriggerUnit())
-    else
-    // 破斩剑
-        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hval') == true)) then
-            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'hval'))
-            call UnitAddItemByIdSwapped('srbd', GetTriggerUnit())
-        else
+        set a= 'afac'
+        set b ='hval'
+        // 破斩剑
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'hval') == true)) then
+        set a= 'hval'
+        set b ='srbd'
         // 钢刀
-            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'evtl') == true)) then
-                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'evtl'))
-                call UnitAddItemByIdSwapped('ratc', GetTriggerUnit())
-            else
-            // 凤嘴刀
-                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ratc') == true)) then
-                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ratc'))
-                    call UnitAddItemByIdSwapped('fwss', GetTriggerUnit())
-                else
-                // 钢枪
-                    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rhth') == true)) then
-                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rhth'))
-                        call UnitAddItemByIdSwapped('rwiz', GetTriggerUnit())
-                    else
-                    // 狼牙枪
-                        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rwiz') == true)) then
-                            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rwiz'))
-                            call UnitAddItemByIdSwapped('gldo', GetTriggerUnit())
-                        else
-                        // 钢弓
-                            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'kpin') == true)) then
-                                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'kpin'))
-                                call UnitAddItemByIdSwapped('gcel', GetTriggerUnit())
-                            else
-                            // 连珠弓
-                                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'gcel') == true)) then
-                                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'gcel'))
-                                    call UnitAddItemByIdSwapped('arsh', GetTriggerUnit())
-                                else
-                                // 黑羽扇
-                                    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'sbch') == true)) then
-                                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'sbch'))
-                                        call UnitAddItemByIdSwapped('mcou', GetTriggerUnit())
-                                    else
-                                    // 火云扇
-                                        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'mcou') == true)) then
-                                            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'mcou'))
-                                            call UnitAddItemByIdSwapped('drph', GetTriggerUnit())
-                                        else
-                                        // 大斧
-                                            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ajen') == true)) then
-                                                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'ajen'))
-                                                call UnitAddItemByIdSwapped('dsum', GetTriggerUnit())
-                                            else
-                                            // 宣花斧
-                                                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'dsum') == true)) then
-                                                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'dsum'))
-                                                    call UnitAddItemByIdSwapped('axas', GetTriggerUnit())
-                                                else
-                                                    call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cffffff00材料不足！")
-                                                    call AdjustPlayerStateBJ(3000, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
-                                                endif
-                                            endif
-                                        endif
-                                    endif
-                                endif
-                            endif
-                        endif
-                    endif
-                endif
-            endif
-        endif
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'evtl') == true)) then
+        set a= 'evtl'
+        set b ='ratc'
+        // 凤嘴刀
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ratc') == true)) then
+        set a= 'ratc'
+        set b ='fwss'
+        // 钢枪
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rhth') == true)) then
+        set a= 'rhth'
+        set b ='rwiz'
+        // 狼牙枪
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rwiz') == true)) then
+        set a= 'rwiz'
+        set b ='gldo'
+        // 钢弓
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'kpin') == true)) then
+        set a= 'kpin'
+        set b ='gcel'
+        // 连珠弓
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'gcel') == true)) then
+        set a= 'gcel'
+        set b ='arsh'
+        // 黑羽扇
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'sbch') == true)) then
+        set a= 'sbch'
+        set b ='mcou'
+        // 火云扇
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'mcou') == true)) then
+        set a= 'mcou'
+        set b ='drph'
+        // 大斧
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'ajen') == true)) then
+        set a= 'ajen'
+        set b ='dsum'
+        // 宣花斧
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'dsum') == true)) then
+        set a= 'dsum'
+        set b ='axas'
     endif
+
+    if( a != 0 ) then 
+        call RemoveItem (GetItemOfTypeFromUnitBJ(GetTriggerUnit(), a))
+        call UnitAddItemByIdSwapped (b, GetTriggerUnit())
+    else
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cffffff00材料不足！")
+        call AdjustPlayerStateBJ(3000, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
+    endif
+ 
 endfunction
 
 //===========================================================================

@@ -1,63 +1,54 @@
 function Trig_UpdateTreasureConditions takes nothing returns boolean
-    return ((GetItemTypeId(GetManipulatedItem()) == 'I027'))
+    return ((GetItemTypeId(GetManipulatedItem() ) == 'I027') )
 endfunction
 
 function Trig_UpdateTreasureActions takes nothing returns nothing
-//护手
+    local integer a =0
+    local integer b =0
     if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I025') == true)) then
-        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I025'))
-        call UnitAddItemByIdSwapped('lhst', GetTriggerUnit())
-    else
-    // 凤纹护手
-        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'lhst') == true)) then
-            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'lhst'))
-            call UnitAddItemByIdSwapped('I028', GetTriggerUnit())
-        else
+        //护手
+        set a = 'I025'
+        set b ='lhst'
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'lhst') == true)) then
+        // 凤纹护手
+        set a = 'lhst'
+        set b ='I028'
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rst1') == true)) then
         //虎皮靴
-            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rst1') == true)) then
-                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rst1'))
-                call UnitAddItemByIdSwapped('I029', GetTriggerUnit())
-            else
-            // 狼皮靴
-                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01L') == true)) then
-                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I01L'))
-                    call UnitAddItemByIdSwapped('rst1', GetTriggerUnit())
-                else
-                //铁箭
-                    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I026') == true)) then
-                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I026'))
-                        call UnitAddItemByIdSwapped('rin1', GetTriggerUnit())
-                    else
-                    //锯齿箭
-                        if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rin1') == true)) then
-                            call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'rin1'))
-                            call UnitAddItemByIdSwapped('I02A', GetTriggerUnit())
-                        else
-                        // 钢盾
-                            if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I02C') == true)) then
-                                call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I02C'))
-                                call UnitAddItemByIdSwapped('I02B', GetTriggerUnit())
-                            else
-                            // 狮蛮带
-                                if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bgst') == true)) then
-                                    call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'bgst'))
-                                    call UnitAddItemByIdSwapped('I02D', GetTriggerUnit())
-                                else
-                                // 圆盾
-                                    if ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01O') == true)) then
-                                        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit(), 'I01O'))
-                                        call UnitAddItemByIdSwapped('I02C', GetTriggerUnit())
-                                    else
-                                        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cffffff00材料不足！")
-                                        call AdjustPlayerStateBJ(3000, GetOwningPlayer(GetTriggerUnit()), PLAYER_STATE_RESOURCE_GOLD)
-                                    endif
-                                endif
-                            endif
-                        endif
-                    endif
-                endif
-            endif
-        endif
+        set a = 'rst1'
+        set b ='I029'
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01L') == true)) then
+        // 狼皮靴
+        set a = 'I01L'
+        set b ='rst1'
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I026') == true)) then
+        //铁箭
+        set a = 'I026'
+        set b ='rin1'
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'rin1') == true)) then
+        //锯齿箭
+        set a = 'rin1'
+        set b ='I02A'
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I02C') == true)) then
+        // 钢盾
+        set a = 'I02C'
+        set b ='I02B'
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'bgst') == true)) then
+        // 狮蛮带
+        set a = 'bgst'
+        set b ='I02D'
+    elseif ((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01O') == true)) then
+        // 圆盾
+        set a = 'I01O'
+        set b ='I02C'
+    endif
+    
+    if (a == 0) then
+        call DisplayTimedTextToForce(GetPlayersAll(), 5.00, "|Cffffff00材料不足！")
+        call AdjustPlayerStateBJ(3000, GetOwningPlayer(GetTriggerUnit() ), PLAYER_STATE_RESOURCE_GOLD)
+    else 
+        call RemoveItem(GetItemOfTypeFromUnitBJ(GetTriggerUnit() , a) )
+        call UnitAddItemByIdSwapped (b, GetTriggerUnit() )
     endif
 endfunction
 
