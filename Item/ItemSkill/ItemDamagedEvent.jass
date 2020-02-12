@@ -1,0 +1,187 @@
+function Trig_ItemDamagedEventConditions takes nothing returns boolean
+    // 伤害来源是英雄  判断 是攻击
+    return   (IsUnitType(GetEventDamageSource(), UNIT_TYPE_HERO) == true) and  (BlzGetEventIsAttack())
+endfunction
+
+//盘古斧 镇魂 青缸
+function GroupDamageForDamagedEvent takes nothing returns boolean
+    // call DisplayTextToForce( GetPlayersAll(),  GetUnitName( GetFilterUnit() ) )
+    // call DisplayTextToForce( GetPlayersAll(),  "str : "+I2S(GetHeroStr(GetEventDamageSource(), true) ) )
+    
+    // 是敌对单位  法术 强化
+    if((IsUnitAlly(GetFilterUnit(), GetOwningPlayer(GetEventDamageSource())) == false)) then 
+          call UnitDamageTargetBJ(GetEventDamageSource(), GetFilterUnit(), udg_Hero_Damage , ATTACK_TYPE_NORMAL, DAMAGE_TYPE_ENHANCED)
+    endif
+
+    return false
+endfunction
+
+function Trig_ItemDamagedEventActions takes nothing returns nothing
+    local integer heroInt  
+    local real  damage  = 0.00
+    local real x
+    local real y
+    local unit u 
+
+    set heroInt = GetHeroInt(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))], true)
+    // 统一造成 通用攻击  法术伤害
+
+    //水神戟 
+    if  ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'stpg') == true)  )  then
+        set damage = heroInt
+    elseif (UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I001') == true)   then
+        //镇魂帐
+        set damage = heroInt
+
+        if(  (GetRandomInt(1, 10) == 8)) then
+            set x = GetWidgetX(GetTriggerUnit())
+            set y = GetWidgetY(GetTriggerUnit())
+
+            //创建 马甲 
+            //单位 - 创建 1 个 神出鬼没 给 ((攻击单位) 的所有者) 在 (local_A) , 面向角度为 默认建筑朝向
+            set u =  CreateUnit( GetOwningPlayer(GetEventDamageSource()) ,  'nemi' , x,y,0)
+            call UnitAddAbility(u, 'ACfn')
+            //单位 - 对 最后创建的单位 [R] 发布 不死族巫妖 - 霜冻新星 命令到目标: (被攻击单位)
+            call IssueTargetOrder( u, "frostnova",GetTriggerUnit())
+             
+            
+            set udg_Hero_Damage = R2I( damage)
+
+            //选取单位
+        
+            call GroupEnumUnitsInRange(udg_GroupFormItem ,x,y, 300,   Condition(function GroupDamageForDamagedEvent))
+        endif
+    elseif ((  (UnitHasItemOfTypeBJ(GetEventDamageSource(), 'jdrn') == true))    and  (GetRandomInt(1, 10) == 8) ) then
+    
+    // ((攻击单位) 拥有 |cffB366FF青缸剑（终级）) 等于 TRUE
+    // (((被攻击单位) 的所有者) 是 ((攻击单位) 的所有者) 的敌人) 等于 TRUE
+    //  10 % 
+    // ((攻击单位) 的类型) 等于 赵统 (挥舞着霜之哀伤宝剑)
+    
+
+        set x = GetWidgetX(GetTriggerUnit())
+        set y = GetWidgetY(GetTriggerUnit())
+       
+
+
+       //创建 马甲 
+       //单位 - 创建 1 个 神出鬼没 给 ((攻击单位) 的所有者) 在 (local_A) , 面向角度为 默认建筑朝向
+        set u =  CreateUnit( GetOwningPlayer(GetEventDamageSource()) ,  'nemi' , x,y,0)
+        call UnitAddAbility(u, 'ACfn')
+        //单位 - 对 最后创建的单位 [R] 发布 不死族巫妖 - 霜冻新星 命令到目标: (被攻击单位)
+        call IssueTargetOrder( u, "frostnova",GetTriggerUnit())
+
+
+       
+        //设置伤害
+        // 是赵统
+        if ((GetUnitTypeId(GetEventDamageSource()) == 'Harf')) then
+        // 获取赵统的敏捷
+            set damage = GetHeroAgi(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetEventDamageSource()))]  , true)
+        else
+            set damage =  GetHeroAgi(GetEventDamageSource(), true)
+        endif
+        //幻象伤害减半
+        if (IsUnitIllusion(GetEventDamageSource())== true) then
+            set damage =  damage / 2
+        endif
+        set udg_Hero_Damage = R2I(damage)
+        
+        //选取单位
+        call GroupEnumUnitsInRange(udg_GroupFormItem ,x,y, 300,   Condition(function GroupDamageForDamagedEvent))
+
+        set damage = 0
+    //鼎文帐
+    elseif ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I00F') == true)) then
+        set damage = heroInt * 0.9
+    //朱雀羽扇
+    elseif ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'ofir') == true)) then
+        set damage = heroInt * 0.8
+    //落日 霹雳雷鸣
+    elseif (((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'drph') == true) or (UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I02H') == true))) then
+        set damage = heroInt * 0.7
+        
+        if (    (UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I02H') == true)   and (GetRandomInt(21, 24) == 23)) then
+            //霹雳雷鸣
+            set x = GetWidgetX(GetTriggerUnit())
+            set y = GetWidgetY(GetTriggerUnit())
+            // 创建马甲释放闪电链
+
+            set u  = CreateUnit(GetOwningPlayer(GetEventDamageSource()) , 'h002', x, y ,0 ) 
+            call UnitAddAbility(u, 'A08P')
+            call IssueTargetOrder( u , "chainlightning",  GetTriggerUnit() )
+
+            
+        endif
+        
+    //星瀚
+    elseif ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I024') == true)) then
+        set damage = heroInt * 1.1
+    //太虚
+    elseif ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I02G') == true) and (UnitHasBuffBJ(GetTriggerUnit(), 'Bcrs') == true)) then
+        set damage = heroInt * 1.8
+    
+    elseif (((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I008') == true) or (UnitHasItemOfTypeBJ(GetEventDamageSource(), 'ocor') == true))  ) then
+    // 盘古斧 玄武斧  敌对 非镜像
+        set damage = ( GetHeroStr(GetEventDamageSource(), true ) /2 )
+        
+        // 混乱 普通
+        call UnitDamageTargetBJ(GetEventDamageSource(), GetTriggerUnit(),damage , ATTACK_TYPE_CHAOS, DAMAGE_TYPE_NORMAL)
+        // 盘古斧 12.5% 触发地板
+        if ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I008') == true) and (GetRandomInt(1, 8) == 8)) then
+            set x = GetWidgetX(GetTriggerUnit())
+            set y = GetWidgetY(GetTriggerUnit())
+          
+
+            //  发布 中立雷霆一击 
+            call IssueImmediateOrder(  CreateUnit( GetOwningPlayer(GetEventDamageSource()) ,  'hwt3' , x,y,0)  , "gcreepthunderclap" )
+
+            // 范围伤害
+            set udg_Hero_Damage =    (GetHeroStr(GetEventDamageSource(), true))
+            call GroupEnumUnitsInRange(udg_GroupFormItem, x,y, 500, Condition(function GroupDamageForDamagedEvent))
+        endif
+        // 已经造成伤害 不需要二次伤害   
+        set damage = 0   
+    elseif ((IsUnitIllusionBJ(GetEventDamageSource()) == false) and (GetRandomInt(1, 12) == 8) and (UnitHasItemOfTypeBJ(GetEventDamageSource(), 'flag') == true)) then
+        set damage =  (R2I(GetUnitState(GetTriggerUnit(), UNIT_STATE_LIFE)) / 6)
+        
+        // 李广 攻击 1/12 15% 生命值  法术 通用伤害
+        call DestroyEffect(AddSpecialEffectTarget("Objects\\Spawnmodels\\Naga\\NagaDeath\\NagaDeath.mdl", GetTriggerUnit(), "overhead"))
+
+    elseif ((UnitHasItemOfTypeBJ(GetEventDamageSource(), 'I01M') == true)) then
+        // (  拥有 |cffffdead轩辕剑) 等于 TRUE
+
+        //轩辕剑 混乱 普通 
+        set damage =  (R2I(GetUnitState(GetTriggerUnit(), UNIT_STATE_LIFE)) / 100 )
+    elseif ( (UnitHasItemOfTypeBJ(GetEventDamageSource(), 'lnrn') == true) and (IsUnitIllusionBJ(GetEventDamageSource()) == false) ) then
+    //雌雄 非镜像
+        set x = GetWidgetX(GetTriggerUnit())
+        set y = GetWidgetY(GetTriggerUnit())
+        set damage =  220 
+        
+        call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Other\\ImmolationRed\\ImmolationRedDamage.mdl", x,y))
+
+        
+         
+        
+        
+    endif
+    
+    //统一伤害事件
+    if( damage > 0) then
+        call UnitDamageTarget(GetEventDamageSource(), GetTriggerUnit(), damage, true, true, ATTACK_TYPE_NORMAL,   DAMAGE_TYPE_UNIVERSAL, WEAPON_TYPE_WHOKNOWS)
+    endif
+
+    set u = null
+     
+endfunction
+
+//===========================================================================
+function InitTrig_ItemDamagedEvent takes nothing returns nothing
+    set gg_trg_ItemDamagedEvent = CreateTrigger()
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_ItemDamagedEvent,  EVENT_PLAYER_UNIT_DAMAGED)
+     
+    call TriggerAddCondition(gg_trg_ItemDamagedEvent, Condition(function Trig_ItemDamagedEventConditions))
+    call TriggerAddAction(gg_trg_ItemDamagedEvent, function Trig_ItemDamagedEventActions)
+endfunction
+

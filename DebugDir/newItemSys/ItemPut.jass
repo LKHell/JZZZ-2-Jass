@@ -1,0 +1,35 @@
+
+
+
+function Trig_ItemPut_Actions takes nothing returns nothing
+    local integer value = GetItemUserData(GetManipulatedItem())
+    local integer strL = GetStrLeveL(value)
+    local integer intL = GetIntLeveL(value)
+    local integer agiL = GetAgiLeveL(value)
+    
+    if(strL > 0) then
+        call ModifyHeroStat(bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_SUB, strL)
+    endif
+
+
+    if(agiL > 0) then
+        call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_SUB, agiL)
+    endif
+
+    if(intL > 0) then
+        call ModifyHeroStat(bj_HEROSTAT_INT, GetTriggerUnit(), bj_MODIFYMETHOD_SUB, intL)
+    endif
+
+
+
+
+endfunction
+
+//===========================================================================
+function InitTrig_ItemPut takes nothing returns nothing
+    set gg_trg_ItemPut = CreateTrigger(  )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_ItemPut, EVENT_PLAYER_UNIT_DROP_ITEM )
+    call TriggerAddCondition( gg_trg_ItemPut, Condition( function Trig_ItemBase_Conditions ) )
+    call TriggerAddAction( gg_trg_ItemPut, function Trig_ItemPut_Actions )
+endfunction
+

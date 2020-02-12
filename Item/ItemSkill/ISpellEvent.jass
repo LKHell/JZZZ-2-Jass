@@ -45,12 +45,12 @@ function Trig_SpecialItemSkillActions takes nothing returns nothing
             call UnitDamageTargetBJ(GetTriggerUnit(), GetSpellTargetUnit(), ((I2R(GetHeroStr(GetTriggerUnit(), true)) + 900.00) * 2.00), ATTACK_TYPE_CHAOS, DAMAGE_TYPE_UNIVERSAL)
         endif
         call AddHeroXPSwapped((GetUnitLevel(GetSpellTargetUnit()) * 10), GetTriggerUnit(), true)
-        set udg_Tem_point[6] = GetUnitLoc(GetTriggerUnit())
-        call CreateTextTagLocBJ(I2S((GetUnitLevel(GetSpellTargetUnit()) * 10)), udg_Tem_point[6], 1.00, 15.00, 25.00, 100, 25.00, 10.00)
+        
+        call CreateTextTagUnitBJ(I2S((GetUnitLevel(GetSpellTargetUnit()) * 10)), GetTriggerUnit(), 0, 20.00, 0.00, 0.00, 100, 30.00)
         call SetTextTagVelocityBJ(bj_lastCreatedTextTag, 64, 90)
         call SetTextTagPermanent(bj_lastCreatedTextTag, false)
         call SetTextTagLifespan(bj_lastCreatedTextTag, 2.00)
-        call RemoveLocation(udg_Tem_point[6])   
+        
     endif
 endfunction
 
