@@ -1,0 +1,70 @@
+ 
+
+function SetItemSpecialLevel takes item it returns nothing
+    local integer sum = 0
+    local integer index  = 3
+    local integer i
+    local integer base = 1
+    local string x = "\n|r随机属性:\n"
+ 
+
+   // set base  = GetItemLevel(it) -3
+    
+
+    if( base > 0 ) then
+               
+        loop 
+            exitwhen index < 0
+
+            set i = GetRandomInt( 0 , 7) 
+            //左移3位 + i
+            set sum = sum * 8+ i 
+            if(i>0) then 
+                set x = x + str[index] + I2S(i) +"\n"
+            endif
+            set index = index -1
+        endloop
+    
+    endif
+
+    call SetItemUserData(it, sum )
+   
+   
+     
+    
+    call BlzSetItemIntegerFieldBJ( it, ITEM_IF_TINTING_COLOR_GREEN , 0 )
+    call BlzSetItemIntegerFieldBJ( it, ITEM_IF_TINTING_COLOR_BLUE , 0 )
+    call BlzSetItemDescription( it, ( BlzGetItemDescription(it)  + x ) )
+   
+endfunction
+
+function Trig_ItemBase_Conditions takes nothing returns boolean
+
+    return  IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true and   GetItemUserData(GetManipulatedItem()) > 0
+endfunction
+
+
+function GetLiefLeveL  takes integer base returns integer
+
+    // 不需要除
+    return BlzBitAnd(base, 07)
+endfunction
+
+function  GetIntLeveL  takes integer base returns integer
+
+    // 需要除 8
+    return BlzBitAnd(base, 070) / 010
+endfunction
+
+function GetAgiLeveL  takes integer base returns integer
+
+    //需要除 8^2  64
+    return BlzBitAnd(base, 0700) / 0100
+endfunction
+
+
+function  GetStrLeveL takes integer base returns integer
+
+    //需要除 8^3
+    return BlzBitAnd(base, 0700) / 01000
+endfunction

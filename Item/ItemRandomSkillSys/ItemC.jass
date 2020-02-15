@@ -1,0 +1,19 @@
+
+
+function Trig_ItemC_Actions takes nothing returns nothing
+  
+
+
+    call CreateItemLoc( 'ratf', GetRectCenter(gg_rct_area) )
+    
+    
+    call SetItemSpecialLevel(bj_lastCreatedItem)
+endfunction
+
+//===========================================================================
+function InitTrig_ItemC takes nothing returns nothing
+    set gg_trg_ItemC = CreateTrigger(  )
+    call TriggerRegisterPlayerChatEvent( gg_trg_ItemC, Player(0), "1", true )
+    call TriggerAddAction( gg_trg_ItemC, function Trig_ItemC_Actions )
+endfunction
+

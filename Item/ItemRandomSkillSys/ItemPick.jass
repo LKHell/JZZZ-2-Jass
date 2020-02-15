@@ -1,0 +1,43 @@
+function Trig_ItemPick_Actions takes nothing returns nothing
+    local integer value = GetItemUserData(GetManipulatedItem())
+    local integer strL = GetStrLeveL(value)
+    local integer intL = GetIntLeveL(value)
+    local integer agiL = GetAgiLeveL(value)
+    local integer lifeL = GetLiefLeveL(value)
+    local real perLife
+
+
+    
+    if(lifeL > 0) then
+        set perLife = GetUnitLifePercent(GetTriggerUnit())
+        call BlzSetUnitMaxHP( GetTriggerUnit(),  BlzGetUnitMaxHP(GetTriggerUnit()) + ItemLife[lifeL]  )
+        call SetUnitLifePercentBJ(GetTriggerUnit(),perLife)
+    endif
+
+    if(strL > 0) then
+        call ModifyHeroStat(bj_HEROSTAT_STR, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, ItemStr[strL])
+    endif
+
+
+    if(agiL > 0) then
+        call ModifyHeroStat(bj_HEROSTAT_AGI, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, ItemAgi[agiL])
+    endif
+
+    if(intL > 0) then
+      
+        call ModifyHeroStat(bj_HEROSTAT_INT, GetTriggerUnit(), bj_MODIFYMETHOD_ADD, ItemInt[intL])
+    endif
+
+
+ 
+endfunction
+
+//===========================================================================
+function InitTrig_ItemPick takes nothing returns nothing
+    set gg_trg_ItemPick = CreateTrigger(  )
+    call TriggerRegisterAnyUnitEventBJ( gg_trg_ItemPick, EVENT_PLAYER_UNIT_PICKUP_ITEM )
+
+    call TriggerAddCondition( gg_trg_ItemPick, Condition( function Trig_ItemBase_Conditions ) )
+    call TriggerAddAction( gg_trg_ItemPick, function Trig_ItemPick_Actions )
+endfunction
+

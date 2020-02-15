@@ -1,0 +1,59 @@
+globals
+    integer array ItemStr
+    integer array ItemAgi
+    integer array ItemInt
+    integer array ItemLife
+    string  array str
+endglobals
+
+function Trig_ItemVariableArray_Actions takes nothing returns nothing
+    set str[3] ="力量等级 "
+    set str[2] ="敏捷等级 "
+    set str[1] ="智力等级 "
+    set str[0] ="生命等级 "
+    
+    set ItemStr[0] = 0
+    set ItemStr[1] = 5
+    set ItemStr[2] = 20
+    set ItemStr[3] = 35
+    set ItemStr[4] = 40
+    set ItemStr[5] = 45
+    set ItemStr[6] = 47
+    set ItemStr[7] = 50
+
+    set ItemAgi[0] = 0
+    set ItemAgi[1] = 5
+    set ItemAgi[2] = 15
+    set ItemAgi[3] = 25
+    set ItemAgi[4] = 35
+    set ItemAgi[5] = 45
+    set ItemAgi[6] = 50
+    set ItemAgi[7] = 55
+
+    set ItemInt[0] = 0
+    set ItemInt[1] = 10
+    set ItemInt[2] = 25
+    set ItemInt[3] = 35
+    set ItemInt[4] = 45
+    set ItemInt[5] = 50
+    set ItemInt[6] = 55
+    set ItemInt[7] = 60
+
+    set ItemLife[0] = 0
+    set ItemLife[1] = 100
+    set ItemLife[2] = 300
+    set ItemLife[3] = 500
+    set ItemLife[4] = 650
+    set ItemLife[5] = 800
+    set ItemLife[6] = 900
+    set ItemLife[7] = 1000
+    
+endfunction
+
+//===========================================================================
+function InitTrig_ItemVariableArray takes nothing returns nothing
+    set gg_trg_ItemVariableArray = CreateTrigger(  )
+    call TriggerRegisterTimerEventSingle( gg_trg_ItemVariableArray, 5 )
+        call TriggerAddAction( gg_trg_ItemVariableArray, function Trig_ItemVariableArray_Actions )
+endfunction
+
