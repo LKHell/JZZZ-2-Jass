@@ -47,22 +47,22 @@ function Trig_dropItemActions takes nothing returns nothing
     // 42 级 以上 且 不是 小boss
     if ((GetHeroLevel(GetTriggerUnit()) >= 42) and (GetUnitPointValue(GetTriggerUnit()) != 9) and (GetRandomInt(1, (15 + udg_Difficulty)) <= 5)) then
     
-        call CreateItem(udg_wplx[GetRandomInt(64, 87)], x , y )
+        call SetItemSpecialLevel(CreateItem(udg_wplx[GetRandomInt(64, 87)], x , y ))
      
     endif
 
     // 42 级 以上 不是 小 boss
     if ((GetHeroLevel(GetTriggerUnit()) >= 42) and (GetUnitPointValue(GetTriggerUnit()) != 9)) then
     
-        call CreateItem(udg_wplx[GetRandomInt(25, 65)], x , y )
-     
+      
+        call SetItemSpecialLevel( CreateItem(udg_wplx[GetRandomInt(25, 65)], x , y ) )
     endif
 
 
     // 42 级 以上 
     if ((GetHeroLevel(GetTriggerUnit()) >= 42) and (GetRandomInt(1, (50 + (udg_Difficulty * 6))) == 4)) then
        
-        call CreateItem(udg_wplx[GetRandomInt(64, 87)], x , y )
+        call SetItemSpecialLevel (CreateItem(udg_wplx[GetRandomInt(64, 87)], x , y ))
      
     endif
     

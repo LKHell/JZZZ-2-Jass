@@ -1,6 +1,6 @@
 function Trig_DropItemHero2Conditions takes nothing returns boolean
 // 中立Boss
-    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true)) abd ((GetUnitPointValue(GetTriggerUnit()) == 99))
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true)) and ((GetUnitPointValue(GetTriggerUnit()) == 99))
 endfunction
 
 function Trig_DropItemHero2Actions takes nothing returns nothing
@@ -12,8 +12,8 @@ function Trig_DropItemHero2Actions takes nothing returns nothing
    
     // 大于 70 级 或 25% 顺序掉落物品
     if (((GetHeroLevel(udg_hero[GetConvertedPlayerId(GetOwningPlayer(GetKillingUnitBJ()))]) > 70) or (GetRandomInt(1, 4) == 2))) then
-        call CreateItem(udg_wplx[udg_wplx_Int], x , y)
-
+     // 三刷特殊掉落必定附带随机属性
+        call SetItemSpecialLevel(CreateItem(udg_wplx[udg_wplx_Int], x , y))
         if ((udg_wplx_Int >= 87)) then
             set udg_wplx_Int = 28
         else
