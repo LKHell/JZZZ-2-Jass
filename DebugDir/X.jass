@@ -1,16 +1,25 @@
 function Trig_DebugDamageEventActions takes nothing returns nothing   
     if (BlzGetEventIsAttack()) then 
-        call DisplayTextToForce (GetPlayersAll() , "Is attack")
-        call UnitDamageTarget(GetEventDamageSource(), GetTriggerUnit(), 22, true, true, ATTACK_TYPE_HERO, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
+       // call DisplayTextToForce (GetPlayersAll() , "Is attack " + I2S(07777777777 ) +"and 7 after is"+  I2S(BlzBitAnd(070,07777777767) / 010 ) ) 
+	
+       // call UnitDamageTarget(GetEventDamageSource(), GetTriggerUnit(), 22, true, true, ATTACK_TYPE_HERO, DAMAGE_TYPE_NORMAL, WEAPON_TYPE_WHOKNOWS)
     else
         call DisplayTextToForce (GetPlayersAll() , "Isn't attack")
+        if(BlzGetEventDamageType()  == DAMAGE_TYPE_ENHANCED) then 
+             call DisplayTextToForce (GetPlayersAll() , "Isn't 0")
+        elseif (BlzGetEventDamageType() == DAMAGE_TYPE_UNKNOWN) then
+             call DisplayTextToForce (GetPlayersAll() , "Isn't 1")
+        endif
+	call DisplayTextToForce( GetPlayersAll(), "source" + GetUnitName(GetEventDamageSource()) + "damage "+ R2S(GetEventDamage()) )
     endif
+
+
 
     // call DisplayTextToForce (GetPlayersAll() , "BlzGetEventDamageTarget :" + GetUnitName(BlzGetEventDamageTarget()) ) 
     // call DisplayTextToForce (GetPlayersAll() , "GetEventTargetUnit : " + GetUnitName(GetEventTargetUnit()) ) 
     // call DisplayTextToForce (GetPlayersAll() , "GetTriggerUnit : " + GetUnitName(GetTriggerUnit()) ) 
     // call DisplayTextToForce (GetPlayersAll() , "GetEventDamageSource : " + GetUnitName(GetEventDamageSource()) )    
-    call DisplayTextToForce( GetPlayersAll(), "source" + GetUnitName(GetEventDamageSource()) + "damage "+ R2S(GetEventDamage()) )
+   
 endfunction
 
 //===========================================================================
