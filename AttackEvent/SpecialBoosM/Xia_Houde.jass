@@ -141,9 +141,10 @@ function Trig_Xia_HoudeActions takes nothing returns nothing
      
     endif
     call DisplayTextToForce(GetPlayersAll(), "探子：报！有两位猛士分别从城东城南单枪匹马而来")
-  
-   
-  
+     call DisplayTextToForce(GetPlayersAll(), "提示：西侧的强盗退散了")
+    call RemoveUnit(  gg_unit_e006_0244 )
+    call RemoveUnit(  gg_unit_e006_0243 )
+    call RemoveUnit(  gg_unit_e006_0242 )
     // call EnableTrigger(gg_trg_llq_come)
     // call EnableTrigger(gg_trg_llq_come_2)
     // call EnableTrigger(gg_trg_llq_d_zuangbei_1)
