@@ -8,4 +8,141 @@ function initA0AHLevel takes unit u returns nothing
     endif
     
 endfunction
+
+//  设置技能 小boss
  
+function BaseNormalHeroSkillSetting takes unit u, integer arrayIndex ,integer level   returns nothing
+local integer x 
+    //军师
+    if ((arrayIndex == 2)) then
+        if ((level  >= 18)) then
+
+            set x = GetHeroLevel(u) / 3
+            if(x>9) then 
+                set   x = 9
+            endif
+            //火之缚
+            call UnitAddAbility(u, 'AHfs')
+            
+            call SetUnitAbilityLevel(u, 'AHfs',x)
+                
+            
+            
+        endif
+        //中郎
+    elseif ((arrayIndex == 4)) then
+        if ((level  >= 18)) then
+        
+        
+            set x = GetHeroLevel(u) / 3
+            if(x>9) then 
+              set  x = 9
+            endif
+            //落雷
+            call UnitAddAbility(u, 'AOsh')
+            
+            call SetUnitAbilityLevel(u, 'AOsh',x)
+
+        endif
+            //偏将军
+    elseif ((arrayIndex == 5)) then
+        if ((level  >= 15)) then
+          set x = GetHeroLevel(u) / 4
+            if(x>7) then 
+              set  x = 7
+            endif
+
+            //地裂
+            call SelectHeroSkill(u, 'AOws')
+            
+            call SetUnitAbilityLevel(u, 'AOws',x)
+          
+
+        endif
+        if ((level  >= 18)) then
+            //白马
+            set x = GetHeroLevel(u) / 4
+              if(x>7) then 
+              set  x = 7
+            endif
+
+            call SelectHeroSkill(u, 'AOae')
+            call SetUnitAbilityLevel(u, 'AOae',x)
+            
+                
+        endif
+        if ((level  >= 33)) then
+            // 重生
+            call SelectHeroSkill(u, 'AOre')
+            
+        endif
+        //牙门将军
+    elseif ((arrayIndex == 1)) then
+        if ((level  >= 33)) then
+        //力拔山兮气盖世
+            call SelectHeroSkill(u, 'AHav')
+            
+        endif
+        if ((level  >= 15)) then
+            //雷霆一击
+            call SelectHeroSkill(u, 'AHtc')
+            set x = GetHeroLevel(u) / 4
+            if(x>7) then 
+             set   x = 7
+            endif
+ 
+            call SetUnitAbilityLevel(u, 'AHtc',x)
+        endif
+            //裨将军
+    elseif ((arrayIndex == 3)) then
+        if ((level  >= 21)) then
+        //横扫
+            call SelectHeroSkill(u, 'AOww')
+            set x = GetHeroLevel(u) / 4
+            if(x>5) then 
+             set   x = 5
+            endif
+ 
+            call SetUnitAbilityLevel(u, 'AOww',x)
+        endif
+        if ((level  >= 18)) then
+        //会心
+            call SelectHeroSkill(u, 'AOcr')
+            set x = GetHeroLevel(u) / 4
+            if(x>5) then 
+              set  x = 5
+            endif
+ 
+            call SetUnitAbilityLevel(u, 'AOcr',x)
+        endif
+        if ((level  >= 9)) then 
+        //镜像
+            call SelectHeroSkill(u, 'AOmi')
+            set x = GetHeroLevel(u) / 4
+            if(x>5) then 
+             set   x = 5
+            endif
+ 
+            call SetUnitAbilityLevel(u, 'AOmi',x)
+                
+        endif
+    elseif ((arrayIndex == 6)) then
+        //参军
+        if ((level  >= 18)) then
+            //妖术
+            call SelectHeroSkill(u, 'AOhx')
+            
+        endif
+        if ((level  >= 9)) then
+            // 血魔
+            call SelectHeroSkill(u, 'AOhw')
+            // 止血
+            call SelectHeroSkill(u, 'ANms')
+            
+        endif
+ 
+    endif
+endfunction
+
+ 
+

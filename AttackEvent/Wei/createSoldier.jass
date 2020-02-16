@@ -1,3 +1,8 @@
+globals
+    // 每两拨创建一个车
+    integer  int_car = 0
+endglobals
+
 // createSoldier
 //     事件
 //         时间 - Every (25.00 - (Real((Level of 闪避 (难度) for 训练场长官 0031<预设>)))) seconds of game time
@@ -30,49 +35,57 @@
 //             Else - 动作
 //                 单位 - Create 5 unitEnemy[(Hero level of 训练场长官 0031<预设>)] for 玩家 10 (淡蓝色) at global_point1 facing 默认建筑朝向 degrees
 //                 单位 - Create 5 unitEnemy[((Hero level of 训练场长官 0031<预设>) + 1)] for 玩家 10 (淡蓝色) at global_point2 facing 默认建筑朝向 degrees
-function Trig_createSoldier_Func002Func003Func001C takes nothing returns boolean
-    if ( not ( GetHeroLevel(gg_unit_Hpal_0031) > 17 ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_createSoldier_Func002Func003C takes nothing returns boolean
-    if ( not ( GetHeroLevel(gg_unit_Hpal_0031) > 12 ) ) then
-        return false
-    endif
-    return true
-endfunction
-
-function Trig_createSoldier_Func002C takes nothing returns boolean
-    if ( not ( udg_Difficulty == 3 ) ) then
-        return false
-    endif
-    return true
-endfunction
+ 
 
 function Trig_createSoldier_Actions takes nothing returns nothing
-    if ( Trig_createSoldier_Func002C() ) then
-        call CreateNUnitsAtLoc( 3, udg_unitEnemy[GetHeroLevel(gg_unit_Hpal_0031)], Player(9), udg_global_point1, bj_UNIT_FACING )
-        call CreateNUnitsAtLoc( 3, udg_unitEnemy[( GetHeroLevel(gg_unit_Hpal_0031) + 1 )], Player(9), udg_global_point2, bj_UNIT_FACING )
-        if ( Trig_createSoldier_Func002Func003C() ) then
-            if ( Trig_createSoldier_Func002Func003Func001C() ) then
-                call CreateNUnitsAtLoc( 1, udg_unitEnemy[20], Player(9), udg_global_point1, bj_UNIT_FACING )
-                call CreateNUnitsAtLoc( 1, udg_unitEnemy[26], Player(9), udg_global_point1, bj_UNIT_FACING )
-                call CreateNUnitsAtLoc( 1, udg_unitEnemy[22], Player(9), udg_global_point2, bj_UNIT_FACING )
-                call CreateNUnitsAtLoc( 1, udg_unitEnemy[19], Player(9), udg_global_point2, bj_UNIT_FACING )
-            else
-                call CreateNUnitsAtLoc( 2, udg_unitEnemy[( GetHeroLevel(gg_unit_Hpal_0031) + 2 )], Player(9), udg_global_point1, bj_UNIT_FACING )
-                call CreateNUnitsAtLoc( 2, udg_unitEnemy[( GetHeroLevel(gg_unit_Hpal_0031) + 2 )], Player(9), udg_global_point2, bj_UNIT_FACING )
-            endif
+    //创建单位的数量
+    local integer i = 5
+    //波数
+    local integer round = GetHeroLevel(gg_unit_Hpal_0031) 
+    
+    if (  udg_Difficulty == 3 ) then
+        if ( round > 17 ) then
+            set i  = 3
+           
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[26]   , 4346 ,9133  ,230), "attack", udg_GuanYuLocation)
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[22]   , 4346 ,9133  ,230), "attack", udg_GuanYuLocation)
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[19]   , 4346 ,9133  ,230), "attack", udg_GuanYuLocation)
+
+        elseif ( round > 12 ) then
+            set i  = 3
+                
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[ round + 2 ]   , 4346 ,9133  ,230), "attack", udg_GuanYuLocation)
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[ round + 2 ]   , 4346 ,9133  ,230), "attack", udg_GuanYuLocation)
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[ round + 2 ]   , 4346 ,9133  ,230), "attack", udg_GuanYuLocation)
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[ round + 2 ]   , 4346 ,9133  ,230), "attack", udg_GuanYuLocation)
+            
         else
-            call CreateNUnitsAtLoc( 1, udg_unitEnemy[7], Player(9), udg_global_point1, bj_UNIT_FACING )
-            call CreateNUnitsAtLoc( 2, udg_unitEnemy[( GetHeroLevel(gg_unit_Hpal_0031) + 2 )], Player(9), udg_global_point2, bj_UNIT_FACING )
+            set i  = 4
+            
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[ round + 2 ]   , 4346 ,9133  ,230), "attack", udg_GuanYuLocation)
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[ round + 2 ]   , 4346 ,9133  ,230), "attack", udg_GuanYuLocation)
+            
+        endif
+
+    endif
+
+    // 每隔 一波 创建一辆车
+    if(int_car == 0) then
+        set int_car = 1
+        if ( round < 15 ) then
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[30]   , 4346 ,9133  ,230), "attack", udg_GuanYuLocation)
+            
+        else
+            call IssuePointOrderLoc(CreateUnit(Player(9) , udg_unitEnemy[31]   , 4346 , 9133 ,230), "attack", udg_GuanYuLocation)
+            
         endif
     else
-        call CreateNUnitsAtLoc( 5, udg_unitEnemy[GetHeroLevel(gg_unit_Hpal_0031)], Player(9), udg_global_point1, bj_UNIT_FACING )
-        call CreateNUnitsAtLoc( 5, udg_unitEnemy[( GetHeroLevel(gg_unit_Hpal_0031) + 1 )], Player(9), udg_global_point2, bj_UNIT_FACING )
+        set int_car = 0
     endif
+
+    call CreateNUnitsAtLoc( i, udg_unitEnemy[round], Player(9), udg_global_point1, bj_UNIT_FACING )
+    call CreateNUnitsAtLoc( i, udg_unitEnemy[round + 1 ], Player(9), udg_global_point2, bj_UNIT_FACING )
+
 endfunction
 
 //===========================================================================

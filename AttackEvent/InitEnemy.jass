@@ -83,8 +83,8 @@ function Trig_InitEnemyActions takes nothing returns nothing
   set udg_unitEnemy[5] = 'ogru'
 //设置 unitEnemy[6] = （魂）掷斧手 6
   set udg_unitEnemy[6] = 'nftb'
-//设置 unitEnemy[7] = 战车 7
-  set udg_unitEnemy[7] = 'ebal'
+//设置 unitEnemy[7] = 铁甲步兵 7
+  set udg_unitEnemy[7] = 'ogru'
 //设置 unitEnemy[8] = 西凉女兵 8
   set udg_unitEnemy[8] = 'esen'
 //设置 unitEnemy[9] = （魂）怨灵 9
@@ -109,8 +109,9 @@ function Trig_InitEnemyActions takes nothing returns nothing
   set udg_unitEnemy[18] = 'nlrv'
 //设置 unitEnemy[19] = 丹阳兵 19
   set udg_unitEnemy[19] = 'hhes'
-//设置 unitEnemy[20] = 霹雳车 20
-  set udg_unitEnemy[20] = 'ncat'
+//设置 unitEnemy[20] = 丹阳兵 20
+set udg_unitEnemy[20] = 'hhes'
+ 
 //设置 unitEnemy[21] = （魂）陷阵营 21
   set udg_unitEnemy[21] = 'nchg'
 //设置 unitEnemy[22] = 虎豹骑 22
@@ -125,6 +126,14 @@ function Trig_InitEnemyActions takes nothing returns nothing
   set udg_unitEnemy[26] = 'odkt'
 //设置 unitEnemy[27] = 东吴水兵（术士）
   set udg_unitEnemy[27] = 'odkt'
+
+//设置 unitEnemy[30] = 战车 30
+  set udg_unitEnemy[30] = 'ebal'
+//设置 unitEnemy[31] = 霹雳车 31
+  set udg_unitEnemy[31] = 'ncat'
+ 
+
+
 //触发器 - 开启 createSoldier <预设>
   call EnableTrigger(gg_trg_createSoldier)
 //-------- ------------------------- --------
