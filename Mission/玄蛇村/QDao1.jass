@@ -18,6 +18,7 @@ function Trig_QDao1Actions takes nothing returns nothing
 
     //创建小boss
     call TriggerRegisterUnitEvent( gg_trg_QDBoss , CreateUnit(Player(PLAYER_NEUTRAL_AGGRESSIVE), 'ncnk', 2389, 11354, 0), EVENT_UNIT_DEATH )
+    call EnableTrigger(gg_trg_QDBoss)
     // 创建蛇胆
     call CreateItem('I00T',GetRandomInt(2560,4443),GetRandomInt(12064,13408))
 
