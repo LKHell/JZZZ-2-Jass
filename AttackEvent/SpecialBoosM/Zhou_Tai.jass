@@ -1,7 +1,4 @@
-function Trig_Zhou_TaiConditions takes nothing returns boolean
-    return ((GetTriggerUnit() == gg_unit_Nplh_0140))
-endfunction
-
+ 
 function Trig_Zhou_TaiActions takes nothing returns nothing
     local unit b = gg_unit_Hdgo_0080
     call DestroyTrigger(GetTriggeringTrigger())
@@ -19,8 +16,7 @@ function InitTrig_Zhou_Tai takes nothing returns nothing
     set gg_trg_Zhou_Tai = CreateTrigger()
  
  
-    call TriggerRegisterEnterRectSimple(gg_trg_Zhou_Tai, gg_rct_wu_boss)
-    call TriggerAddCondition(gg_trg_Zhou_Tai, Condition(function Trig_Zhou_TaiConditions))
+    call TriggerRegisterUnitEvent( gg_trg_Zhou_Tai, gg_unit_Nplh_0140, EVENT_UNIT_CHANGE_OWNER )
     call TriggerAddAction(gg_trg_Zhou_Tai, function Trig_Zhou_TaiActions)
 endfunction
 

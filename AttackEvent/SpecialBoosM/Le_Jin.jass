@@ -1,6 +1,6 @@
 function Trig_Le_JinConditions takes nothing returns boolean
 // 乐进进攻，张虎存活，封印存活
-    return ((GetTriggerUnit() == gg_unit_U006_0170) and (IsUnitAliveBJ(gg_unit_U005_0168) == true )  and (IsUnitAliveBJ(gg_unit_nfrm_0260)== true)  ) 
+    return    (IsUnitAliveBJ(gg_unit_U005_0168) == true )  and (IsUnitAliveBJ(gg_unit_nfrm_0260)== true)  
 endfunction
 
 function Trig_Le_JinActions takes nothing returns nothing
@@ -31,7 +31,10 @@ endfunction
 function InitTrig_Le_Jin takes nothing returns nothing
     set gg_trg_Le_Jin = CreateTrigger()
  
-    call TriggerRegisterEnterRectSimple(gg_trg_Le_Jin, gg_rct_createWest)
+    
+
+    call TriggerRegisterUnitEvent( gg_trg_Le_Jin, gg_unit_U006_0170, EVENT_UNIT_CHANGE_OWNER )
+
     call TriggerAddCondition(gg_trg_Le_Jin, Condition(function Trig_Le_JinConditions))
     call TriggerAddAction(gg_trg_Le_Jin, function Trig_Le_JinActions)
 endfunction

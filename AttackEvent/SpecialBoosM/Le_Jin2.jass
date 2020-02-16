@@ -1,7 +1,4 @@
-function Trig_Le_Jin2Conditions takes nothing returns boolean
-    return ((GetTriggerUnit() == gg_unit_U006_0170))
-endfunction
-
+ 
  
 function Trig_Le_Jin2Actions takes nothing returns nothing
     
@@ -71,8 +68,7 @@ endfunction
 function InitTrig_Le_Jin2 takes nothing returns nothing
     set gg_trg_Le_Jin2 = CreateTrigger()
  
-    call TriggerRegisterEnterRectSimple(gg_trg_Le_Jin2, gg_rct_createWest)
-    call TriggerAddCondition(gg_trg_Le_Jin2, Condition(function Trig_Le_Jin2Conditions))
+    call TriggerRegisterUnitEvent( gg_trg_Le_Jin2, gg_unit_U006_0170, EVENT_UNIT_CHANGE_OWNER )
     call TriggerAddAction(gg_trg_Le_Jin2, function Trig_Le_Jin2Actions)
 endfunction
 

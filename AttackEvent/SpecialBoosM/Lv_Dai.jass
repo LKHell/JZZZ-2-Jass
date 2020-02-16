@@ -1,14 +1,5 @@
-function Trig_Lv_DaiConditions takes nothing returns boolean
-    return ((GetTriggerUnit() == gg_unit_Uwar_0039))
-endfunction
-
-function Trig_Lv_DaiFunc014002002 takes nothing returns boolean
-    return (((GetOwningPlayer(GetFilterUnit()) == Player(9)) and ((IsUnitType(GetFilterUnit(), UNIT_TYPE_HERO) == false) and ((GetUnitLevel(GetFilterUnit()) + 2) < GetHeroLevel(gg_unit_Hpal_0031)))))
-endfunction
-
-function Trig_Lv_DaiFunc015A takes nothing returns nothing
-    call RemoveUnit(GetEnumUnit())
-endfunction
+ 
+ 
 
 function Trig_Lv_DaiActions takes nothing returns nothing
     local unit  b = gg_unit_Ewrd_0072
@@ -120,8 +111,7 @@ endfunction
 function InitTrig_Lv_Dai takes nothing returns nothing
     set gg_trg_Lv_Dai = CreateTrigger()
  
-    call TriggerRegisterEnterRectSimple(gg_trg_Lv_Dai, gg_rct_pand)
-    call TriggerAddCondition(gg_trg_Lv_Dai, Condition(function Trig_Lv_DaiConditions))
+    call TriggerRegisterUnitEvent( gg_trg_Lv_Dai, gg_unit_Uwar_0039, EVENT_UNIT_CHANGE_OWNER )
     call TriggerAddAction(gg_trg_Lv_Dai, function Trig_Lv_DaiActions)
 endfunction
 

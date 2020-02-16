@@ -1,6 +1,4 @@
-function Trig_Xia_HoudeConditions takes nothing returns boolean
-    return ((GetTriggerUnit() == gg_unit_Uanb_0052))
-endfunction
+ 
 
 function Trig_Xia_HoudeActions takes nothing returns nothing
     call DestroyTrigger(GetTriggeringTrigger())
@@ -158,8 +156,7 @@ endfunction
 function InitTrig_Xia_Houde takes nothing returns nothing
     set gg_trg_Xia_Houde = CreateTrigger()
  
-    call TriggerRegisterEnterRectSimple(gg_trg_Xia_Houde, gg_rct_createWest)
-    call TriggerAddCondition(gg_trg_Xia_Houde, Condition(function Trig_Xia_HoudeConditions))
-    call TriggerAddAction(gg_trg_Xia_Houde, function Trig_Xia_HoudeActions)
+    call TriggerRegisterUnitEvent( gg_trg_Xia_Houde, gg_unit_Uanb_0052, EVENT_UNIT_CHANGE_OWNER )
+     call TriggerAddAction(gg_trg_Xia_Houde, function Trig_Xia_HoudeActions)
 endfunction
 

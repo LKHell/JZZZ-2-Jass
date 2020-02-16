@@ -1,7 +1,4 @@
-function Trig_Si_MayiConditions takes nothing returns boolean
-    return ((GetTriggerUnit() == gg_unit_Nsjs_0070))
-endfunction
-
+ 
 function Trig_Si_MayiActions takes nothing returns nothing
     local unit b = gg_unit_Ocb2_0071 
     call DestroyTrigger(GetTriggeringTrigger())
@@ -19,8 +16,7 @@ endfunction
 function InitTrig_Si_Mayi takes nothing returns nothing
     set gg_trg_Si_Mayi = CreateTrigger()
  
-    call TriggerRegisterEnterRectSimple(gg_trg_Si_Mayi, gg_rct_pand)
-    call TriggerAddCondition(gg_trg_Si_Mayi, Condition(function Trig_Si_MayiConditions))
-    call TriggerAddAction(gg_trg_Si_Mayi, function Trig_Si_MayiActions)
+    call TriggerRegisterUnitEvent( gg_trg_Si_Mayi, gg_unit_Nsjs_0070, EVENT_UNIT_CHANGE_OWNER )
+     call TriggerAddAction(gg_trg_Si_Mayi, function Trig_Si_MayiActions)
 endfunction
 

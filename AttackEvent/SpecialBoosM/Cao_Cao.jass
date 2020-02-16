@@ -1,7 +1,3 @@
-function Trig_Cao_CaoConditions takes nothing returns boolean
-    return ((GetTriggerUnit() == gg_unit_Udea_0047))
-endfunction
-
 function Trig_Cao_CaoActions takes nothing returns nothing
 local unit b =gg_unit_H00A_0169
     call DestroyTrigger(GetTriggeringTrigger())
@@ -30,9 +26,8 @@ endfunction
 //===========================================================================
 function InitTrig_Cao_Cao takes nothing returns nothing
     set gg_trg_Cao_Cao = CreateTrigger()
- 
-    call TriggerRegisterEnterRectSimple(gg_trg_Cao_Cao, gg_rct_createWest)
-    call TriggerAddCondition(gg_trg_Cao_Cao, Condition(function Trig_Cao_CaoConditions))
+    // 改变所有者
+    call TriggerRegisterUnitEvent( gg_trg_Cao_Cao, gg_unit_Udea_0047, EVENT_UNIT_CHANGE_OWNER )
     call TriggerAddAction(gg_trg_Cao_Cao, function Trig_Cao_CaoActions)
 endfunction
 
