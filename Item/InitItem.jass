@@ -1,21 +1,13 @@
 function Trig_InitItemActions takes nothing returns nothing
 // 物品 - 为 |cffB366FF雌雄一对剑（终级） 添加 增加攻击力的物品 雌雄
-// 物品 - 为 |cffB366FF龙鳞铠甲（终级） 添加 D护甲 (+35系统注册)
-// 物品 - 为 |cffffdead削甲战甲 添加 D护甲 (+35系统注册)
+
 // 物品 - 为 |Cff00ff00真·青龙偃月刀 添加 D30 (+4)
 // 物品 - 为 |Cffffff00日月乾坤轮 添加 特武 (+80 敏捷度)
-// 物品 - 为 |cffffdead雷霆魔翼 添加 特坐骑 (+30所有属性)
-// 物品 - 为 |Cffffff00倚天剑 添加 特宝 (+30所有属性)
-// 物品 - 为 |cffffdead黄龙盾 添加 特宝 (+30所有属性)
-// 物品 - 为 |Cff00ff00白虎护手 添加 特宝 (+30所有属性)
-// 物品 - 为 |Cff00ff00项羽护手 添加 特宝 (+30所有属性)
-// 物品 - 为 |Cffffff00钨钢护手 添加 特宝 (+30所有属性)
-// 物品 - 为 |Cffffff00真龙护手 添加 特宝 (+30所有属性)
-// 物品 - 为 |Cffffff00神灵腰带 添加 特宝 (+30所有属性)
-// 物品 - 为 |cffffdead混天绫 添加 特宝 (+30所有属性)
+
+ 
+
 // 物品 - 为 |Cff00ff00干将 添加 增加攻击力的物品 (+干将)
-// 物品 - 为 |Cff00ff00莫邪 添加 增加攻击力的物品 (+莫邪)
-// 物品 - 为 |cffffdead追日靴 添加 能提高英雄属性的物品 (+90力量)追日
+
 
  // 设置 wplx_Int = GetRandomInt(27, 88) ，设置初始掉落指针 27 -88 随机数 影响 DropItemHero2 函数
   set udg_wplx_Int = GetRandomInt(27, 88)
