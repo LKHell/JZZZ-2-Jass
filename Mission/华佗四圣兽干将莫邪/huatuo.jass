@@ -1,18 +1,25 @@
 function Trig_huatuoActions takes nothing returns nothing
+    local integer facing =  GetUnitFacing(GetTriggerUnit())
+    local integer x = GetWidgetX(GetTriggerUnit()) -  Cos(facing ) * 200
+    local integer y = GetWidgetY(GetTriggerUnit()) - Sin(facing ) * 200 
+
     // 创建华佗
-    local unit u = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'edot', GetWidgetX(GetTriggerUnit()), GetWidgetY(GetTriggerUnit()), GetUnitFacing(GetTriggerUnit()))
-    call CreateItemLoc('ckng', GetUnitLoc(GetTriggerUnit()))
+    local unit u = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'edot',x,y,facing)
+    
     //call CreateItemLoc('I01J', GetUnitLoc(GetTriggerUnit()))
     
     
 
     call TransmissionFromUnitWithNameBJ(GetPlayersAll(), u, "华佗", null, "吓死我了，这只圣兽一直在这害得我都不敢出去了", bj_TIMETYPE_ADD, 0, true)
+    call CreateItem('ckng',  x,y)
+    //创建铜雀
+    call CreateItem('modt',  x,y)
     call TransmissionFromUnitWithNameBJ(GetPlayersAll(), u, "华佗", null, "这是给关将军的药，务必带给将军！在下先告辞了", bj_TIMETYPE_ADD, 0, true)
 
-    call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl",GetWidgetX(u),GetWidgetY(u)))
+    call DestroyEffect(AddSpecialEffect("Abilities\\Spells\\Human\\MassTeleport\\MassTeleportCaster.mdl",x ,y))
 
     call RemoveUnit(u)
-    call DestroyTrigger(GetTriggeringTrigger())
+    call DisableTrigger(GetTriggeringTrigger())
     set u = null 
 endfunction
 
