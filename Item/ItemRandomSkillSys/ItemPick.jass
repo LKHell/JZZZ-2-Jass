@@ -6,8 +6,13 @@ function Trig_ItemPick_Actions takes nothing returns nothing
     local integer lifeL = GetLiefLeveL(value)
     local real perLife
 
+    // call DisplayTextToForce(GetPlayersAll(), "value "+I2S(value ))
+    // call DisplayTextToForce(GetPlayersAll(), I2S(strL))
+    // call DisplayTextToForce(GetPlayersAll(), I2S(intL))
+    // call DisplayTextToForce(GetPlayersAll(), I2S(agiL))
+    // call DisplayTextToForce(GetPlayersAll(), I2S(lifeL))
 
-    
+
     if(lifeL > 0) then
         set perLife = GetUnitLifePercent(GetTriggerUnit())
         call BlzSetUnitMaxHP( GetTriggerUnit(),  BlzGetUnitMaxHP(GetTriggerUnit()) + ItemLife[lifeL]  )

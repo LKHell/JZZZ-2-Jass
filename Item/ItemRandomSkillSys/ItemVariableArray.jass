@@ -7,10 +7,10 @@ globals
 endglobals
 
 function Trig_ItemVariableArray_Actions takes nothing returns nothing
-    set str[3] ="力量等级 "
-    set str[2] ="敏捷等级 "
-    set str[1] ="智力等级 "
-    set str[0] ="生命等级 "
+    set str[0] ="力量等级 "
+    set str[1] ="敏捷等级 "
+    set str[2] ="智力等级 "
+    set str[3] ="生命等级 "
     
     set ItemStr[0] = 0
     set ItemStr[1] = 5
