@@ -1,7 +1,7 @@
 function BaseCreateNormalBoss takes integer x ,integer y , integer round, integer face returns nothing
     local integer arrayIndex = GetRandomInt(1, 6)
     local integer level = round * 3
-    set bj_lastCreatedUnit = CreateUnit(Player(10) , udg_unitEnemy[arrayIndex ]   , x ,y  ,face)
+    set bj_lastCreatedUnit = CreateUnit(Player(10) , udg_unitEnemyBoss[arrayIndex ]   , x ,y  ,face)
     call IssuePointOrderLoc( bj_lastCreatedUnit, "attack", udg_GuanYuLocation)
 
     call SetHeroLevelBJ(bj_lastCreatedUnit, level , false)
