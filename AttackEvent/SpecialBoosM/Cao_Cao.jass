@@ -10,12 +10,14 @@ local unit b =gg_unit_H00A_0169
     call initA0AHLevel(b)
      
     
-    // call DestroyTrigger(gg_trg_BossTimeOut)
-    // call DestroyTrigger(gg_trg_NextAttack)
-    // call DestroyTrigger(gg_trg_boss33)
-    // call DestroyTrigger(gg_trg_createSoldier)
-    // call DestroyTrigger(gg_trg_createBoss)
-    // call DestroyTrigger(gg_trg_createGhost)
+ 
+
+    call DisableTrigger( gg_trg_NextAttack )
+    call DisableTrigger( gg_trg_BossTimeOut )
+    call DisableTrigger( gg_trg_BossCome )
+    call DisableTrigger( gg_trg_createSoldier )
+    call DisableTrigger( gg_trg_createBoss )
+    call DisableTrigger( gg_trg_createGhost ) 
 
     call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_H00A_0169, "典韦", null, "誓死追随将军！", bj_TIMETYPE_ADD, 0, true)
     call TransmissionFromUnitWithNameBJ(GetPlayersAll(), gg_unit_Osam_0022, "马良", null, "曹操亲自带兵进攻！众将小心！", bj_TIMETYPE_ADD, 0, true)
