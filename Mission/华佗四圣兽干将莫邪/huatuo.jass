@@ -1,7 +1,7 @@
 function Trig_huatuoActions takes nothing returns nothing
-    local integer facing =  GetUnitFacing(GetTriggerUnit())
-    local integer x = GetWidgetX(GetTriggerUnit()) -  Cos(facing ) * 200
-    local integer y = GetWidgetY(GetTriggerUnit()) - Sin(facing ) * 200 
+    local real facing =  GetUnitFacing(GetTriggerUnit())
+    local real x = GetWidgetX(GetTriggerUnit()) -  Cos(facing ) * 200
+    local real y = GetWidgetY(GetTriggerUnit()) - Sin(facing ) * 200 
 
     // 创建华佗
     local unit u = CreateUnit(Player(PLAYER_NEUTRAL_PASSIVE), 'edot',x,y,facing)

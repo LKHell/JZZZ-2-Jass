@@ -25,8 +25,8 @@ function Trig_HaoTianTaActions takes nothing returns nothing
    
     local real facing =  GetUnitFacing(GetTriggerUnit())
 
-    set udg_realX = GetWidgetX(GetAttacker()) -  Cos(facing ) * 200
-    set udg_realY = GetWidgetY(GetAttacker()) - Sin(facing ) * 200 
+    set udg_realX = GetWidgetX(GetAttacker()) +  Cos(facing ) * 200
+    set udg_realY = GetWidgetY(GetAttacker()) + Sin(facing ) * 200 
 
     set udg_Count  = 0
     call GroupEnumUnitsInRange(udg_GroupFormItem ,  udg_realX , udg_realY , 512 ,Condition(function Trig_HaoTianTaGroupCount) )
