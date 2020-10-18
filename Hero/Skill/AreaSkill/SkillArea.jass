@@ -1,8 +1,4 @@
-function Trig_SkillAreaConditions takes nothing returns boolean
-    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
-endfunction
 
- 
 
 function Trig_SkillAreaActions takes nothing returns nothing
     local real  x 
@@ -189,28 +185,7 @@ function Trig_SkillAreaActions takes nothing returns nothing
  
         call CreateUnit(GetTriggerPlayer(), 'hwt3' , x , y ,0)
 
-        call GroupEnumUnitsInRange(udg_GroupFormHero ,x , y , 225 , Condition(function GroupDamgeFilterUnitNormalENHANCED)  )
-    elseif ((GetSpellAbilityId() == 'AHtb')) then
-    // 幻影斩
- 
-        set  x =  GetSpellTargetX() + 128 * Cos(GetUnitFacing(GetTriggerUnit()) - 180.00) * bj_DEGTORAD 
-        set  y =  GetSpellTargetY() + 128 * Sin(GetUnitFacing(GetTriggerUnit()) - 180.00) * bj_DEGTORAD
-
-        set udg_Hero_Damage = (GetHeroInt(GetTriggerUnit(), true) + GetHeroAgi(GetTriggerUnit(), true) -  GetHeroStr(GetTriggerUnit(), true)  )* HeroDamageMulti()
-
-        // 拥有 真·青龙刀 或者 项羽战刃
-        if (((UnitHasItemOfTypeBJ(GetTriggerUnit(), 'I01A') == true) or (UnitHasItemOfTypeBJ(GetTriggerUnit(), 'stre') == true))) then
-            set udg_Hero_Damage = udg_Hero_Damage * GetUnitAbilityLevel(GetTriggerUnit(), GetSpellAbilityId())
-        else
-           set udg_Hero_Damage = udg_Hero_Damage * (GetUnitAbilityLevel(GetTriggerUnit(), GetSpellAbilityId()) + 2 )
-        endif
-        
-        call GroupEnumUnitsInRange(udg_GroupFormHero ,x , y , 225 , Condition(function GroupDamgeFilterUnitNormalENHANCED)  )
-        // 复制目标
-        call IssueTargetOrderById( CreateUnit(GetTriggerPlayer(), 'hwt3' , x , y ,0) , 852274, GetSpellTargetUnit())
-     
-       
-     
+        call GroupEnumUnitsInRange(udg_GroupFormHero ,x , y , 225 , Condition(function GroupDamgeFilterUnitNormalENHANCED)  )  
     endif
     
 endfunction
@@ -220,7 +195,7 @@ function InitTrig_SkillArea takes nothing returns nothing
     set gg_trg_SkillArea = CreateTrigger()
  
     call TriggerRegisterAnyUnitEventBJ(gg_trg_SkillArea, EVENT_PLAYER_UNIT_SPELL_EFFECT)
-    call TriggerAddCondition(gg_trg_SkillArea, Condition(function Trig_SkillAreaConditions))
+    call TriggerAddCondition(gg_trg_SkillArea, Condition(function AreaSkillIsHeroConditions))
     call TriggerAddAction(gg_trg_SkillArea, function Trig_SkillAreaActions)
 endfunction
 
