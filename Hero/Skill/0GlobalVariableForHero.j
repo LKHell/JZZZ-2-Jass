@@ -41,3 +41,11 @@ function HeroDamageMulti takes nothing returns integer
 
     return i
 endfunction
+
+
+// 触发单位 = 英雄
+function AreaSkillIsHeroConditions takes nothing returns boolean
+    return ((IsUnitType(GetTriggerUnit(), UNIT_TYPE_HERO) == true))
+endfunction
+
+ 
